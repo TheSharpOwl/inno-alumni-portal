@@ -1,0 +1,3 @@
+pyenv virtualenv django-rest
+pyenv local django-rest
+pip install django
