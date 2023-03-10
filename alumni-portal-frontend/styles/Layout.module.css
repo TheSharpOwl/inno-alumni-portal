@@ -1,0 +1,17 @@
+.imgStyle{
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-l-md;
+    position: relative;
+    overflow: hidden;
+}
+
+.cartoonImg{
+    background: url(../utils/images/innopolis-icon.png) no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
