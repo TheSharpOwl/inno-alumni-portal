@@ -14,7 +14,7 @@ export default function Home() {
       async () => {
         try {
           const res = await fetch(
-            'https://alumni.pythonanywhere.com/pass', 
+            'https://alumni.pythonanywhere.com/accounts/profile', 
             {
               credentials: 'include',
             });
@@ -24,7 +24,6 @@ export default function Home() {
           // console.log(content)
         } catch (err) {
           console.log(err);
-          // setMessage('You are not logged in')
           setAuth(false);
         }
       }
@@ -66,16 +65,8 @@ function User() {
     <main className='text-center'>
       <h3 className='text-4xl font-bold'> {title} </h3>
 
-      {/* <div className='details'>
-        <h5>Unknown</h5>
-      </div> */}
-
       <div className='flex justify-center'>
         <button className='mt-5 px-10 py-1 rounded-sm bg-[#51B112] text-[#E8F0FE]'>Signout</button>
-      </div>
-
-      <div className='flex justify-center'>
-        <Link href={'/profile'} className='mt-5 px-10 py-1 rounded-sm bg-[#51B112] text-[#E8F0FE]'>Profile Page</Link>
       </div>
     </main>
   )

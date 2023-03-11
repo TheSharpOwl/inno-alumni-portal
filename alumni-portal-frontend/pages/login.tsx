@@ -3,38 +3,63 @@ import Layout from "components/layout/layout";
 import Link from "next/link";
 import styles from '../styles/Form.module.css';
 import { HiOutlineUser, HiEye, HiEyeOff } from "react-icons/hi";
-import { SyntheticEvent, useState } from 'react';
+import { useEffect, SyntheticEvent, useState } from 'react';
 import { useRouter } from "next/router";
 
 export default function Login () {
   const [show, setShow] = useState(false);
+  const [csrfToken, setCsrf] = useState('');
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const router = useRouter();
+
+  
+  useEffect(() => {
+    fetch('https://alumni.pythonanywhere.com/csrf',
+    {
+      credentials: 'include',
+    })
+    .then((res) => {
+      let csrfToken = res.headers.get("X-CSRFToken");
+      setCsrf(csrfToken!);
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  }, [])
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-
     try {
       await fetch(
-        `http://alumni.pythonanywhere.com/api-auth/login`,
+        'http://alumni.pythonanywhere.com/api-auth/login',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken,
           },
           credentials: 'include',
           body: JSON.stringify({
             username: username,
             password: password
           })
-        }
-      );
-      
-      await router.push('/')
-      
+        })
+        .then(res => {
+          if(!res.ok) {
+            throw new Error('Could not connect to the server')
+          }
+        })
+        .then(data => {
+          console.log(data)
+          router.push('/')
+        })
+        .catch (err => {
+          setError(err);
+        });
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
@@ -47,6 +72,7 @@ export default function Login () {
         <div>
           <h1 className="text-[#E8F0FE] text-4xl font-bold py-4">Login</h1>
         </div>
+        {/* { error } */}
         <form onSubmit={submit} className="flex flex-col gap-5">
           <div className={styles.input_group}>
             <input 
