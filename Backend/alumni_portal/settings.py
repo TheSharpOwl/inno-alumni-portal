@@ -38,9 +38,7 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
-CSRF_TRUSTED_ORIGINS = [
-    '*',
-]
+CSRF_TRUSTED_ORIGINS = []
 
 # Application definition
 
