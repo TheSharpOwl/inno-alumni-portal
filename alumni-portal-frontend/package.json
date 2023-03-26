@@ -5,17 +5,13 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "prepare": "husky install",
-    "pre-commit": "next lint --fix && git add -A ."
+    "start": "next start"
   },
   "dependencies": {
     "@next/font": "13.1.4",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
     "@types/react-dom": "18.0.10",
-    "eslint": "8.32.0",
     "eslint-config-next": "13.1.4",
     "next": "13.1.4",
     "postcss-preset-env": "^8.0.1",
@@ -26,7 +22,6 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
-    "husky": "^8.0.3",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.6"
   }
