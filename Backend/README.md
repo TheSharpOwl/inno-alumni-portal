@@ -4,11 +4,12 @@
 1. Open a shell/command line in this folder (better if it was after activating a python virtual env)
 2. Then run the following commands
 ```bash
-    pip install -r requirements.txt
-    python manage.py runserver <port>
+$ pip install -r requirements.txt
+$ python manage.py runserver <port>
 ```
 ## Requests
 ### Registration
+```
 POST http://localhost:8000/register
 Body:
 {
@@ -17,6 +18,7 @@ Body:
     "password": "",
     "password2": ""
 }
+```
 ### Getting Token
 ```
 POST http://localhost:8000/api-token-auth
