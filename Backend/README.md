@@ -18,15 +18,21 @@ Body:
     "password2": ""
 }
 ### Getting Token
+```
 POST http://localhost:8000/api-token-auth
 Body:
 {
     "username": "",
     "password": ""
 }
+```
 ### Ordering Pass
+```
 POST http://localhost:8000/pass/
-Include in HTTP headers Authorization with value: TOKEN <token>
+Include in HTTP headers Authorization with value: TOKEN <token> 
+```
 ### Get Elective Courses
+```
 GET http://localhost:8000/courses
-Include in HTTP headers Authorization with value: TOKEN <token>
+Include in HTTP headers Authorization with value: TOKEN <token> 
+```
