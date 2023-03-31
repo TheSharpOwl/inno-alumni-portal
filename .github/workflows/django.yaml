@@ -23,7 +23,7 @@ jobs:
       - name: Install requirements
         run: |
             pip install -r Backend/requirements.txt
-      - name: Run Project
+      - name: Run tests
         run: |
             cd Backend
-            python manage.py runserver
+            python manage.py test
