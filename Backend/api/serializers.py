@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-from .models import Alumni
+from .models import Alumni, ElectiveCourse
 from .diploma_validator import validate_diploma_id
 
 
@@ -13,6 +13,12 @@ class AlumniSerializer(serializers.ModelSerializer):
   class Meta:
     model = Alumni
     fields = ['username', 'diploma_id', 'name']
+
+
+class ElectiveCourseSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = ElectiveCourse
+    fields = ['name', 'description', 'tutor', 'available_places']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
