@@ -71,7 +71,7 @@ export default function Register () {
       </Head>
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div>
-          <h1 className="text-[#E8F0FE] text-4xl font-bold py-4">Register</h1>
+          <h1 className="text-[#40BA21] font-['Montserrat'] text-4xl font-bold py-4">Sign Up</h1>
         </div>
         {/* { error } */}
         <form onSubmit={submit} className="flex flex-col gap-5">
@@ -135,8 +135,8 @@ export default function Register () {
             </button>
           </div>
         </form>
-        <p className="text-center text-[#E8F0FE]">
-            Have an account? <Link href={'/login'} className="text-[#51B112]">Login</Link>
+        <p className="text-center text-[#777777]">
+            Already have an account? Go to <Link href={'/login'} className="font-bold">Log in</Link>
         </p>
       </section>
     </Layout>

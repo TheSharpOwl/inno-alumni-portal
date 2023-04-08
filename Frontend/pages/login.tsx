@@ -70,7 +70,7 @@ export default function Login () {
       </Head>
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div>
-          <h1 className="text-[#E8F0FE] text-4xl font-bold py-4">Login</h1>
+          <h1 className="text-[#40BA21] font-['Montserrat'] text-4xl font-bold py-4">Login</h1>
         </div>
         {/* { error } */}
         <form onSubmit={submit} className="flex flex-col gap-5">
@@ -94,7 +94,7 @@ export default function Login () {
               onChange={e => setPassword(e.target.value)}
               className={styles.input_text}
             />
-            <span className="icon flex items-center px-4 hover:cursor-pointer hover:text-[#6366f1]" onClick={() => setShow(!show)}>
+            <span className="icon flex items-center px-4 hover:cursor-pointer hover:text-[#402F6E]" onClick={() => setShow(!show)}>
               {show 
                 ? <HiEye size={20}/> 
                 : <HiEyeOff size={20}/>
@@ -107,8 +107,8 @@ export default function Login () {
             </button>
           </div>
         </form>
-        <p className="text-center text-[#E8F0FE]">
-            Don&apos;t have an account yet? <Link href={'/register'} className="text-[#51B112]">SignUp</Link>
+        <p className="text-center text-[#777777]">
+            Don&apos;t have an account? Go to <Link href={'/register'} className="font-bold">Sign Up</Link>
         </p>
       </section>
     </Layout>
