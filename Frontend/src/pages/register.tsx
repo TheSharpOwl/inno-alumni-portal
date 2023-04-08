@@ -1,15 +1,15 @@
 import Head from "next/head";
-import Layout from "components/layout/layout";
+import Layout from "@/components/layout/layout";
 import styles from '../styles/Form.module.css';
 import { HiOutlineUser, HiOutlineBookOpen, HiEye, HiEyeOff } from "react-icons/hi";
-import { useEffect, SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useState } from 'react';
 import Link from "next/link";
-import { PasswordCredential } from "interfaces";
+import { PasswordCredential } from "@/interfaces";
 import { useRouter } from "next/router";
+import axios from 'axios';
 
 export default function Register () {
   const [show, setShow] = useState<PasswordCredential>({password: false, confirmPassword: false});
-  const [csrfToken, setCsrf] = useState('');
   const [username, setUserName] = useState('');
   const [diplomaId, setDiplomaId] = useState('');
   const [password, setPassword] = useState('');
@@ -17,51 +17,30 @@ export default function Register () {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  useEffect(() => {
-    fetch('https://alumni.pythonanywhere.com/csrf',
-    {
-      credentials: 'include',
-    })
-    .then((res) => {
-      let csrfToken = res.headers.get("X-CSRFToken");
-      setCsrf(csrfToken!);
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }, [])
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    try {
-      await fetch(
-        'https://alumni.pythonanywhere.com/register',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrfToken,
-          },
-          body: JSON.stringify({
-            username: username,
-            diploma_id: diplomaId,
-            password: password,
-            password2: confirmPassword
-          })
-        })
-        .then(res => {
-          if(!res.ok) {
+    await axios.post('http://localhost:8000/register',
+      JSON.stringify({
+        username: username,
+        diploma_id: diplomaId,
+        password: password,
+        password2: confirmPassword
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      },
+      )
+      .then(res => {
+          if(res.status !== 200) {
             throw new Error('Could not connect to the server')
           }
-        })
-        await router.push('/login')
-        .catch (err => {
-          setError(err);
-        })
-
-    } catch (err) {
-      console.log(err)
-    }
+          router.push('/login')
+      }).catch(function(err) {
+        console.log(err.message);
+    })
   }
     
   return (
@@ -131,7 +110,7 @@ export default function Register () {
           </div>
           <div className="input-button">
             <button type="submit" className={styles.button}>
-                SignUp
+                Sign up
             </button>
           </div>
         </form>
