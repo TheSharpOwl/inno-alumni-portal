@@ -2,6 +2,8 @@ import Head from 'next/head'
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Header from '@/components/layout/header';
+import Profile from './profile';
+import { Course } from './Course';
 
 
 const title: string = "Innopolis Alumni Portal";
@@ -30,10 +32,11 @@ export default function Home({ courses }: any) {
       </Head>
       <div>
         <Header />
-        {auth 
+        {/* {auth 
           ? User({ courses }) 
           : Guest()
-        }
+        } */}
+        <Course />
         {/* {message} */}
       </div>
     </div>
