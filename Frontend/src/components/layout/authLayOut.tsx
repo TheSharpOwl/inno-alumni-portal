@@ -1,6 +1,6 @@
 import Header from "./header";
 
-export default function Layout({children}: {children: React.ReactNode}): JSX.Element {
+export default function AuthLayOut({children}: {children: React.ReactNode}): JSX.Element {
   return (
       <div className="h-screen bg-[#2A347B] text-sm font-['IBM Plex Sans']">
         <Header />

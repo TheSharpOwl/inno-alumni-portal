@@ -1,4 +1,4 @@
-import styles from '../../styles/Layout.module.css'
+import styles from '../../styles/Image.module.css'
 
 export default function Header() {
     return (

@@ -1,0 +1,77 @@
+/* .imgStyle{
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-l-md;
+    position: relative;
+    overflow: hidden;
+} */
+
+.logoAlumni{
+    background: url(../utils/images/Logo_Alumni.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 140px;
+    height: 24px;
+}
+
+.logo{
+    background: url(../utils/images/Logo.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 100px;
+    height: 24px;
+}
+
+.courses{
+    background: url(../utils/images/Hat.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 100px;
+    height: 24px;
+}
+
+.pass{
+    background: url(../utils/images/Lock.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 100px;
+    height: 24px;
+}
+
+.donation{
+    background: url(../utils/images/Coins.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 100px;
+    height: 24px;
+}
+
+.network{
+    background: url(../utils/images/Hand.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 100px;
+    height: 24px;
+}

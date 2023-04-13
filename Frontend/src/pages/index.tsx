@@ -6,16 +6,19 @@ import Header from '@/components/layout/header';
 
 const title: string = "Innopolis Alumni Portal";
 
-export const getStaticProps = async () => {
-  const API_URL = "http://localhost:8000/courses"
-  const request = await fetch(API_URL)
-  const courses = await request.json()
-  return  { props : { courses } }
-}
+// export const getStaticProps = async () => {
+//   const API_URL = "http://localhost:8000/courses"
+//   const request = await fetch(API_URL)
+//   const courses = await request.json()
+//   return  { props : { courses } }
+// }
 
 export default function Home({ courses }: any) {
   const [auth, setAuth] = useState(false)
   // const [message, setMessage] = useState('')
+  // useEffect(() => {
+    
+  // });
 
   return (
     <div className='h-screen bg-[#2A347B] text-[#777777]'>

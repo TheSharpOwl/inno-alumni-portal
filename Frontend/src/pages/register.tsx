@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "@/components/layout/layout";
+import Layout from "@/components/layout/authLayOut";
 import styles from '../styles/Form.module.css';
 import { HiOutlineUser, HiOutlineBookOpen, HiEye, HiEyeOff } from "react-icons/hi";
 import { SyntheticEvent, useState } from 'react';
