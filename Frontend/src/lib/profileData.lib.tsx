@@ -8,7 +8,7 @@ export const dashboardComponents = [
     },
     {
         title: 'Courses',
-        description: 'find and take additional studies specifically for graduates',
+        description: 'Find and take additional studies specifically for graduates',
         img: styles.courses
     },
     {
