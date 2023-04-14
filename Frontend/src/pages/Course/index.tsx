@@ -3,7 +3,9 @@ import Image from "next/image"
 import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
-export const Course = ({ courses }: any) => {
+import React from "react";
+
+export default function Course({ courses }: any) {
 
     const course = {
         "name": "DevOps Engineering",

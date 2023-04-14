@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Header from '@/components/layout/header';
 import Profile from './profile';
-import { Course } from './Course';
+import { Course } from './course';
 
 
 const title: string = "Innopolis Alumni Portal";
