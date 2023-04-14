@@ -6,7 +6,7 @@ import qr_code from "../../utils/images/qr-code.jpg"
 import React from "react";
 import MainLayOut from "@/components/layout/mainLayOut";
 
-export default function Course() {
+export default function Course({ courses }: any) {
 
     const course = {
         "name": "DevOps Engineering",
@@ -19,28 +19,24 @@ export default function Course() {
 
     return ( 
         <MainLayOut>
-        <div className="">
-            {[1,1,1].map((_)=> 
-            (
-                <div className="bg-white p-5 rounded-md border-4 mb-2">
-                    <div className="flex justify-between font-bold mb-3 text-lg text-green-400">
-                        <div> {course.name} </div>
-                        <div> {course.duration} </div>
-                    </div>
-                    <div className="flex justify-between text-sm mb-6">
-                        <div className="font-bold "> {course.instructor} </div>
-                        <div> {course.places_taken} / {course.total_intake} booked </div>
-                    </div>
-                    <div className="mb-8">
-                        {course.description}
-                    </div>
-                    <div className="flex justify-between">
-                        <div></div>
-                        <button onClick={()=>{}} className="bg-green-400 text-white px-6 py-2 rounded-lg">Apply</button>
-                    </div>
+        <div>
+            {/* <div className="bg-white p-5 rounded-md border-4 mb-2">
+                <div className="flex justify-between font-bold mb-3 text-lg text-green-400">
+                    <div> {course.name} </div>
+                    <div> {course.duration} </div>
                 </div>
-            ))}
-            
+                <div className="flex justify-between text-sm mb-6">
+                    <div className="font-bold "> {course.instructor} </div>
+                    <div> {course.places_taken} / {course.total_intake} booked </div>
+                </div>
+                <div className="mb-8">
+                    {course.description}
+                </div>
+                <div className="flex justify-between">
+                    <div></div>
+                    <button onClick={()=>{}} className="bg-green-400 text-white px-6 py-2 rounded-lg">Apply</button>
+                </div>
+            </div> */}
             {/* <div className="bg-white p-5 rounded-md border-4 mb-2">
                 <div className="flex justify-between mb-3 text-lg ">
                     <div> {course.name} </div>
@@ -57,18 +53,7 @@ export default function Course() {
                 </div>
             </div> */}
 
-            {/* <div className="flex justify-center">
-                <div className="flex flex-col bg-white p-6 rounded-md border-4 mb-2 w-96 text-center">
-                    <div className="font-bold mb-5 text-lg text-green-400">Success!</div>
-                    <div className="text-start mb-10">
-                        Your pass will be waiting for you on the specified date at the University reception. 
-                        Please don't forget to bring any document to confirm your identity.
-                    </div>
-                    <button className="bg-green-400 text-white px-6 py-2 rounded-lg">OK</button>
-                </div>
-            </div> */}
-
-            {/* <div className="flex justify-center">
+            <div className="flex justify-center">
                 <div className="flex flex-col bg-white p-6 rounded-md border-4 mb-2 w-96 text-center">
                     <div className="font-bold mb-5 text-lg text-green-400">Get your University Pass here</div>
                     <div className="text-start mb-10">
@@ -88,7 +73,20 @@ export default function Course() {
                     </div>
                     <button className="bg-green-400 text-white px-6 py-2 rounded-lg">Confirm</button>
                 </div>
-            </div> */}
+            </div>
+
+            <div className="flex justify-center">
+                <div className="flex flex-col bg-white p-6 rounded-md border-4 mb-2 w-96 text-center">
+                    <div className="font-bold mb-5 text-lg text-green-400">Success!</div>
+                    <div className="text-start mb-10">
+                        Your pass will be waiting for you on the specified date at the University reception. 
+                        Please don't forget to bring any document to confirm your identity.
+                    </div>
+                    <button className="bg-green-400 text-white px-6 py-2 rounded-lg">OK</button>
+                </div>
+            </div>
+
+            
 
             {/* <div className="flex justify-center">
                 <div className="bg-white p-5 rounded-xl border-4 mb-2">
@@ -103,9 +101,9 @@ export default function Course() {
                     </div>
                     <div className="text-green-400"> READ </div>
                 </div>
-            </div> */}
+            </div>
 
-            {/* <div className="flex justify-center">
+            <div className="flex justify-center">
                 <div className="flex bg-white rounded-xl border-4 mb-2">
                     <div className="flex flex-col items-end text-green-400 px-7 py-2 bg-gray-100 rounded-l-lg rounded-r-xl">
                        <div className="text-[30px]">12</div>

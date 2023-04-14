@@ -1,23 +1,14 @@
-import { dashboardComponents } from "@/lib/profileData.lib"
+import LeftBar from "./leftBar"
+import RightBar from "./rightBar"
 
-export default function MainLayOut() {
+export default function MainLayOut({children}) {
     
     
     return (
-        <div className="bg-[#E5E5E5] h-full">
-            <div className="grid m-auto lg:grid-cols-2 h-screen place-items-center lg:h-3/5 lg:pt-32 lg:w-10/12 xl:h-4/6 xl:w-3/5 xl:ml-24">
-                {
-                    dashboardComponents.map((dashboardComponent) => (
-                        <button className="grid grid-cols-2 items-center bg-[#FFFFFF] h-[180px] w-[350px] rounded-lg shadow-lg text-start">
-                            <div className="pl-8">
-                                <h2 className="text-[#40BA21] font-bold text-[24px]" key={dashboardComponent.title}>{dashboardComponent.title}</h2>
-                                <p key={dashboardComponent.title}>{dashboardComponent.description}</p>
-                            </div>
-                            <div key={dashboardComponent.title} className={dashboardComponent.img}></div>
-                        </button>
-                    ))
-                }
-            </div>
+        <div className="flex">
+            <LeftBar className="bg-[#2A347B] text-white pt-[51px] px-4 h-screen min-w-fit w-72 flex-initial" />
+            <main className="flex-grow bg-[#f8fbff] p-20">{children}</main>
+            <RightBar className="px-6" />
         </div>
     )
 }
