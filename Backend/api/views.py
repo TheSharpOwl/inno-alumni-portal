@@ -9,8 +9,8 @@ from rest_framework import generics
 from knox.views import LoginView as KnoxLoginView
 import urllib 
 from .serializers import AlumniSerializer, ElectiveCourseSerializer
-from .models import Alumni, ElectiveCourse
-
+from .models import Alumni, ElectiveCourse, EmailCode
+from django.conf import settings
 
 class AlumniDetailAPI(APIView):
   authentication_classes = (TokenAuthentication,)
@@ -30,11 +30,17 @@ class AlumniDetailAPI(APIView):
 
 
 class ElectiveCourseDetailAPI(APIView):
-    
+  authentication_classes = (TokenAuthentication,)
+  permission_classes = (AllowAny,)
+  http_method_names = ['get', 'head', 'post']
+
   def get(self, request):
+    print(request.user.id)
+    alumni = Alumni.objects.get(user_ptr_id=request.user.id)
+    if alumni.verified == False:
+        return Response({"status": "User needs to verify the email"})
+
     courses = ElectiveCourse.objects.all()
-    # print("courses")
-    # print(courses)
     data = []
     for course in courses: 
       serializer = ElectiveCourseSerializer(course)
@@ -49,7 +55,7 @@ class RegisterAlumniAPIView(generics.CreateAPIView):
 
 
 class AlumniViewSet(viewsets.ModelViewSet):
-    queryset = Alumni.objects.all().order_by('username')
+    queryset = Alumni.objects.all().order_by('email')
     serializer_class = AlumniSerializer
 
 
@@ -59,15 +65,87 @@ class PassOrderAPI(APIView):
   http_method_names = ['get', 'head', 'post']
   
   def post(self, request):
-    TOKEN = "6125230376:AAGi7qfothkdpDGwwy7nB9x8VieXwzN9yNQ"
-    # url = f"https://api.telegram.org/bot{TOKEN}/getUpdates"
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
+    if alumni.verified == False:
+        return Response({"status": "User needs to verify the email"})
     message = f"{alumni.name} requested a pass."
-    chat_id = -1001525464247
-    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage?chat_id={chat_id}&text={message}".replace(" ", "%20")
+    url = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/sendMessage?chat_id={settings.CHAT_ID}&text={message}".replace(" ", "%20")
     urllib.request.urlopen(url)
     
     return Response({"status": "Pass Ordered"})
 
 
+class VerifyMailAPI(APIView):
+  authentication_classes = (TokenAuthentication,)
+  permission_classes = (AllowAny,)
+  http_method_names = ['get', 'head', 'post']
+  
+  def post(self, request):
+    alumni = Alumni.objects.get(user_ptr_id=request.user.id)
+    code = EmailCode.objects.get(email=alumni.email).code
+    if request.data['code'] == code:
+      alumni = Alumni.objects.update(user_ptr_id=request.user.id, verified=True)
+      return Response({"status": "Successfuly Verified"})
+    else:
+      return Response({"status": "Email verification failed"})
 
+
+class UpdateProfileAPI(APIView):
+  authentication_classes = (TokenAuthentication,)
+  permission_classes = (AllowAny,)
+  http_method_names = ['get', 'head', 'post']
+  
+  def post(self, request):
+    alumni = Alumni.objects.get(user_ptr_id=request.user.id)
+    if alumni.verified == False:
+        return Response({"status": "User needs to verify the email"})
+    
+    try:
+      if request.data['name'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, name=request.data['name'])
+    except:
+      pass 
+    
+    try:
+      if request.data['name_russian'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, name_russian=request.data['name_russian'])
+    except:
+      pass 
+
+    try:
+      if request.data['field_of_study'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, filed_of_study=request.data['field_of_study'])
+    except:
+      pass 
+
+    try:
+      if request.data['graduation_year'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, graduation_year=request.data['graduation_year'])
+    except:
+      pass 
+
+    try:
+      if request.data['bio'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, bio=request.data['bio'])
+    except:
+      pass 
+
+    try:
+      if request.data['city'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, city=request.data['city'])
+    except:
+      pass 
+
+    try:
+      if request.data['company'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, company=request.data['company'])
+    except:
+      pass 
+
+    try:
+      if request.data['position'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, position=request.data['position'])
+    except:
+      pass 
+
+    return Response({"status": "Attributes Updated"})

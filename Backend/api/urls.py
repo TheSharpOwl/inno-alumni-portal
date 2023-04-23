@@ -1,7 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
 from . import views
-from .views import AlumniDetailAPI, RegisterAlumniAPIView, PassOrderAPI, ElectiveCourseDetailAPI
+from .views import AlumniDetailAPI, RegisterAlumniAPIView, PassOrderAPI, ElectiveCourseDetailAPI, VerifyMailAPI, UpdateProfileAPI
 
 router = routers.DefaultRouter()
 router.register(r'alumni', views.AlumniViewSet)
@@ -15,5 +15,7 @@ urlpatterns = [
     path('register', RegisterAlumniAPIView.as_view()),
     # path('pass/', views.request_pass, name='pass'),
     path('pass/', PassOrderAPI.as_view()),
-    path('courses/', ElectiveCourseDetailAPI.as_view())
+    path('courses/', ElectiveCourseDetailAPI.as_view()),
+    path('confirm/email', VerifyMailAPI.as_view()),
+    path('update', UpdateProfileAPI.as_view())
 ]
