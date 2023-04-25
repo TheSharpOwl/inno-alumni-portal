@@ -9,7 +9,7 @@ from rest_framework import generics
 from knox.views import LoginView as KnoxLoginView
 import urllib 
 from .serializers import AlumniSerializer, ElectiveCourseSerializer
-from .models import Alumni, ElectiveCourse, EmailCode
+from .models import Alumni, ElectiveCourse, EmailCode, ElectiveCourseRequest
 from django.conf import settings
 
 class AlumniDetailAPI(APIView):
@@ -43,8 +43,31 @@ class ElectiveCourseDetailAPI(APIView):
     courses = ElectiveCourse.objects.all()
     data = []
     for course in courses: 
-      serializer = ElectiveCourseSerializer(course)
-      data.append(serializer.data)
+      exists = ElectiveCourseRequest.objects.filter(alumni=alumni, course=course).count() 
+      if exists == 0:
+        serializer = ElectiveCourseSerializer(course)
+        data.append(serializer.data)
+    return Response(data)
+
+
+class BookedCoursesDetailAPI(APIView):
+  authentication_classes = (TokenAuthentication,)
+  permission_classes = (AllowAny,)
+  http_method_names = ['get', 'head', 'post']
+
+  def get(self, request):
+    print(request.user.id)
+    alumni = Alumni.objects.get(user_ptr_id=request.user.id)
+    if alumni.verified == False:
+        return Response({"status": "User needs to verify the email"})
+
+    courses = ElectiveCourse.objects.all()
+    data = []
+    for course in courses:
+      exists = ElectiveCourseRequest.objects.filter(alumni=alumni, course=course).count() 
+      if exists > 0:
+        serializer = ElectiveCourseSerializer(course)
+        data.append(serializer.data)
     return Response(data)
 
 
@@ -149,3 +172,26 @@ class UpdateProfileAPI(APIView):
       pass 
 
     return Response({"status": "Attributes Updated"})
+
+
+class RequestCourseAPI(APIView):
+  authentication_classes = (TokenAuthentication,)
+  permission_classes = (AllowAny,)
+  http_method_names = ['get', 'head', 'post']
+  
+  def post(self, request):
+    alumni = Alumni.objects.get(user_ptr_id=request.user.id)
+    if alumni.verified == False:
+        return Response({"status": "User needs to verify the email"})
+    course_id = request.data['id']
+    course = ElectiveCourse.objects.get(id=course_id)
+    try:
+      course_request = ElectiveCourseRequest.objects.get(alumni=alumni, course=course) 
+      return Response({"status": "Course already requested by user"})
+    except:
+      pass 
+    alumni_name = alumni.name
+    course_name = course.name
+    course_request = ElectiveCourseRequest.objects.create(alumni=alumni, course=course, alumni_name=alumni_name, course_name=course_name, approved=False)
+    course_request.save()
+    return Response({"status": "Successfuly requested course"})

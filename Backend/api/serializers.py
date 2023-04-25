@@ -17,7 +17,7 @@ class AlumniSerializer(serializers.ModelSerializer):
 class ElectiveCourseSerializer(serializers.ModelSerializer):
   class Meta:
     model = ElectiveCourse
-    fields = ['name', 'description', 'tutor', 'available_places']
+    fields = ['id', 'name', 'description', 'tutor', 'available_places']
 
 
 class RegisterSerializer(serializers.ModelSerializer):

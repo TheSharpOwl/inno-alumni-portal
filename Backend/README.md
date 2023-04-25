@@ -7,6 +7,7 @@
 $ pip install -r requirements.txt
 $ python manage.py runserver <port>
 ```
+
 ## Requests
 ### Registration
 ```
@@ -18,6 +19,7 @@ Body:
     "password2": ""
 }
 ```
+
 ### Getting Token
 
 * username should have value of email
@@ -29,16 +31,26 @@ Body:
     "password": ""
 }
 ```
+
 ### Ordering Pass
 ```
 POST http://localhost:8000/pass/
 Include in HTTP headers Authorization with value: TOKEN <token> 
 ```
-### Get Elective Courses
+
+### Get Elective Courses (non-booked)
 ```
 GET http://localhost:8000/courses
 Include in HTTP headers Authorization with value: TOKEN <token> 
 ```
+
+### Get Booked Elective Courses 
+```
+GET http://localhost:8000/courses/booked
+Include in HTTP headers Authorization with value: TOKEN <token> 
+```
+
+
 ### Verify Email
 * the code would be received on Innopolis email
 ```
@@ -64,7 +76,7 @@ Body:
   "bio" = <str:value>,
   "city" = <str:value>,
   "company" = <str:value>,
-  "position" = <str:value>,
+  "position" = <str:value>
 }
 ```
 
@@ -72,4 +84,14 @@ Body:
 ```
 GET http://localhost:8000/accounts/profile/
 Include in HTTP headers Authorization with value: TOKEN <token>
+```
+
+### Request Elective Course
+```
+POST http://localhost:8000/request/course
+Include in HTTP headers Authorization with value: TOKEN <token>
+Body:
+{
+  "id": <int:course_id>
+}
 ```

@@ -27,3 +27,11 @@ class ElectiveCourse(models.Model):
 class EmailCode(models.Model):
     email = models.EmailField()
     code = models.IntegerField()
+
+
+class ElectiveCourseRequest(models.Model):
+    alumni = models.ForeignKey(Alumni, on_delete=models.CASCADE)
+    course = models.ForeignKey(ElectiveCourse, on_delete=models.CASCADE)
+    alumni_name = models.CharField(max_length=60)
+    course_name = models.CharField(max_length=60)
+    approved = models.BooleanField(default=False)
