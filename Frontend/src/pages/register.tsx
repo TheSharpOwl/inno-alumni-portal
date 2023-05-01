@@ -11,7 +11,7 @@ import axios from 'axios';
 
 export default function Register () {
   const [show, setShow] = useState<PasswordCredential>({password: false, confirmPassword: false});
-  const [username, setUserName] = useState('');
+  const [email, setEmail] = useState('');
   const [diplomaId, setDiplomaId] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,8 +23,7 @@ export default function Register () {
     e.preventDefault();
     await axios.post('http://localhost:8000/register',
       JSON.stringify({
-        username: username,
-        diploma_id: diplomaId,
+        email: email,
         password: password,
         password2: confirmPassword
       }),
@@ -68,11 +67,11 @@ export default function Register () {
             {/* <label>Email</label> */}
             <div className={styles.input_group}>
               <input 
-                type="username" 
-                name="username"
+                type="email" 
+                name="Email"
                 placeholder="a.b@innopolis.ru"
                 onChange={e => {
-                  setUserName(e.target.value);
+                  setEmail(e.target.value);
                   setErrorMessage('');
                 }}
                 className={styles.input_text}
@@ -81,7 +80,7 @@ export default function Register () {
                 <HiOutlineMail size={20}/>
               </span>
             </div>
-            {getErrorMessage('username') && <span className="text-red-500"> {getErrorMessage('username')[0].split('.')[0]} </span>}
+            {getErrorMessage('email') && <span className="text-red-500"> {getErrorMessage('email')[0].split('.')[0]} </span>}
           </div>
           {/* <div>
             <label>Diploma ID</label>
