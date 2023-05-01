@@ -75,3 +75,15 @@
     width: 120px;
     height: 132px;
 }
+
+.alumni{
+    background: url(../utils/images/alumni.png) no-repeat;
+    /* background-size: cover;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: 0; */
+    width: 24px;
+    height: 24px;
+}
