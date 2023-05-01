@@ -1,0 +1,28 @@
+.input_group{
+    @apply flex border rounded-xl bg-slate-50;
+    position: relative;
+}
+
+.input_text{
+    @apply w-full py-4 pl-6 border rounded-xl bg-slate-50;
+    @apply focus:outline-none border-none;
+}
+
+.button{
+    @apply w-full bg-gradient-to-r from-[#69b356] to-[#40BA21] rounded-md;
+    @apply py-3 text-gray-50 text-lg;
+    color: #FFFFFF;
+}
+
+.button:hover{
+    @apply bg-gradient-to-r from-[#8ca586] to-[#84ba76] border-[#89b17f];
+    @apply text-[#777777] border;
+}
+
+.input_text + *{
+    color: #777777;
+}
+
+.input_text:focus + *{
+    color: #777777;
+}
