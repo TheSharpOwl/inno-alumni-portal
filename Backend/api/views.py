@@ -11,6 +11,9 @@ import urllib
 from .serializers import AlumniSerializer, ElectiveCourseSerializer
 from .models import Alumni, ElectiveCourse, EmailCode, ElectiveCourseRequest
 from django.conf import settings
+from datetime import datetime
+import smtplib, ssl
+
 
 class AlumniDetailAPI(APIView):
   authentication_classes = (TokenAuthentication,)
@@ -82,6 +85,50 @@ class AlumniViewSet(viewsets.ModelViewSet):
     serializer_class = AlumniSerializer
 
 
+def validate_date_format(requested_date):
+  date_format = "%d/%m/%y"
+  try:
+    return bool(datetime.strptime(requested_date, date_format))
+  except ValueError:
+    return False
+
+
+def send_pass_email(name, requested_date):
+  receiver_email = "n.novarlic@innopolis.ru" # this attribute has to be changed in future
+  
+  message = u"""Subject: Alumni Pass Order
+
+  
+  Добрый день!
+
+  Направляю на согласование список выпускников АНО ВО “Университета Иннополис” для посещения УЛК. 
+
+  Список посетителей:
+
+  1. {name}
+
+  Дата посещения: {date}
+  Ответственные: (ФИО сотрудника УИ)
+  """.format(name=name, date=requested_date)
+
+  port = 587   # For starttls
+  smtp_server = "smtp.university.innopolis.ru"
+  sender_email = "alumni.portal@innopolis.university"
+  password = settings.EMAIL_PASSWORD
+
+  smtp = smtplib.SMTP(smtp_server, port=port)
+
+  smtp.ehlo()  
+  smtp.starttls()  
+
+  smtp.login(sender_email, password)  
+
+  smtp.sendmail(sender_email, receiver_email,
+              message.encode("utf-8"))
+              
+  smtp.quit()
+
+
 class PassOrderAPI(APIView):
   authentication_classes = (TokenAuthentication,)
   permission_classes = (AllowAny,)
@@ -91,10 +138,22 @@ class PassOrderAPI(APIView):
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     if alumni.verified == False:
         return Response({"status": "User needs to verify the email"})
+
+    '''
+    ### Might be useful later
     message = f"{alumni.name} requested a pass."
     url = f"https://api.telegram.org/bot{settings.TELEGRAM_TOKEN}/sendMessage?chat_id={settings.CHAT_ID}&text={message}".replace(" ", "%20")
     urllib.request.urlopen(url)
+    '''
+    requested_date = request.data['date']
+
+    if not validate_date_format(requested_date):
+      return Response({"status": "Wrong date format"})
+    if alumni.name_russian == "":
+      return Response({"status": "There is no Russian version of name for current Alumni"})
     
+    send_pass_email(alumni.name_russian, requested_date)  
+
     return Response({"status": "Pass Ordered"})
 
 

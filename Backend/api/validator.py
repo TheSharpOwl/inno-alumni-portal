@@ -13,8 +13,7 @@ def send_confirmation_mail(receiver_email):
     password = settings.EMAIL_PASSWORD
     code = random.randint(CODE_MIN, CODE_MAX)
     
-    message = """\
-    subject: Alumni Portal Registration
+    message = """Subject: Alumni Portal Registration
 
 
     Welcome to Alumni Portal! Your activation code is: {code}

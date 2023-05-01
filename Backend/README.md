@@ -36,6 +36,10 @@ Body:
 ```
 POST http://localhost:8000/pass/
 Include in HTTP headers Authorization with value: TOKEN <token> 
+Body:
+{
+  "date": "DD/MM/YY"
+}
 ```
 
 ### Get Elective Courses (non-booked)
