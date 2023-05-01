@@ -6,29 +6,24 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 from .models import Alumni, ElectiveCourse
-from .diploma_validator import validate_diploma_id
-
+from .validator import validate_innopolis_mail
 
 class AlumniSerializer(serializers.ModelSerializer):
   class Meta:
     model = Alumni
-    fields = ['username', 'diploma_id', 'name']
+    fields = ['email', 'name', 'name_russian', 'graduation_year', 'filed_of_study', 'bio', 'city', 'company', 'position']
 
 
 class ElectiveCourseSerializer(serializers.ModelSerializer):
   class Meta:
     model = ElectiveCourse
-    fields = ['name', 'description', 'tutor', 'available_places']
+    fields = ['id', 'name', 'description', 'tutor', 'available_places']
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-  username = serializers.CharField(
+  email = serializers.EmailField(
     required=True,
     validators=[UniqueValidator(queryset=User.objects.all())]
-  )
-  diploma_id = serializers.IntegerField(
-    required=True,
-    validators=[UniqueValidator(queryset=Alumni.objects.all())]
   )
   password = serializers.CharField(
     write_only=True, required=True, validators=[validate_password])
@@ -36,24 +31,22 @@ class RegisterSerializer(serializers.ModelSerializer):
   
   class Meta:
     model = Alumni
-    fields = ('username', 'diploma_id', 'password', 'password2')
+    fields = ('email', 'password', 'password2')
 
   def validate(self, attrs):
     if attrs['password'] != attrs['password2']:
       raise serializers.ValidationError(
         {"password": "Password fields didn't match."})
-    if validate_diploma_id(attrs['diploma_id']) == '':
+    if validate_innopolis_mail(attrs['email']) == -1:
         raise serializers.ValidationError(
-        {"diploma_id": "Diploma with entered ID does not exist in IU database"})
+        {"email": "Given email is not an official Innopolis University email address."})
     return attrs
   
   def create(self, validated_data):
     alumni = Alumni.objects.create(
-      username=validated_data['username'],
-      diploma_id=validated_data['diploma_id'],
-      name=validate_diploma_id(validated_data['diploma_id']),
+      email=validated_data['email'],
+      username=validated_data['email'],
     )
     alumni.set_password(validated_data['password'])
-    # alumni = Alumni.objects.create(user = user, diploma_id="1111222", name = "Nikola Novarlic")
     alumni.save()
     return alumni
