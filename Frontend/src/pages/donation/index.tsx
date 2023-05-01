@@ -37,7 +37,11 @@ export default function Course({ courses }: any) {
                 </div>
             </div>
 
-            
+            <div className="flex flex-col items-center mb-2">
+                <p>Scan the QR Code for easy donation</p>
+                <p>It will redirect you to tinkoff for donations</p>
+            </div>
+
         </div>
         </MainLayOut>
     );

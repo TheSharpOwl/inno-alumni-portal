@@ -39,6 +39,7 @@ export default function Login () {
         }
         router.push('/')
         console.log(res.data.token)
+        localStorage.setItem("alumni-token", res.data.token)
     }).catch(function(err) {
         console.log(err.message);
     })
