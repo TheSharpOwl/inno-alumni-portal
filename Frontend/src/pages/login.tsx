@@ -40,6 +40,7 @@ export default function Login () {
         }
         router.push('/')
         console.log(res.data.token)
+        localStorage.setItem("alumni-token", res.data.token)
     }).catch(function(err) {
       if(err.response) {
         setErrorMessage(err.response.data);
