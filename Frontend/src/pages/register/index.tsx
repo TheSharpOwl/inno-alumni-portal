@@ -1,27 +1,37 @@
 import Head from "next/head";
-import Layout from "@/components/layout/authLayOut";
-import styles from '../styles/Form.module.css';
-import imgStyles from '../styles/Image.module.css'
-import { HiOutlineMail, HiOutlineBookOpen, HiEye, HiEyeOff } from "react-icons/hi";
+import Layout from "@/components/Layout/authLayOut";
+import styles from '../../styles/Form.module.css';
+import imgStyles from '../../styles/Image.module.css';
+import { 
+  HiOutlineMail,
+  HiEye, 
+  HiEyeOff 
+} from "react-icons/hi";
 import { SyntheticEvent, useState } from 'react';
 import Link from "next/link";
 import { PasswordCredential } from "@/interfaces";
 import { useRouter } from "next/router";
 import axios from 'axios';
+import { apiEndPoint } from "@/constants";
+import ErrorModal from "@/components/Modals/error.modal";
+import SuccessModal from "@/components/Modals/success.modal";
+
 
 export default function Register () {
   const [show, setShow] = useState<PasswordCredential>({password: false, confirmPassword: false});
   const [email, setEmail] = useState('');
-  const [diplomaId, setDiplomaId] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [serverError, setServerError] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const router = useRouter();
 
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await axios.post('http://localhost:8000/register',
+    await axios.post(`${apiEndPoint}/register`,
       JSON.stringify({
         email: email,
         password: password,
@@ -34,13 +44,25 @@ export default function Register () {
       },
       )
       .then(res => {
-          if(res.status !== 201) {
-            setErrorMessage('Could not connect to the server')
+          if(res.status === 201 || 200) {
+            setSuccessMessage('Registered Successfully!');
+            setShowModal(true);
+            if (!showModal) {
+              const timer = setTimeout(() => {
+                router.push('/confirmation');
+              }, 1000);
+              return () => clearTimeout(timer);
+            }
+          }else {
+            setErrorMessage('Could not connect to the server');
           }
-          router.push('/login')
+
       }).catch(err => {
-        if(err.response) {
+        if(err.response && err.response.status === 400) {
           setErrorMessage(err.response.data);
+        }else if(err.response && err.response.status === 500){
+          setServerError(err.response.statusText);
+          setShowModal(true);
         }
     })
   }
@@ -57,9 +79,9 @@ export default function Register () {
       <Head>
         <title>Alumni Portal | Register</title>
       </Head>
-      <section className="w-3/4 mx-auto flex flex-col gap-10">
+      <section className="w-3/4 mx-auto flex flex-col gap-5">
         <div>
-          <h1 className="text-[#40BA21] font-['Montserrat'] text-4xl font-bold py-4">Sign Up</h1>
+          <h1 className="text-[#40BA21] font-['Montserrat'] text-4xl font-bold pb-4">Sign Up</h1>
         </div>
         {/* { error } */}
         <form onSubmit={submit} className="flex flex-col gap-5">
@@ -82,25 +104,6 @@ export default function Register () {
             </div>
             {getErrorMessage('email') && <span className="text-red-500"> {getErrorMessage('email')[0].split('.')[0]} </span>}
           </div>
-          {/* <div>
-            <label>Diploma ID</label>
-            <div className={styles.input_group}>
-              <input 
-                type="number" 
-                name="diplomaId"
-                placeholder="Diploma ID"
-                onChange={e => {
-                  setDiplomaId(e.target.value);
-                  setErrorMessage('');
-                }}
-                className={styles.input_text}
-              />
-              <span className="icon flex items-center px-4">
-                <HiOutlineBookOpen size={20}/>
-              </span>
-            </div>
-            {getErrorMessage('diploma_id') && <span className="text-red-500"> {getErrorMessage('diploma_id')[0].split('.')[0]} </span>}
-          </div> */}
           <div>
             {/* <label>Password</label> */}
             <div className={styles.input_group}>
@@ -145,30 +148,33 @@ export default function Register () {
             </div>
             {getErrorMessage('password2') && <span className="text-red-500"> {getErrorMessage('password2')[0].split('.')[0]} </span>}
           </div>
-          <div className="input-button">
+          <div className="w-2/5 m-auto">
             <button type="submit" className={styles.button}>
                 Sign up
             </button>
           </div>
         </form>
 
-        <div>
-
+        <div className="flex items-center">
+          <div className="flex-1 h-0.5 bg-[#B7D4E8]"></div>
+          <div className="px-4"> or sign up with </div>
+          <div className="flex-1 h-0.5 bg-[#B7D4E8]"></div>
         </div>
-
         
-        <Link href="#" className=" border-solid border-2 border-[#40BA21] rounded-md center">
-          <div className="flex text-[#40BA21] font-['Montserrat'] text-l font-bold">
-            <div className={imgStyles.alumni}></div>
-            <h2>Innopolis University</h2>
+        <Link href="#" className="border-solid border-2 border-[#40BA21] rounded-lg w-60 h-8 m-auto">
+          <div className="flex text-[#40BA21] font-['Montserrat'] text-l font-bold pt-1">
+            <div className="m-auto"><div className={imgStyles.alumni}></div></div>
+            <div className="m-auto">Innopolis University</div>
           </div>
         </Link>
         
 
-        <p className="text-center text-[#777777]">
-            Already have an account? Go to <Link href={'/login'} className="font-bold">Log in</Link>
+        <p className="text-center text-[#777]">
+            Already have an account? Go to <Link href={'/login'} className="font-bold text-[#000]">Login</Link>
         </p>
       </section>
+      {showModal && serverError !== '' && <ErrorModal message={serverError} onClose={() => setShowModal(false)} />}
+      {showModal && successMessage !== '' && <SuccessModal message={successMessage} onClose={() => setShowModal(false)} />}
     </Layout>
   )
 }

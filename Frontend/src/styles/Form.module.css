@@ -9,8 +9,8 @@
 }
 
 .button{
-    @apply w-full bg-gradient-to-r from-[#69b356] to-[#40BA21] rounded-md;
-    @apply py-3 text-gray-50 text-lg;
+    @apply w-full bg-gradient-to-r from-[#69b356] to-[#40BA21] rounded-lg;
+    @apply py-2 text-gray-50 text-lg;
     color: #FFFFFF;
 }
 
