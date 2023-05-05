@@ -8,19 +8,28 @@ import MainLayOut from "@/components/layout/mainLayOut";
 
 export default function Course() {
 
-    const course = {
-        "name": "DevOps Engineering",
+    const courses = [{
+        "name": "Architecture of Software Systems",
         "duration": "24.07.2022 — 26.07.2022",
-        "instructor": "Dmitry Creed, Insaf Safin",
-        "places_taken": "3",
-        "total_intake": "15",
-        "description": "This course contains theoretical and practical parts. In the theoretical part students will learn DevOps culture and devops practices; Continuous Integration, Continuous Deployment and Continuous Delivery approaches. In Practical part students will sequentially implement:",
+        "instructor": "Vladimir Semenov",
+        "places_taken": "0",
+        "total_intake": "30",
+        "description": "Architecture of Software Systems aims to teach you how to design, understand, and evaluate systems at an architectural level of abstraction",
+    },
+    {
+        "name": "Analysis of Software Artefacts",
+        "duration": "24.07.2022 — 26.07.2022",
+        "instructor": "Andrey Sadovykh",
+        "places_taken": "0",
+        "total_intake": "30",
+        "description": "Software quality is a key aspect of any IT solution whether a few hundred lines of code for a smart phone app or a few million lines of code for Enterprise Resource Planning software. The Analysis of Software Artifacts course provides techniques to develop confidence in the quality of the software being produced or acquired regardless of its size and domain.",
     }
+]
 
     return ( 
         <MainLayOut>
         <div className="">
-            {[1,1,1].map((_)=> 
+            {courses.map((course)=> 
             (
                 <div className="bg-white p-5 rounded-md border-4 mb-2">
                     <div className="flex justify-between font-bold mb-3 text-lg text-green-400">
