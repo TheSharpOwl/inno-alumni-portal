@@ -32,7 +32,7 @@ function Guest() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/register');
+    router.push('/login');
   }, []);
 
   return null;

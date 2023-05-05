@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Layout from "@/components/Layout/authLayOut";
 import styles from '../../styles/Form.module.css';
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from 'axios';
 import { apiEndPoint } from "@/constants";
@@ -15,8 +15,14 @@ export default function Login () {
   const [errorMessage, setErrorMessage] = useState('');
   const [serverError, setServerError] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [token, setToken] = useState('');
   const router = useRouter();
 
+  useEffect(() => {
+    const token = localStorage.getItem("alumni-token");
+    token ? setToken(token) : '';
+  }, []);
+  
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
     await axios.post(`${apiEndPoint}/confirm/email`,
@@ -27,18 +33,18 @@ export default function Login () {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': '',
+        'Authorization': `TOKEN ${token}`,
       }
     },
     )
     .then(res => {
-      console.log("res", res)
+      // console.log("res", res)
         if(res.status === 201 || 200) {
-          setSuccessMessage('Account Confirmed!');
+          setSuccessMessage(res.data.status);
           setShowModal(true);
           if (!showModal) {
             const timer = setTimeout(() => {
-              router.push('/login');
+              router.push('/course');
             }, 1000);
             return () => clearTimeout(timer);
           }
@@ -51,6 +57,9 @@ export default function Login () {
         setErrorMessage(err.response.data);
       }else if(err.response && err.response.status === 500) {
         setServerError(err.response.statusText);
+        setShowModal(true);
+      }else {
+        setServerError(err.message);
         setShowModal(true);
       }
     })

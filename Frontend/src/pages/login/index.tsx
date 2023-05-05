@@ -35,19 +35,18 @@ export default function Login () {
       withCredentials: true,
       headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': 'TOKEN ' + token,
       }
     },
     )
     .then(res => {
-      console.log("res", res)
+      // console.log("res", res)
         if(res.status === 201 || 200) {
           setSuccessMessage('Login Successful!');
           setShowModal(true);
           localStorage.setItem("alumni-token", res.data.token)
           if (!showModal) {
             const timer = setTimeout(() => {
-              router.push('/course');
+              router.push('/confirmation');
             }, 1000);
             return () => clearTimeout(timer);
           }
@@ -60,6 +59,9 @@ export default function Login () {
         setErrorMessage(err.response.data);
       }else if(err.response && err.response.status === 500) {
         setServerError(err.response.statusText);
+        setShowModal(true);
+      }else {
+        setServerError(err.message);
         setShowModal(true);
       }
     })

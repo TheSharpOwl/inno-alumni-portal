@@ -49,7 +49,7 @@ export default function Register () {
             setShowModal(true);
             if (!showModal) {
               const timer = setTimeout(() => {
-                router.push('/confirmation');
+                router.push('/login');
               }, 1000);
               return () => clearTimeout(timer);
             }
@@ -62,6 +62,9 @@ export default function Register () {
           setErrorMessage(err.response.data);
         }else if(err.response && err.response.status === 500){
           setServerError(err.response.statusText);
+          setShowModal(true);
+        }else {
+          setServerError(err.message);
           setShowModal(true);
         }
     })
