@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "@/components/Layout/authLayOut";
+import Layout from "../../components/layout/authLayOut";
 import styles from '../../styles/Form.module.css';
 import imgStyles from '../../styles/Image.module.css';
 import { 
@@ -9,12 +9,12 @@ import {
 } from "react-icons/hi";
 import { SyntheticEvent, useState } from 'react';
 import Link from "next/link";
-import { PasswordCredential } from "@/interfaces";
+import { PasswordCredential } from "../../interfaces";
 import { useRouter } from "next/router";
 import axios from 'axios';
-import { apiEndPoint } from "@/constants";
-import ErrorModal from "@/components/Modals/error.modal";
-import SuccessModal from "@/components/Modals/success.modal";
+import { apiEndPoint } from "../../constants";
+import ErrorModal from "../../components/modals/error.modal";
+import SuccessModal from "../../components/modals/success.modal";
 
 
 export default function Register () {
