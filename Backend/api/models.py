@@ -11,6 +11,7 @@ class Alumni(User):
     city = models.CharField(max_length=60)
     company = models.CharField(max_length=60)
     position = models.CharField(max_length=60)
+    telegram = models.CharField(max_length=60)
     verified = models.BooleanField(default=False)
 
     def __str__(self):
