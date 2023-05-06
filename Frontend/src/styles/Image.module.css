@@ -80,10 +80,10 @@
     background: url(../utils/images/alumni.png) no-repeat;
     /* background-size: cover;
     position: absolute;
-    bottom: 0;
     right: 0;
-    top: 0;
     left: 0; */
+    /* top: 1;
+    bottom: 1; */
     width: 24px;
-    height: 24px;
+    height: 14px;
 }
