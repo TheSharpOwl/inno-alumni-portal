@@ -5,8 +5,8 @@ import { SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from 'axios';
 import { apiEndPoint } from "../../constants";
-import ErrorModal from "../..ts/modals/error.modal";
-import SuccessModal from "../..ts/modals/success.modal";
+import ErrorModal from "../../components/modals/error.modal";
+import SuccessModal from "../../components/modals/success.modal";
 
 
 export default function Login () {

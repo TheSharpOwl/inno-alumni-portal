@@ -4,7 +4,7 @@ import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "../..ts/layout/mainLayOut";
+import MainLayOut from "../../layout/mainLayOut";
 
 export default function Course() {
 
