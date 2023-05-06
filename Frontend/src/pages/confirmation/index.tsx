@@ -9,7 +9,7 @@ import ErrorModal from "@/components/Modals/error.modal";
 import SuccessModal from "@/components/Modals/success.modal";
 
 
-export default function Login () {
+export default function Confirmation () {
   const [codeMessage, setCodeMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,7 +44,7 @@ export default function Login () {
           setShowModal(true);
           if (!showModal) {
             const timer = setTimeout(() => {
-              router.push('/course');
+              router.push('/account-profile');
             }, 1000);
             return () => clearTimeout(timer);
           }
@@ -68,7 +68,7 @@ export default function Login () {
   return (
     <Layout>
       <Head>
-        <title>Alumni Portal | Log in</title>
+        <title>Alumni Portal | Account Confirmation</title>
       </Head>
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div>

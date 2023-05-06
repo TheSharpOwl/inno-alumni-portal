@@ -12,7 +12,7 @@ export default function LeftBar({className, ...props}) {
     return (
         <div className={`${className} `} {...props}>
             <div>
-                <Link href="/profile">
+                <Link href="/dashboard">
                     <div className={styles.logoAlumni}></div>
                 </Link>
             </div>
