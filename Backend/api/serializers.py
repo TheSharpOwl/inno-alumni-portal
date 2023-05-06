@@ -11,7 +11,7 @@ from .validator import validate_innopolis_mail
 class AlumniSerializer(serializers.ModelSerializer):
   class Meta:
     model = Alumni
-    fields = ['email', 'name', 'name_russian', 'graduation_year', 'filed_of_study', 'bio', 'city', 'company', 'position']
+    fields = ['email', 'name', 'name_russian', 'telegram', 'graduation_year', 'filed_of_study', 'bio', 'city', 'company', 'position']
 
 
 class ElectiveCourseSerializer(serializers.ModelSerializer):

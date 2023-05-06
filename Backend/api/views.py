@@ -38,10 +38,10 @@ class ElectiveCourseDetailAPI(APIView):
   http_method_names = ['get', 'head', 'post']
 
   def get(self, request):
-    print(request.user.id)
+    # print(request.user.id)
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     if alumni.verified == False:
-        return Response({"status": "User needs to verify the email"})
+        return Response(status = 403, data={"status": "User needs to verify the email"})
 
     courses = ElectiveCourse.objects.all()
     data = []
@@ -62,7 +62,7 @@ class BookedCoursesDetailAPI(APIView):
     print(request.user.id)
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     if alumni.verified == False:
-        return Response({"status": "User needs to verify the email"})
+        return Response(status=403, data={"status": "User needs to verify the email"})
 
     courses = ElectiveCourse.objects.all()
     data = []
@@ -93,9 +93,16 @@ def validate_date_format(requested_date):
     return False
 
 
-def send_pass_email(name, requested_date):
+def send_pass_email(name, requested_date, invited_guests):
   receiver_email = "n.novarlic@innopolis.ru" # this attribute has to be changed in future
   
+  visitors = "\t1. {name}\n".format(name=name)
+  count = 1
+
+  for guest in invited_guests:
+    count += 1
+    visitors += "\t{count}. {guest}\n".format(count=str(count), guest=guest)
+
   message = u"""Subject: Alumni Pass Order
 
   
@@ -105,11 +112,10 @@ def send_pass_email(name, requested_date):
 
   Список посетителей:
 
-  1. {name}
-
+{visitors}
   Дата посещения: {date}
   Ответственные: (ФИО сотрудника УИ)
-  """.format(name=name, date=requested_date)
+  """.format(date=requested_date, visitors=visitors)
 
   port = 587   # For starttls
   smtp_server = "smtp.university.innopolis.ru"
@@ -137,7 +143,7 @@ class PassOrderAPI(APIView):
   def post(self, request):
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     if alumni.verified == False:
-        return Response({"status": "User needs to verify the email"})
+        return Response(status=403, data={"status": "User needs to verify the email"})
 
     '''
     ### Might be useful later
@@ -146,13 +152,14 @@ class PassOrderAPI(APIView):
     urllib.request.urlopen(url)
     '''
     requested_date = request.data['date']
+    invited_guests = request.data['invited_guests']
 
     if not validate_date_format(requested_date):
-      return Response({"status": "Wrong date format"})
+      return Response(status=402, data={"status": "Wrong date format"})
     if alumni.name_russian == "":
-      return Response({"status": "There is no Russian version of name for current Alumni"})
+      return Response(status=402, data={"status": "There is no Russian version of name for current Alumni"})
     
-    send_pass_email(alumni.name_russian, requested_date)  
+    send_pass_email(alumni.name_russian, requested_date, invited_guests)  
 
     return Response({"status": "Pass Ordered"})
 
@@ -165,11 +172,12 @@ class VerifyMailAPI(APIView):
   def post(self, request):
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     code = EmailCode.objects.get(email=alumni.email).code
+    print(code)
     if request.data['code'] == code:
       alumni = Alumni.objects.update(user_ptr_id=request.user.id, verified=True)
       return Response({"status": "Successfuly Verified"})
     else:
-      return Response({"status": "Email verification failed"})
+      return Response(status = 402, data={"status": "User failed to verify mail"})
 
 
 class UpdateProfileAPI(APIView):
@@ -180,7 +188,7 @@ class UpdateProfileAPI(APIView):
   def post(self, request):
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     if alumni.verified == False:
-        return Response({"status": "User needs to verify the email"})
+        return Response(status = 403, data={"status": "User needs to verify the email"})
     
     try:
       if request.data['name'] is not None:
@@ -230,6 +238,12 @@ class UpdateProfileAPI(APIView):
     except:
       pass 
 
+    try:
+      if request.data['telegram'] is not None:
+        alumni = Alumni.objects.update(user_ptr_id=request.user.id, telegram=request.data['telegram'])
+    except:
+      pass
+
     return Response({"status": "Attributes Updated"})
 
 
@@ -241,12 +255,12 @@ class RequestCourseAPI(APIView):
   def post(self, request):
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     if alumni.verified == False:
-        return Response({"status": "User needs to verify the email"})
+        return Response(status = 403, data={"status": "User needs to verify the email"})
     course_id = request.data['id']
     course = ElectiveCourse.objects.get(id=course_id)
     try:
       course_request = ElectiveCourseRequest.objects.get(alumni=alumni, course=course) 
-      return Response({"status": "Course already requested by user"})
+      return Response(status=403, data={"status": "Course already requested by user"})
     except:
       pass 
     alumni_name = alumni.name
