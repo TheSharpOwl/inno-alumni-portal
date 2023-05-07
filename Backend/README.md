@@ -88,6 +88,7 @@ Body:
 {
   "name": <str:value>,
   "name_russian" = <str:value>,
+  "telegram" = <str:value>,
   "graduation_year" = <int:value>,
   "field_of_study" = <str:value>,
   "bio" = <str:value>,
