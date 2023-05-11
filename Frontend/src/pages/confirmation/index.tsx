@@ -52,9 +52,9 @@ export default function Confirmation () {
           throw new Error('Could not connect to the server');
         }
         
-    }).catch(function(err) {
-      if(err.response && err.response.status === 400) {
-        setErrorMessage(err.response.data);
+    }).catch(function(err) { console.log('err', err)
+      if(err.response && err.response.status === 400 || 402) {
+        setErrorMessage(err.response.data.status);
       }else if(err.response && err.response.status === 500) {
         setServerError(err.response.statusText);
         setShowModal(true);

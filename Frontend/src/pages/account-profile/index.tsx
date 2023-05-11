@@ -4,9 +4,9 @@ import styles from '../../styles/Form.module.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from 'axios';
-import { apiEndPoint } from "@/constants";
-import ErrorModal from "@/components/Modals/error.modal";
-import SuccessModal from "@/components/Modals/success.modal";
+import { apiEndPoint } from "constants";
+import ErrorModal from "components/Modals/error.modal";
+import SuccessModal from "components/Modals/success.modal";
 
 
 export default function AccountProfile () {
