@@ -9,7 +9,7 @@ import ErrorModal from "../../components/modals/error.modal";
 import SuccessModal from "../../components/modals/success.modal";
 
 
-export default function Login () {
+export default function Confirmation () {
   const [codeMessage, setCodeMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -44,7 +44,7 @@ export default function Login () {
           setShowModal(true);
           if (!showModal) {
             const timer = setTimeout(() => {
-              router.push('/course');
+              router.push('/account-profile');
             }, 1000);
             return () => clearTimeout(timer);
           }
@@ -52,9 +52,9 @@ export default function Login () {
           throw new Error('Could not connect to the server');
         }
         
-    }).catch(function(err) {
-      if(err.response && err.response.status === 400) {
-        setErrorMessage(err.response.data);
+    }).catch(function(err) { console.log('err', err)
+      if(err.response && err.response.status === 400 || 402) {
+        setErrorMessage(err.response.data.status);
       }else if(err.response && err.response.status === 500) {
         setServerError(err.response.statusText);
         setShowModal(true);
@@ -68,7 +68,7 @@ export default function Login () {
   return (
     <Layout>
       <Head>
-        <title>Alumni Portal | Log in</title>
+        <title>Alumni Portal | Account Confirmation</title>
       </Head>
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div>
