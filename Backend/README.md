@@ -1,4 +1,4 @@
-# inno-alumni-portal backend
+# Alumni Portal Backend
 
 ## How to run
 
@@ -9,20 +9,18 @@
     pip install -r requirements.txt
     python manage.py runserver
 ```
-
-<<<<<<< HEAD
 ### Using docker
 1. Here the image tag name is `alumni-backend` you can name it as you like
 2. Also the port in docker is 8000 by default and locally you can map it to anything as you like
+
 ```bash
 docker build -t alumni-backend
 docker run -p 8000:8000 -d alumni-backend
+```
 
 
-### api explaination
-=======
-## Requests
->>>>>>> 2dcfe6efb9c0a5aea1578d02d636d109cd689861
+## API Explaination
+
 ### Registration
 ```
 POST http://localhost:8000/register
@@ -52,7 +50,8 @@ POST http://localhost:8000/pass/
 Include in HTTP headers Authorization with value: TOKEN <token> 
 Body:
 {
-  "date": "DD/MM/YY"
+  "date": "DD/MM/YY",
+  "invited_guests": ["<first_guest>", "<second_guest>", ... , "<last_guest>"]
 }
 ```
 
@@ -89,6 +88,7 @@ Body:
 {
   "name": <str:value>,
   "name_russian" = <str:value>,
+  "telegram" = <str:value>,
   "graduation_year" = <int:value>,
   "field_of_study" = <str:value>,
   "bio" = <str:value>,
