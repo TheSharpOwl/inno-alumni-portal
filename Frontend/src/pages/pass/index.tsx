@@ -1,20 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image"
 import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "../../layout/mainLayOut";
+import MainLayOut from "components/Layout/mainLayOut";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import { apiEndPoint } from "constants";
 
 export default function Course({ courses }: any) {
+    const [startDate, setStartDate] = useState(new Date());
+    const [guests, setGuests] = useState("")
+    const [done, setDone] = useState(false)
 
-    const course = {
-        "name": "DevOps Engineering",
-        "duration": "24.07.2022 — 26.07.2022",
-        "instructor": "Dmitry Creed, Insaf Safin",
-        "places_taken": "3",
-        "total_intake": "15",
-        "description": "This course contains theoretical and practical parts. In the theoretical part students will learn DevOps culture and devops practices; Continuous Integration, Continuous Deployment and Continuous Delivery approaches. In Practical part students will sequentially implement:",
+    useEffect(()=>{
+    }, [])
+
+    const handleRequestPass = async () => {
+        const token = localStorage.getItem("alumni-token");
+        await axios.post(`${apiEndPoint}/pass/`,
+        JSON.stringify({
+            date: "01/02/23",
+            invited_guests: [""]
+        }),
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `TOKEN ${token}`,
+            }
+        })
+        .then(res => {
+            console.log(res)
+            setDone(true)
+        })
     }
 
     return ( 
@@ -58,24 +80,15 @@ export default function Course({ courses }: any) {
                     <div className="font-bold mb-5 text-lg text-green-400">Get your University Pass here</div>
                     <div className="text-start mb-10">
                         <form onSubmit={()=>{}} className="flex flex-col gap-5">
-                            <div className="">
-                                <input 
-                                type="username" 
-                                name="username"
-                                placeholder="Username"
-                                onChange={()=>{}}
-                                className=""
-                                />
-                                <span className="icon flex items-center px-4">
-                                </span>
-                            </div>
+                           <p>Select a date below:</p>
+                            <DatePicker className="border border-gray-300 rounded-lg px-4 py-4"  selected={startDate} onChange={(date) => setStartDate(date)} />
                         </form>
                     </div>
-                    <button className="bg-green-400 text-white px-6 py-2 rounded-lg">Confirm</button>
+                    <button onClick={()=>handleRequestPass()} className="bg-green-400 text-white px-6 py-2 rounded-lg">Confirm</button>
                 </div>
             </div>
 
-            <div className="flex justify-center">
+            {done && <div className="flex justify-center">
                 <div className="flex flex-col bg-white p-6 rounded-md border-4 mb-2 w-96 text-center">
                     <div className="font-bold mb-5 text-lg text-green-400">Success!</div>
                     <div className="text-start mb-10">
@@ -84,7 +97,7 @@ export default function Course({ courses }: any) {
                     </div>
                     <button className="bg-green-400 text-white px-6 py-2 rounded-lg">OK</button>
                 </div>
-            </div>
+            </div>}
 
             
 

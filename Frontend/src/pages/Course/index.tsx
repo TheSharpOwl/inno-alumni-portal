@@ -1,56 +1,136 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image"
 import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
 import MainLayOut from "components/Layout/mainLayOut";
+import axios from "axios";
+import { apiEndPoint } from "constants";
 
 export default function Course() {
 
-    const course = {
+    const initialCourses = [{
+        "id": 1,
         "name": "DevOps Engineering",
         "duration": "24.07.2022 — 26.07.2022",
-        "instructor": "Dmitry Creed, Insaf Safin",
+        "tutor": "Dmitry Creed, Insaf Safin",
         "places_taken": "3",
-        "total_intake": "15",
+        "available_places": "15",
         "description": "This course contains theoretical and practical parts. In the theoretical part students will learn DevOps culture and devops practices; Continuous Integration, Continuous Deployment and Continuous Delivery approaches. In Practical part students will sequentially implement:",
+    }]
+    const [allCourseTab, setAllCourseTab] = useState(true)
+    const [courses, setCourses] = useState(initialCourses);
+    const [bookedCourses, setBookedCourses] = useState([]);
+    const [token, setToken] = useState("")
+console.log(bookedCourses)
+    const requestAllCourses = async (token) => {
+        await axios.get(`${apiEndPoint}/courses`,
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                 'Authorization': `TOKEN ${token}`,
+            }
+        })
+        .then(res => {
+        console.log("ALL", res)
+        const result = res.data.map((course) => ({
+                ...course,
+                "duration": "24.07.2023 — 26.07.2023",
+            }))
+            setCourses(result)
+        }).catch(function(err) {
+
+        })
     }
+
+    const requestBookedCourses = async (token) => {
+        await axios.get(`${apiEndPoint}/courses/booked`,
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                 'Authorization': `TOKEN ${token}`,
+            }
+        })
+        .then(res => {
+        console.log("BOOKED", res)
+        const result = res.data.map((course) => ({
+                ...course,
+                "duration": "24.07.2023 — 26.07.2023",
+            }))
+            setBookedCourses(result)
+        }).catch(function(err) {
+
+        })
+    }
+
+    const handleRequestCourse = async (courseId) => {
+        const token = localStorage.getItem("alumni-token");
+        await axios.post(`${apiEndPoint}/request/course`,
+        JSON.stringify({
+            id: courseId
+        }),
+        {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `TOKEN ${token}`,
+            }
+        })
+        .then(res => {
+            console.log(res)
+        })
+    }
+    useEffect(()=>{
+        const token = localStorage.getItem("alumni-token");
+        setToken(token)
+        requestAllCourses(token);
+        requestBookedCourses(token);
+    },[])
 
     return ( 
         <MainLayOut>
+            <div className="flex mb-5 gap-6">
+                <button onClick={()=>setAllCourseTab(true)} className={allCourseTab ? "text-green-500" : ""}>ALL COURSES</button>
+                <button onClick={()=>setAllCourseTab(false)} className={!allCourseTab ? "text-green-500" : ""}>BOOKED COURSES</button>
+            </div>
         <div className="">
-            {[1,1,1].map((_)=> 
-            (
+            {allCourseTab ? 
+            courses.map((course)=> (
                 <div className="bg-white p-5 rounded-md border-4 mb-2">
                     <div className="flex justify-between font-bold mb-3 text-lg text-green-400">
                         <div> {course.name} </div>
                         <div> {course.duration} </div>
                     </div>
                     <div className="flex justify-between text-sm mb-6">
-                        <div className="font-bold "> {course.instructor} </div>
-                        <div> {course.places_taken} / {course.total_intake} booked </div>
+                        <div className="font-bold "> {course.tutor} </div>
+                        <div> {course.available_places} available places </div>
                     </div>
                     <div className="mb-8">
                         {course.description}
                     </div>
                     <div className="flex justify-between">
                         <div></div>
-                        <button onClick={()=>{}} className="bg-green-400 text-white px-6 py-2 rounded-lg">Apply</button>
+                        <button onClick={()=>handleRequestCourse(course.id)} className="bg-green-400 text-white px-6 py-2 rounded-lg">Apply</button>
+                    </div>
+                </div>
+            )) : 
+            bookedCourses.map((course) => (
+                <div className="bg-white p-5 rounded-md border-4 mb-2">
+                    <div className="flex justify-between mb-3 text-lg ">
+                        <div> {course.name} </div>
+                        <div> 24.07.2022 </div>
+                    </div>
+                    <div className="flex justify-between text-sm mb-6"> 
+                        <div className="font-bold text-gray-400"> {course.tutor} </div>
+                        <div className="text-green-400"> CURRENT </div>
                     </div>
                 </div>
             ))}
             
-            {/* <div className="bg-white p-5 rounded-md border-4 mb-2">
-                <div className="flex justify-between mb-3 text-lg ">
-                    <div> {course.name} </div>
-                    <div> 24.07.2022 </div>
-                </div>
-                <div className="flex justify-between text-sm mb-6"> 
-                    <div className="font-bold text-gray-400"> {course.instructor} </div>
-                    <div className="text-green-400"> CURRENT </div>
-                </div>
-            </div> */}
+            
             {/* <div className="flex justify-center mb-2">
                 <div className="bg-white p-5 rounded-md border-4 mb-2 w-96">
                     <Image src={qr_code} alt="qr code with payment link" />

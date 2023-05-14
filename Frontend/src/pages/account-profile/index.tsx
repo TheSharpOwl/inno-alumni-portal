@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "@/components/Layout/authLayOut";
+import Layout from "components/Layout/authLayOut";
 import styles from '../../styles/Form.module.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from "next/router";
