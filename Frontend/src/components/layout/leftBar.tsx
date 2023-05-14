@@ -23,7 +23,7 @@ export default function LeftBar({className, ...props}) {
 
             <div className="pt-[15%] pb-[70%]">
                 <div className="py-[10px]">
-                    <Link href="#">
+                    <Link href="/profile">
                         <button className="flex items-center bg-transparent h-12 w-full hover:bg-[#333E82] active:bg-[#505B95] font-semibold py-2 px-4 hover:border-transparent rounded">
                             <div className="text-[#40BA21] pr-4"><BiUserPin size={30}/></div>
                             <div>Personal data</div>

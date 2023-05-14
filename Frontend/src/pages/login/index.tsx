@@ -46,7 +46,7 @@ export default function Login () {
           localStorage.setItem("alumni-token", res.data.token)
           if (!showModal) {
             const timer = setTimeout(() => {
-              router.push('/confirmation');
+              router.push('/confirmation'); // If for the first time route to /confirmation otherwise route to /dashboard
             }, 1000);
             return () => clearTimeout(timer);
           }
