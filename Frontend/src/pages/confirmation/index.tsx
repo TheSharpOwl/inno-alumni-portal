@@ -52,7 +52,7 @@ export default function Confirmation () {
           throw new Error('Could not connect to the server');
         }
         
-    }).catch(function(err) { console.log('err', err)
+    }).catch(function(err) {
       if(err.response && err.response.status === 400 || 402) {
         setErrorMessage(err.response.data.status);
       }else if(err.response && err.response.status === 500) {
@@ -73,6 +73,7 @@ export default function Confirmation () {
       <section className="w-3/4 mx-auto flex flex-col gap-10">
         <div>
           <h1 className="text-[#40BA21] font-['Montserrat'] text-4xl font-bold py-4">Account Confirmation</h1>
+          <p>Use the code sent to your email to verify your account.</p>
         </div>
         {/* { error } */}
         <form onSubmit={submit} className="flex flex-col gap-5">
