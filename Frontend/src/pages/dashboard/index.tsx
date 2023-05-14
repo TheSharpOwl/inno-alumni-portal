@@ -1,8 +1,8 @@
-import LeftBar from "@/components/Layout/leftBar"
-import MainLayOut from "@/components/Layout/mainLayOut"
-import RightBar from "@/components/Layout/rightBar"
+import LeftBar from "components/Layout/leftBar"
+import MainLayOut from "components/Layout/mainLayOut"
+import RightBar from "components/Layout/rightBar"
 
-import { dashboardComponents } from "@/lib/profileData.lib"
+import { dashboardComponents } from "lib/profileData.lib"
 import Link from "next/link"
 
 export default function Dashboard() {
