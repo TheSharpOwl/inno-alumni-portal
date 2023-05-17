@@ -60,3 +60,15 @@ services:
     # TODO add with database server
     # depends_on:
     #   - db
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    volumes:
+      - ./Nginx/conf.d:/etc/nginx/conf.d:ro
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      - backend
+
