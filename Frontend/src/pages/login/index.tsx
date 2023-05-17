@@ -144,7 +144,7 @@ export default function Login () {
         </Link>
 
         <p className="text-center text-[#777]">
-            Don&apos;t have an account? Go to <Link href={'/register'} className="font-bold text-[#000]">SignUp</Link>
+            Don&apos;t have an account? Go to <Link href={'/register'} className="font-bold text-[#000] hover:text-[#40BA21] underline">SignUp</Link>
         </p>
       </section>
       {showModal && serverError !== '' && <ErrorModal message={serverError} onClose={() => setShowModal(false)} />}

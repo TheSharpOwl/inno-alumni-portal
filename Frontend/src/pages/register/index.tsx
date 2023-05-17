@@ -173,7 +173,7 @@ export default function Register () {
         
 
         <p className="text-center text-[#777]">
-            Already have an account? Go to <Link href={'/login'} className="font-bold text-[#000]">Login</Link>
+            Already have an account? Go to <Link href={'/login'} className="font-bold text-[#000] hover:text-[#40BA21] underline">Login</Link>
         </p>
       </section>
       {showModal && serverError !== '' && <ErrorModal message={serverError} onClose={() => setShowModal(false)} />}
