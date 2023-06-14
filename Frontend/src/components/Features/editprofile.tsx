@@ -6,16 +6,16 @@ import { HiUserCircle } from "react-icons/hi";
 
 const EditProfileModal = ({ onSave, onClose }) => {
   const [user, setUser] = useState({
-      name: '',
-      bio: '',
-      // profilePic: '',
-      name_russian: '',
-      telegram: '',
+      name: null,
+      bio: null,
+      // profilePic: null,
+      name_russian: null,
+      telegram: null,
       graduation_year: null,
-      field_of_study: '',
-      city: '',
-      company: '',
-      position: '',
+      field_of_study: null,
+      city: null,
+      company: null,
+      position: null,
   });
 
   const [successMessage, setSuccessMessage] = useState('');

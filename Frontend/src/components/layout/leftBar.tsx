@@ -7,7 +7,7 @@ import styles from '../../styles/Image.module.css'
 import Link from "next/link";
 
 export default function LeftBar({className, ...props}) {
-    const user_name = 'James'
+    const user_name = 'Ученна Угвумаду'
     
     return (
         <div className={`${className} `} {...props}>

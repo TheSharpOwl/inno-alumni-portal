@@ -32,6 +32,7 @@ const Profile = () => {
             }
         );
     }
+    console.log('user', user)
 
     useEffect(() => {
         const token = localStorage.getItem("alumni-token");
