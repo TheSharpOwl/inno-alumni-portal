@@ -66,6 +66,7 @@ services:
     image: nginx
     volumes:
       - ./Nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./frontend:/app/frontend
     ports:
       - 80:80
     restart: unless-stopped
