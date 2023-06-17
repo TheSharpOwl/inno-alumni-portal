@@ -65,11 +65,11 @@ services:
     container_name: nginx
     image: nginx
     volumes:
-      - ./frontend:/app/frontend
       - ./Nginx/conf.d:/etc/nginx/conf.d:ro
     ports:
       - 80:80
     restart: unless-stopped
     depends_on:
       - backend
+      - frontend
 
