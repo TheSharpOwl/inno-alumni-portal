@@ -2,3 +2,4 @@ Django==4.1.7
 django-cors-headers==3.14.0
 django-rest-knox==4.2.0
 djangorestframework==3.14.0
+django-cors-middleware==1.5.0

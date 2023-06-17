@@ -36,15 +36,15 @@ services:
     ports:
       - '3000:3000'
 
-    volumes:
-      - ./frontend:/app/frontend
+    # volumes:
+    #   - ./frontend:/app/frontend
 
     depends_on:
       - backend
 
   backend: 
     build: 
-      context: ./backend
+      context: ./Backend
       dockerfile: Dockerfile
 
     environment:
@@ -60,3 +60,16 @@ services:
     # TODO add with database server
     # depends_on:
     #   - db
+
+  nginx:
+    build: ./Nginx
+    # volumes:
+    #   - ./Nginx/conf.d:/etc/nginx/conf.d:ro
+    #   - ./frontend:/app/frontend
+    ports:
+      - 80:80
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - frontend
+
