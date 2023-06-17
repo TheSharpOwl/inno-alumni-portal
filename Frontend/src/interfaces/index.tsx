@@ -1,4 +1,4 @@
 export interface PasswordCredential {
     password: boolean;
-    confirmPassword: boolean
+    password2: boolean
   }

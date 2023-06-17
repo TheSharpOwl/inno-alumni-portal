@@ -4,98 +4,77 @@ import { apiEndPoint } from "../../constants";
 import Avatar from "components/Features/avatar";
 import EditProfileModal from "components/Features/editprofile";
 import MainLayOut from "components/Layout/mainLayOut";
+import { HiUserCircle } from "react-icons/hi";
 
 
 const Profile = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [user, setUser] = useState({
-    name: 'John Doe',
-    email: 'johndoe@example.com',
-    bio: 'I am a software engineer who loves to code!',
-    profilePic: 'https://randomuser.me/api/portraits/men/1.jpg',
-    name_russian: '',
-    telegram: '@josebryte',
-    graduation_year: 2012,
-    field_of_study: 'Engineering',
-    city: 'Innopolis',
-    company: 'Innopolis University',
-    position: 'Professor',
-  });
 
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [serverError, setServerError] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [token, setToken] = useState('');
+    const [isEditing, setIsEditing] = useState(false);
+    const [user, setUser] = useState({});
+    const [token, setToken] = useState('');
 
-  const handleSave = (updatedUser: React.SetStateAction<{ name: string; email: string; bio: string; profilePic: string; name_russian: string; telegram: string; graduation_year: null; field_of_study: string; city: string; company: string; position: string; }>) => {
-    setUser(updatedUser);
-    setIsEditing(false);
-  };
+    const handleSave = (updatedUser: React.SetStateAction<{ name: string; email: string; bio: string; profilePic: string; name_russian: string; telegram: string; graduation_year: null; field_of_study: string; city: string; company: string; position: string; }>) => {
+        setUser(updatedUser);
+        setIsEditing(false);
+    };
+
+    const userProfile = async (token) => {
+        await axios.get(`${apiEndPoint}/accounts/profile`, {
+            withCredentials: true,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `TOKEN ${token}`,
+            }})
+            .then(res => {
+                setUser(res.data);
+            }).catch(function(err) {
+                console.log('Error: ', err);
+            }
+        );
+    }
+    console.log('user', user)
 
     useEffect(() => {
         const token = localStorage.getItem("alumni-token");
-        token ? setToken(token) : '';
-    });
-
-    const {data} = axios.get(`${apiEndPoint}/accounts/profile`, {
-        withCredentials: true,
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `TOKEN ${token}`,
-        }})
-        .then(res => {
-        console.log("res", res)
-            if(res.status === 201 || 200) {
-            setSuccessMessage(res.data.status);
-            setShowModal(true);
-            }else {
-            throw new Error('Could not connect to the server');
-            }
-            
-        }).catch(function(err) { 
-            if(err.response && err.response.status === 400 || 402) {
-                setErrorMessage(err.response.data.status);
-            }else if(err.response && err.response.status === 500) {
-                setServerError(err.response.statusText);
-                setShowModal(true);
-            }else {
-                setServerError(err.message);
-                setShowModal(true);
-            }
-    });
-
+        setToken(token);
+        userProfile(token);
+    }, []);
 
   return (
     <MainLayOut>
         <div>
-            <div>
-                <h1>Personal data</h1>
-                <div className="flex items-center">
-                    <div>
-                        <div>
-                            <Avatar 
-                                src={user.profilePic} 
-                                alt={user.name} 
-                                size={48} 
-                            />
+            <h1 className="text-[#40BA21] text-3xl font-bold">Personal data</h1>
+            <div className="my-8">
+                <div className="flex flex-wrap items-center justify-between">
+                    <div className="flex items-center">
+                        <div className="mr-4">
+                            {
+                                user.profilePic ?
+                                <Avatar 
+                                    src={user.profilePic}
+                                    alt={user.name}
+                                    size={48} 
+                                /> :
+                                <div className="text-[#40BA21]"><HiUserCircle size={96}/></div>
+                            }
                         </div>
                         <div>
-                            <h1 className="text-2xl font-semibold text-gray-800">{user.name}</h1>
-                            <p className="text-gray-600">{user.email}</p>
+                            <h1 className="text-xl font-semibold text-[#202020]">{user.name}</h1>
+                            <h3 className="text-lg font-semibold text-[#202020]">{user.name_russian}</h3>
+                            <p>{user.email}</p>
                         </div>
                     </div>
                     <div>
                         <div>
                             <button
-                                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                                className="px-4 py-2 text-[#40BA21] border-solid border-[#40BA21] border-2 rounded hover:bg-[#40BA21] hover:text-white"
                                 onClick={() => setIsEditing(true)}
                             >
-                                Edit Profile
+                                EDIT INFORMATION
                             </button>
                         </div>
                         <div>
-                            <button className="ml-4 px-4 py-2 text-white bg-red-500 rounded hover:bg-red-600">
+                            <button className="mt-4 hover:text-[#40BA21] underline">
                                 Change Password
                             </button>
                         </div>
@@ -103,23 +82,43 @@ const Profile = () => {
                 </div>
             </div>
 
-            <div>
-                <h1>Personal information</h1>
-                <div className="flex items-center">
-                    info: value
+            <div className="my-8">
+                <h1 className="text-2xl font-bold">Personal information</h1>
+                <div className="border h-[120px] my-4">
+                    <div className="flex flex-wrap justify-between mx-8 my-4">
+                        <div>
+                            <h1>Degree</h1>
+                            <p className="mt-4 font-bold text-[#12152A] text-center">{user.filed_of_study || 'Field of Study'}</p>
+                        </div>
+                        <div>
+                            <h1>Date of graduation</h1>
+                            <p className="mt-4 font-bold text-[#12152A] text-center">{user.graduation_year || 'YYYY'}</p>
+                        </div>
+                        <div>
+                            <h1>Place of work</h1>
+                            <p className="mt-4 font-bold text-[#12152A] text-center">{user.company || 'Company Name'}</p>
+                        </div>
+                        <div>
+                            <h1>Position</h1>
+                            <p className="mt-4 font-bold text-[#12152A] text-center">{user.position || 'Work Position'}</p>
+                        </div>
+                        <div>
+                            <h1>Current city</h1>
+                            <p className="mt-4 font-bold text-[#12152A] text-center">{user.city || 'City'}</p>
+                        </div>
+                        <div>
+                            <h1>Telegram</h1>
+                            <p className="mt-4 font-bold text-[#12152A] text-center">{user.telegram || '@Username'}</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div>
-                <h1>About</h1>
-                <div className="flex items-center">
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-800">Interests</h3>
-                        <p className="mt-2 text-gray-600"></p>
-                    </div>
-                    <div>
-                        <h3 className="text-lg font-semibold text-gray-800">Bio</h3>
-                        <p className="mt-2 text-gray-600">{user.bio}</p>
+            <div className="my-8">
+                <h1 className="text-2xl font-bold">About</h1>
+                <div className="border h-[120px] my-4">
+                    <div className="flex items-center overflow-y-auto mx-4">
+                        <p className="mt-2 text-gray-600">{user.bio || 'Please tell us about yourself...'}</p>
                     </div>
                 </div>
             </div>

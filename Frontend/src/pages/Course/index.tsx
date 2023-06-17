@@ -23,7 +23,7 @@ export default function Course() {
     const [courses, setCourses] = useState(initialCourses);
     const [bookedCourses, setBookedCourses] = useState([]);
     const [token, setToken] = useState("")
-console.log(bookedCourses)
+// console.log(bookedCourses)
     const requestAllCourses = async (token) => {
         await axios.get(`${apiEndPoint}/courses`,
         {
@@ -34,7 +34,7 @@ console.log(bookedCourses)
             }
         })
         .then(res => {
-        console.log("ALL", res)
+        // console.log("ALL", res)
         const result = res.data.map((course) => ({
                 ...course,
                 "duration": "24.07.2023 — 26.07.2023",

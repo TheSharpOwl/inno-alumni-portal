@@ -1,4 +1,6 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { GlobalContextProvider } from 'Context/store'
+
 
 class MyDocument extends Document {
     render() {
@@ -10,8 +12,10 @@ class MyDocument extends Document {
                     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
                 </Head>
                 <body>
-                    <Main />
-                    <NextScript />
+                    <GlobalContextProvider>
+                        <Main />
+                        <NextScript />
+                    </GlobalContextProvider>
                 </body>
             </Html>
         )

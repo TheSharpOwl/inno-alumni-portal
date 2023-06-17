@@ -1,5 +1,6 @@
+import React, { useState } from 'react';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Head from "next/head";
-import Layout from "../../components/layout/authLayOut";
 import styles from '../../styles/Form.module.css';
 import imgStyles from '../../styles/Image.module.css';
 import { 
@@ -7,76 +8,56 @@ import {
   HiEye, 
   HiEyeOff 
 } from "react-icons/hi";
-import { SyntheticEvent, useState } from 'react';
 import Link from "next/link";
 import { PasswordCredential } from "../../interfaces";
 import { useRouter } from "next/router";
-import axios from 'axios';
 import { apiEndPoint } from "../../constants";
-import ErrorModal from "../../components/modals/error.modal";
-import SuccessModal from "../../components/modals/success.modal";
+import SuccessModal from "components/Modals/success.modal";
+import Layout from "components/Layout/authLayOut";
+import { registerValidationSchema } from 'SchemaValidation';
 
 
-export default function Register () {
-  const [show, setShow] = useState<PasswordCredential>({password: false, confirmPassword: false});
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [serverError, setServerError] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
-
-
-  const submit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    await axios.post(`${apiEndPoint}/register`,
-      JSON.stringify({
-        email: email,
-        password: password,
-        password2: confirmPassword
-      }),
-      {
+const SignupForm = () => {
+  const [show, setShow] = useState<PasswordCredential>({password: false, password2: false});
+    const [successMessage, setSuccessMessage] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const router = useRouter();
+  
+  const handleSubmit = async (values: {}, { setSubmitting, setErrors }: any) => {
+    try {
+      const response = await fetch(`${apiEndPoint}/register`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        }
-      },
-      )
-      .then(res => {
-          if(res.status === 201 || 200) {
-            setSuccessMessage('Registered Successfully!');
-            setShowModal(true);
-            if (!showModal) {
-              const timer = setTimeout(() => {
-                router.push('/login');
-              }, 1000);
-              return () => clearTimeout(timer);
-            }
-          }else {
-            setErrorMessage('Could not connect to the server');
-          }
+        },
+        body: JSON.stringify(values),
+      });
 
-      }).catch(err => {
-        if(err.response && err.response.status === 400) {
-          setErrorMessage(err.response.data);
-        }else if(err.response && err.response.status === 500){
-          setServerError(err.response.statusText);
-          setShowModal(true);
-        }else {
-          setServerError(err.message);
-          setShowModal(true);
+      if (response.ok) {
+        const data = await response.json();
+        console.log('success', response, data);
+        setSuccessMessage(data.message); // Set success message
+        setShowModal(true); // Show success modal
+        setSubmitting(false);
+        if (!showModal) {
+          const timer = setTimeout(() => {
+            router.push('/login');
+          }, 1000);
+          return () => clearTimeout(timer);
         }
-    })
-  }
-
-  const getErrorMessage = (key: string): string => {
-    if (errorMessage && errorMessage[key]) {
-      return errorMessage[key];
+      } else {
+        const errorData = await response.json();
+        console.log('error', errorData);
+        setErrors({ password2: errorData.message });
+        setSubmitting(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setErrors({ password2: 'An error occurred while signing up' });
+      setSubmitting(false);
     }
-    return '';
-  }
-    
+  };
+
   return (
     <Layout>
       <Head>
@@ -86,77 +67,64 @@ export default function Register () {
         <div>
           <h1 className="text-[#40BA21] font-['Montserrat'] text-4xl font-bold pb-4">Sign Up</h1>
         </div>
-        {/* { error } */}
-        <form onSubmit={submit} className="flex flex-col gap-5">
-          <div>
-            {/* <label>Email</label> */}
-            <div className={styles.input_group}>
-              <input 
-                type="email" 
-                name="Email"
-                placeholder="a.b@innopolis.ru"
-                onChange={e => {
-                  setEmail(e.target.value);
-                  setErrorMessage('');
-                }}
-                className={styles.input_text}
-              />
-              <span className="icon flex items-center px-4">
-                <HiOutlineMail size={20}/>
-              </span>
-            </div>
-            {getErrorMessage('email') && <span className="text-red-500"> {getErrorMessage('email')[0].split('.')[0]} </span>}
-          </div>
-          <div>
-            {/* <label>Password</label> */}
-            <div className={styles.input_group}>
-              <input
-                type={`${show.password ? "text" : "password"}`} 
-                name="password"
-                placeholder="password"
-                onChange={e => {
-                  setPassword(e.target.value);
-                  setErrorMessage('');
-                }}
-                className={styles.input_text}
-              />
-              <span className="icon flex items-center px-4 hover:cursor-pointer hover:text-[#6366f1]" onClick={() => setShow({...show, password:!show.password})}>
-                {show.password 
-                  ? <HiEye size={20}/> 
-                  : <HiEyeOff size={20}/>
-                }
-              </span>
-            </div>
-            {getErrorMessage('password') && <span className="text-red-500"> {getErrorMessage('password')[0].split('.')[0]} </span>}
-          </div>
-          <div>
-            {/* <label>Confirm Password</label> */}
-            <div className={styles.input_group}>
-              <input
-                type={`${show.confirmPassword ? "text" : "password"}`} 
-                name="confirmPassword"
-                placeholder="confirm password"
-                onChange={e => {
-                  setConfirmPassword(e.target.value);
-                  setErrorMessage('');
-                }}
-                className={styles.input_text}
-              />
-              <span className="icon flex items-center px-4 hover:cursor-pointer hover:text-[#6366f1]" onClick={() => setShow({...show, confirmPassword:!show.confirmPassword})}>
-                {show.confirmPassword 
-                  ? <HiEye size={20}/> 
-                  : <HiEyeOff size={20}/>
-                }
-              </span>
-            </div>
-            {getErrorMessage('password2') && <span className="text-red-500"> {getErrorMessage('password2')[0].split('.')[0]} </span>}
-          </div>
-          <div className="w-2/5 m-auto">
-            <button type="submit" className={styles.button}>
-                Sign up
-            </button>
-          </div>
-        </form>
+        <Formik
+          initialValues={{ email: '', password: '', password2: '' }}
+          validationSchema={registerValidationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="flex flex-col gap-5">
+              <div>
+                <div className={styles.input_group}>
+                  <Field type="email" id="email" placeholder="a.b@innopolis.ru" name="email" className={styles.input_text} />
+                  <span className="icon flex items-center px-4">
+                    <HiOutlineMail size={20}/>
+                  </span>
+                </div>
+                <span className="text-red-500 text-left">
+                  <ErrorMessage name="email" component="div" className="error" />
+                </span>
+              </div>
+
+
+              <div>
+                <div className={styles.input_group}>
+                  <Field type={`${show.password ? "text" : "password"}`} id="password" placeholder="password" name="password" className={styles.input_text} />
+                  <span className="icon flex items-center px-4 hover:cursor-pointer hover:text-[#6366f1]" onClick={() => setShow({...show, password:!show.password})}>
+                    {show.password 
+                      ? <HiEye size={20}/> 
+                      : <HiEyeOff size={20}/>
+                    }
+                  </span>
+                </div>
+                <span className="text-red-500 text-left">
+                  <ErrorMessage name="password" component="div" className="error" />
+                </span>
+              </div>
+
+              <div>
+                <div className={styles.input_group}>
+                  <Field type={`${show.password2 ? "text" : "password"}`} id="password2" placeholder="confirm password" name="password2" className={styles.input_text} />
+                  <span className="icon flex items-center px-4 hover:cursor-pointer hover:text-[#6366f1]" onClick={() => setShow({...show, password2:!show.password2})}>
+                    {show.password2
+                      ? <HiEye size={20}/> 
+                      : <HiEyeOff size={20}/>
+                    }
+                  </span>
+                </div>
+                <span className="text-red-500 text-left">
+                  <ErrorMessage name="password2" component="div" className="error" />
+                </span>
+              </div>
+              
+              <div className="w-2/5 m-auto">
+                <button type="submit" disabled={isSubmitting} className={styles.button}>
+                    Sign up
+                </button>
+              </div>
+            </Form>
+          )}
+        </Formik>
 
         <div className="flex items-center">
           <div className="flex-1 h-0.5 bg-[#B7D4E8]"></div>
@@ -170,14 +138,15 @@ export default function Register () {
             <div className="m-auto">Innopolis University</div>
           </div>
         </Link>
-        
 
         <p className="text-center text-[#777]">
-            Already have an account? Go to <Link href={'/login'} className="font-bold text-[#000]">Login</Link>
+            Already have an account? Go to <Link href={'/login'} className="font-bold text-[#000] hover:text-[#40BA21] underline">Login</Link>
         </p>
       </section>
-      {showModal && serverError !== '' && <ErrorModal message={serverError} onClose={() => setShowModal(false)} />}
       {showModal && successMessage !== '' && <SuccessModal message={successMessage} onClose={() => setShowModal(false)} />}
     </Layout>
-  )
-}
+  );
+};
+
+export default SignupForm;
+    
