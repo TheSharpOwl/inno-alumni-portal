@@ -4,7 +4,7 @@ import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "components/Layout/mainLayOut";
+import MainLayOut from "components/layout/mainLayOut";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
