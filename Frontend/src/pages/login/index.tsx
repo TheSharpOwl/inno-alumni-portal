@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 import axios from 'axios';
 import { apiEndPoint } from "../../constants";
 import imgStyles from '../../styles/Image.module.css';
-import ErrorModal from "components/Modals/error.modal";
-import SuccessModal from "components/Modals/success.modal";
-import Layout from "components/Layout/authLayOut";
-import { useStore } from 'Context/store';
+// import ErrorModal from "components/Modals/error.modal";
+import SuccessModal from "components/modals/success.modal";
+import Layout from "components/layout/authLayOut";
+import { useStore } from 'context/store';
 import { loginValidationSchema } from "SchemaValidation";
 
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
 import { apiEndPoint } from "../../constants";
-import Avatar from "components/Features/avatar";
-import EditProfileModal from "components/Features/editprofile";
-import MainLayOut from "components/Layout/mainLayOut";
+import Avatar from "components/features/avatar";
+import EditProfileModal from "components/features/editprofile";
+import MainLayOut from "components/layout/mainLayOut";
 import { HiUserCircle } from "react-icons/hi";
 
 
