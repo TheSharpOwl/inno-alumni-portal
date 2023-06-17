@@ -62,7 +62,7 @@ services:
     #   - db
 
   nginx:
-    build: ./nginx
+    build: ./Nginx
     # volumes:
     #   - ./Nginx/conf.d:/etc/nginx/conf.d:ro
     #   - ./frontend:/app/frontend
