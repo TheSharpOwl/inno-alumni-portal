@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Head from "next/head";
-import styles from '../../styles/Form.module.css';
-import imgStyles from '../../styles/Image.module.css';
+import styles from '../../styles/form.module.css';
+import imgStyles from '../../styles/image.module.css';
 import { 
   HiOutlineMail,
   HiEye, 
@@ -13,8 +13,8 @@ import { PasswordCredential } from "../../interfaces";
 import { useRouter } from "next/router";
 import { apiEndPoint } from "../../constants";
 import SuccessModal from "../../components/modals/success.modal";
-import Layout from "../../components/layout/authLayOut";
-import { registerValidationSchema } from 'SchemaValidation';
+import Layout from "../../components/layout/authLayout";
+import { registerValidationSchema } from 'schemaValidation';
 
 
 const SignupForm = () => {
