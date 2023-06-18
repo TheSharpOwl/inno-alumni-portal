@@ -1,5 +1,5 @@
-import LeftBar from "components/layout/leftBar"
-import MainLayOut from "components/layout/mainLayOut"
+import LeftBar from "../../components/layout/leftBar"
+import MainLayOut from "../../components/layout/mainLayOut"
 
 import { dashboardComponents } from "lib/profileData.lib"
 import Link from "next/link"

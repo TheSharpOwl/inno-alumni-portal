@@ -12,8 +12,8 @@ import Link from "next/link";
 import { PasswordCredential } from "../../interfaces";
 import { useRouter } from "next/router";
 import { apiEndPoint } from "../../constants";
-import SuccessModal from "components/modals/success.modal";
-import Layout from "components/layout/authLayOut";
+import SuccessModal from "../../components/modals/success.modal";
+import Layout from "../../components/layout/authLayOut";
 import { registerValidationSchema } from 'SchemaValidation';
 
 

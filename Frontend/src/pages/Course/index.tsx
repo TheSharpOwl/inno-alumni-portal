@@ -4,9 +4,9 @@ import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "components/layout/mainLayOut";
+import MainLayOut from "../../components/layout/mainLayOut";
 import axios from "axios";
-import { apiEndPoint } from "constants";
+import { apiEndPoint } from "../../constants";
 
 export default function Course() {
 
