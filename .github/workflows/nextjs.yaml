@@ -21,8 +21,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - name: Build Frontend
-    - run: |
+      run: |
           cd Frontend
           npm install
           npm run build
-          
