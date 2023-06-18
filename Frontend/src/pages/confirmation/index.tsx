@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Layout from "../../components/layout/authLayOut";
-import styles from '../../styles/Form.module.css';
+import styles from '../../styles/form.module.css';
 import { SyntheticEvent, useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import axios from 'axios';

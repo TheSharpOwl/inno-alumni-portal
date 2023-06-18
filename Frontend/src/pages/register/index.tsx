@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Head from "next/head";
-import styles from '../../styles/Form.module.css';
-import imgStyles from '../../styles/Image.module.css';
+import styles from '../../styles/form.module.css';
+import imgStyles from '../../styles/image.module.css';
 import { 
   HiOutlineMail,
   HiEye, 
