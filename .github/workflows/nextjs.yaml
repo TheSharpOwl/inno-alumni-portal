@@ -1,4 +1,4 @@
-name: Node.js CI
+name: Next.js Test
 
 on:
     workflow_call:
