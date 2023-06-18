@@ -1,5 +1,4 @@
-# https://www.codingforentrepreneurs.com/blog/django-github-actions/
-name: NextJs Test
+name: Node.js CI
 
 on:
     workflow_call:
@@ -11,20 +10,17 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    strategy:
+      matrix:
+        node-version: [12.x]
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      - name: Install requirements
-        run: |
-            cd Frontend
-            npm i
-      - name: Build
-        run: |
-            npm run build
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm --prefix Frontend/ install
+    - run: npm --prefix Frontend/ run build
+      env:
+        CI: true
