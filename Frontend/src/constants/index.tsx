@@ -1,1 +1,1 @@
-export const apiEndPoint = 'http://localhost:8000'
+export const apiEndPoint = 'https://localhost:8000'
