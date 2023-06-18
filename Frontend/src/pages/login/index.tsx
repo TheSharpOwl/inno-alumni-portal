@@ -11,8 +11,8 @@ import imgStyles from '../../styles/Image.module.css';
 // import ErrorModal from "components/Modals/error.modal";
 import SuccessModal from "../../components/modals/success.modal";
 import Layout from "../../components/layout/authLayOut";
-import { useStore } from '../../context/store';
-import { loginValidationSchema } from "../../schemaValidation";
+import { useStore } from 'context/store';
+import { loginValidationSchema } from "schemaValidation";
 
 
 const LoginForm = () => {

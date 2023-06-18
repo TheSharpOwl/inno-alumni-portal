@@ -1,5 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { GlobalContextProvider } from 'context/store'
+import { GlobalContextProvider } from '../context/store'
 
 
 class MyDocument extends Document {
