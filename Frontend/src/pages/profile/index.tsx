@@ -3,7 +3,7 @@ import axios from 'axios';
 import { apiEndPoint } from "../../constants";
 import Avatar from "../../components/features/avatar";
 import EditProfileModal from "../../components/features/editprofile";
-import MainLayOut from "../../components/layout/mainLayOut";
+import MainLayOut from "../../components/layout/mainLayout";
 import { HiUserCircle } from "react-icons/hi";
 
 
