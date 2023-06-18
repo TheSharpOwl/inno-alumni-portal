@@ -1,0 +1,30 @@
+# https://www.codingforentrepreneurs.com/blog/django-github-actions/
+name: NextJs Test
+
+on:
+    workflow_call:
+    workflow_dispatch:
+    push:
+       branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+  simple_build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout code
+        uses: actions/checkout@v2
+     - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+      - name: Install requirements
+        run: |
+            cd Frontend
+            npm i
+      - name: Build
+        run: |
+            npm run build
