@@ -3,7 +3,7 @@ import axios from 'axios';
 import { apiEndPoint } from "../../constants";
 import Avatar from "../../components/features/avatar";
 import EditProfileModal from "../../components/features/editprofile";
-import MainLayOut from "../../components/layout/mainLayout";
+import MainLayout from "../../components/layout/mainLayout";
 import { HiUserCircle } from "react-icons/hi";
 
 
@@ -41,7 +41,7 @@ const Profile = () => {
     }, []);
 
   return (
-    <MainLayOut>
+    <MainLayout>
         <div>
             <h1 className="text-[#40BA21] text-3xl font-bold">Personal data</h1>
             <div className="my-8">
@@ -129,7 +129,7 @@ const Profile = () => {
                 />
             )}
         </div>
-    </MainLayOut>
+    </MainLayout>
   );
 };
 

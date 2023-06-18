@@ -1,7 +1,7 @@
 import LeftBar from "./leftBar"
 import RightBar from "./rightBar"
 
-export default function MainLayOut({children}) {
+export default function MainLayout({children}) {
     
     
     return (
