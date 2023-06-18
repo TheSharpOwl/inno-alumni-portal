@@ -25,19 +25,19 @@ SECRET_KEY = 'django-insecure-j!x*&4_(-r&v9f-xr-lp7iq=ve+ak-bqzb5z6*pr=ffzxnlegg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://127.0.0.1:3000']
+ALLOWED_HOSTS = ['http://127.0.0.1:3000', 'http://localhost:8000/', 'http://localhost', 'http://localhost:3000', 'http://127.0.0.1:8000']
 
 CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SAMESITE = "Lax"
 # CORS_ALLOWED_ORIGINS = ['*']
  # set this
 CORS_ALLOW_ALL_ORIGINS= False
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:3000']
+CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:3000', 'http://localhost:8000', 'http://localhost', 'http://localhost:3000', 'http://127.0.0.1:8000']
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 CORS_EXPOSE_HEADERS = ["Content-Type", "X-CSRFToken"]
-CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:3000', 'http://localhost:8000', 'http://localhost', 'http://localhost:3000', 'http://127.0.0.1:8000']
 
 # Application definition
 
@@ -66,6 +66,15 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
 
 ROOT_URLCONF = 'alumni_portal.urls'
 
