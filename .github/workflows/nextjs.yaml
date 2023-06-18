@@ -20,7 +20,9 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
-    # - run: npm --prefix Frontend/ install
-    - run: npm --prefix Frontend/ run build
+    - run: |
+          cd Frontend
+          npm install
+          npm run build
       env:
         CI: true
