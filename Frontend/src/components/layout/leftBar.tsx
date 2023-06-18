@@ -3,7 +3,7 @@ import { HiUserCircle } from "react-icons/hi";
 import { BiUserPin, BiNetworkChart } from "react-icons/bi";
 import { SlNotebook } from "react-icons/sl";
 import { BsBuildingLock } from "react-icons/bs";
-import styles from '../../styles/Image.module.css'
+import styles from '../../styles/image.module.css'
 import Link from "next/link";
 
 export default function LeftBar({className, ...props}) {

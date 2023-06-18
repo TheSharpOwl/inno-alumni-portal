@@ -4,7 +4,7 @@ import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "../../components/layout/mainLayOut";
+import MainLayout from "../../components/layout/mainLayout";
 
 export default function Course({ courses }: any) {
 
@@ -18,7 +18,7 @@ export default function Course({ courses }: any) {
     }
 
     return ( 
-        <MainLayOut>
+        <MainLayout>
         <div className="w-full m-auto">
            
             {/* <div className="bg-white p-5 rounded-md border-4 mb-2">
@@ -43,7 +43,7 @@ export default function Course({ courses }: any) {
             </div>
 
         </div>
-        </MainLayOut>
+        </MainLayout>
     );
 
 }

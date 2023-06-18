@@ -2,17 +2,17 @@ import React, { useState } from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import Head from "next/head";
 import Link from "next/link";
-import styles from '../../styles/Form.module.css';
+import styles from '../../styles/form.module.css';
 import { HiOutlineMail, HiEye, HiEyeOff } from "react-icons/hi";
 import { useRouter } from "next/router";
 import axios from 'axios';
 import { apiEndPoint } from "../../constants";
-import imgStyles from '../../styles/Image.module.css';
+import imgStyles from '../../styles/image.module.css';
 // import ErrorModal from "components/Modals/error.modal";
 import SuccessModal from "../../components/modals/success.modal";
-import Layout from "../../components/layout/authLayOut";
+import Layout from "../../components/layout/authLayout";
 import { useStore } from 'context/store';
-import { loginValidationSchema } from "SchemaValidation";
+import { loginValidationSchema } from "schemaValidation";
 
 
 const LoginForm = () => {

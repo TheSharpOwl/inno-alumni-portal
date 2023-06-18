@@ -4,7 +4,7 @@ import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "../../components/layout/mainLayOut";
+import MainLayout from "components/layout/mainLayout";
 import axios from "axios";
 import { apiEndPoint } from "../../constants";
 
@@ -91,7 +91,7 @@ export default function Course() {
     },[])
 
     return ( 
-        <MainLayOut>
+        <MainLayout>
             <div className="flex mb-5 gap-6">
                 <button onClick={()=>setAllCourseTab(true)} className={allCourseTab ? "text-green-500" : ""}>ALL COURSES</button>
                 <button onClick={()=>setAllCourseTab(false)} className={!allCourseTab ? "text-green-500" : ""}>BOOKED COURSES</button>
@@ -202,7 +202,7 @@ export default function Course() {
                 </div>
             </div> */}
         </div>
-        </MainLayOut>
+        </MainLayout>
     );
 
 }

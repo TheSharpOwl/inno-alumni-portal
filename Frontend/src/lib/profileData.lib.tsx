@@ -1,4 +1,4 @@
-import styles from '../styles/Image.module.css'
+import styles from '../styles/image.module.css'
 
 export const dashboardComponents = [
     {

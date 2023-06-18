@@ -1,12 +1,12 @@
 import LeftBar from "../../components/layout/leftBar"
-import MainLayOut from "../../components/layout/mainLayOut"
+import MainLayout from "../../components/layout/mainLayout"
 
 import { dashboardComponents } from "lib/profileData.lib"
 import Link from "next/link"
 
 export default function Dashboard() {
     return (
-      <MainLayOut>
+      <MainLayout>
         <div className="flex h-full">
             <div className="flex flex-wrap w-2/3 items-center justify-center gap-8 m-auto">
                 {
@@ -25,6 +25,6 @@ export default function Dashboard() {
                 }
             </div>
         </div>
-        </MainLayOut>
+        </MainLayout>
     )
 }
