@@ -4,12 +4,12 @@ import {IoMdClose} from "react-icons/io"
 import qr_code from "../../utils/images/qr-code.jpg"
 
 import React from "react";
-import MainLayOut from "components/layout/mainLayOut";
+import MainLayOut from "../../components/layout/mainLayOut";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import { apiEndPoint } from "constants";
+import { apiEndPoint } from "../../constants";
 
 export default function Course({ courses }: any) {
     const [startDate, setStartDate] = useState(new Date());
