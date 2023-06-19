@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-j!x*&4_(-r&v9f-xr-lp7iq=ve+ak-bqzb5z6*pr=ffzxnlegg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://127.0.0.1:3000', 'http://localhost:8000/', 'http://localhost', 'http://localhost:3000', 'http://127.0.0.1:8000', 'http://ziadxkabakibi.fvds.ru']
+ALLOWED_HOSTS = ['http://127.0.0.1:3000', 'http://localhost:8000/', 'http://localhost', 'http://localhost:3000', 'http://127.0.0.1:8000', 'http://ziadxkabakibi.fvds.ru', 'localhost:8000', 'localhost:3000', 'localhost', '127.0.0.1:8000', '127.0.0.1:3000', '127.0.0.1']
 
 CSRF_COOKIE_SAMESITE = "Lax"
 SESSION_COOKIE_SAMESITE = "Lax"
