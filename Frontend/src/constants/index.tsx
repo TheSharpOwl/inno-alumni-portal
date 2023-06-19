@@ -1,1 +1,1 @@
-export const apiEndPoint = 'http://188.120.255.101/backend'
+export const apiEndPoint = 'http://localhost/backend'
