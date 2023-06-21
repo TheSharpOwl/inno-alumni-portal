@@ -1,1 +1,1 @@
-export const apiEndPoint = 'http://localhost/backend'
+export const apiEndPoint = 'http://ziadxkabakibi.fvds.ru/backend'
