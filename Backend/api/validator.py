@@ -7,6 +7,7 @@ CODE_MIN = 1000000000
 CODE_MAX = 9999999999
 
 def send_confirmation_mail(receiver_email):
+    print('sending confrimation email')
     port = 587   # For starttls
     smtp_server = "smtp.university.innopolis.ru"
     sender_email = "alumni.portal@innopolis.university"
@@ -29,18 +30,25 @@ def send_confirmation_mail(receiver_email):
     smtp.starttls()  # tell server we want to communicate with TLS encryption
 
     smtp.login(sender_email, password)  # login to our email server
+    try:
+        smtp.sendmail(sender_email, receiver_email,
+                    message)
+        smtp.quit()
+    except:
+        print("FAILED TO SEND EMAIL")
 
-    smtp.sendmail(sender_email, receiver_email,
-                message)
-                
-    smtp.quit()
+    print("sent the email for confirm")      
     verification = EmailCode.objects.create(email=receiver_email, code=code)
     verification.save()
+    print("code is")
+    print(code)
     return code 
     
 
 def validate_innopolis_mail(mail):
+    print('called validate innopolis email')
     domain = mail[mail.find('@')+1:]
+    print(domain)
     if domain == 'innopolis.university' or domain == 'innopolis.ru':
         return send_confirmation_mail(mail)
     return -1 
