@@ -34,15 +34,19 @@ class RegisterSerializer(serializers.ModelSerializer):
     fields = ('email', 'password', 'password2')
 
   def validate(self, attrs):
+    print('validating password')
     if attrs['password'] != attrs['password2']:
       raise serializers.ValidationError(
         {"password": "Password fields didn't match."})
+    print('validating email')
     if validate_innopolis_mail(attrs['email']) == -1:
         raise serializers.ValidationError(
         {"email": "Given email is not an official Innopolis University email address."})
+    print('it is fine')
     return attrs
   
   def create(self, validated_data):
+    print('creating new alumni')
     alumni = Alumni.objects.create(
       email=validated_data['email'],
       username=validated_data['email'],

@@ -5,20 +5,20 @@ const nextConfig = {
     ignoreBuildErrors: true,
   }
 }
-  
+
 module.exports = nextConfig
-  
-  
+
+
 module.exports = {
   images: {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    "baseUrl": "./src",
+//    "baseUrl": "./src",
   },
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
+    eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true,
