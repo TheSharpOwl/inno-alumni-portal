@@ -16,7 +16,8 @@ def send_confirmation_mail(receiver_email):
     sender_email = "alumni.portal@innopolis.university"
 
     password = settings.EMAIL_PASSWORD
-    code = random.randint(CODE_MIN, CODE_MAX)
+    #code = random.randint(CODE_MIN, CODE_MAX)
+    code = 1234567890
     message = (
         f"Subject: Alumni Portal Registration"
         f"Welcome to Alumni Portal! Your activation code is: {code}"
@@ -25,16 +26,17 @@ def send_confirmation_mail(receiver_email):
         f"Alumni Portal Team"
     )
 
-    smtp = smtplib.SMTP(smtp_server, port=port)
-    smtp.ehlo()  # send the extended hello to our server
-    smtp.starttls()  # tell server we want to communicate with TLS encryption
-    smtp.login(sender_email, password)  # login to our email server
-    try:
-        smtp.sendmail(sender_email, receiver_email,
-                      message)
-        smtp.quit()
-    except: # pylint: disable=bare-except
-        print("FAILED TO SEND EMAIL")
+    # TODO disabled for now because verification server is broken and giving timeout (also make code random again)
+    # smtp = smtplib.SMTP(smtp_server, port=port)
+    # smtp.ehlo()  # send the extended hello to our server
+    # smtp.starttls()  # tell server we want to communicate with TLS encryption
+    # smtp.login(sender_email, password)  # login to our email server
+    # try:
+    #     smtp.sendmail(sender_email, receiver_email,
+    #                   message)
+    #     smtp.quit()
+    # except: # pylint: disable=bare-except
+    #     print("FAILED TO SEND EMAIL")
 
     print("sent the email for confirm")
     verification = EmailCode.objects.create(email=receiver_email, code=code)
