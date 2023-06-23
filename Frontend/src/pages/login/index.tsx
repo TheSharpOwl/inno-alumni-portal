@@ -5,22 +5,22 @@ import Link from "next/link";
 import styles from '../../styles/form.module.css';
 import { HiOutlineMail, HiEye, HiEyeOff } from "react-icons/hi";
 import { useRouter } from "next/router";
-import axios from 'axios';
 import { apiEndPoint } from "../../constants";
 import imgStyles from '../../styles/image.module.css';
-// import ErrorModal from "components/Modals/error.modal";
 import SuccessModal from "../../components/modals/success.modal";
 import Layout from "../../components/layout/authLayout";
-import { useStore } from 'context/store';
+import { useStore, useGlobalContext } from 'context/store';
 import { loginValidationSchema } from "schemaValidation";
 
 
 const LoginForm = () => {
-  const { setIsAuth } = useStore(); // Access the setIsAuth function from the store
+  const { isReg, setIsAuth } = useStore(); // Access the setIsAuth function from the store
+  const { setToken } = useGlobalContext(); // Access the setToken function from the store
+
   const [show, setShow] = useState(false);
-    const [showModal, setShowModal] = useState(false);;
-    const [successMessage, setSuccessMessage] = useState('');
-    const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const router = useRouter();
 
   const handleSubmit = async (values: {}, { setSubmitting, setErrors }: any) => {
     try {
@@ -34,24 +34,18 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('success', response, data);
-        setSuccessMessage(data.message); // Set success message
+        setSuccessMessage('Successful'); // Set success message
         setShowModal(true); // Show success modal
         setIsAuth(true); // Set isAuth to true
+        setToken(data.token) // Set token
         setSubmitting(false);
-        if (!showModal) {
-          const timer = setTimeout(() => {
-            router.push('/confirmation'); // If for the first time route to /confirmation otherwise route to /dashboard
-          }, 1000);
-          return () => clearTimeout(timer);
-        }
+        data && router.push(isReg ? '/confirmation' : '/dashboard'); // If for the first time route to /confirmation otherwise route to /dashboard  
       } else {
         const errorData = await response.json();
         setErrors({ password: errorData.message || errorData.non_field_errors[0]});
         setSubmitting(false);
       }
     } catch (error) {
-      console.error('Error:', error);
       setErrors({ password: 'An error occurred while logging in' });
       setSubmitting(false);
     }
@@ -80,9 +74,7 @@ const LoginForm = () => {
                       <HiOutlineMail size={20}/>
                     </span>
                   </div>
-                  <span className="text-red-500 text-left">
-                    <ErrorMessage name="username" component="div" className="error" />
-                  </span>
+                  <ErrorMessage name="username" component="div" className="text-red-500 text-left" />
                 </div>
 
                 <div>
@@ -95,14 +87,12 @@ const LoginForm = () => {
                       }
                     </span>
                   </div>
-                  <span className="text-red-500 text-left">
-                    <ErrorMessage name="password" component="div" className="error" />
-                  </span>
+                  <ErrorMessage name="password" component="div" className="text-red-500 text-left" />
                 </div>
 
                 <div className="w-2/5 m-auto">
                   <button type="submit" disabled={isSubmitting} className={styles.button}>
-                      Log in
+                    {isSubmitting ? 'Logging in...' : 'Log in'}
                   </button>
                 </div>
               </Form>

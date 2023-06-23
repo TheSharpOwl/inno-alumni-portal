@@ -20,7 +20,7 @@ export default function Course({ courses }: any) {
     }, [])
 
     const handleRequestPass = async () => {
-        const token = localStorage.getItem("alumni-token");
+        const token = localStorage.getItem("innoToken");
         await axios.post(`${apiEndPoint}/pass/`,
         JSON.stringify({
             date: "01/02/23",

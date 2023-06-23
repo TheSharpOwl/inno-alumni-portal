@@ -45,3 +45,15 @@ export const profileValidationSchema = Yup.object().shape({
     lastName: Yup.string().required('Last Name is required'),
     email: Yup.string().email('Invalid email address').required('Email is required'),
 });
+
+export const accountConfirmationSchema = Yup.object().shape({
+    code: Yup.number()
+      .required('Confirmation code is required')
+});
+
+export const accountProfileSchema = Yup.object().shape({
+    name: Yup.string().required('Full Name is required'),
+    russian_name: Yup.string().required('Full Name in Russian is required')
+        .matches(/^[\u0400-\u04FF\s]+$/, 'Only Russian Cyrillic characters are allowed'),
+    graduation_year: Yup.string().required('Graduation Year is required'),
+});

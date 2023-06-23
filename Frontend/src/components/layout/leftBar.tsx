@@ -5,9 +5,18 @@ import { SlNotebook } from "react-icons/sl";
 import { BsBuildingLock } from "react-icons/bs";
 import styles from '../../styles/image.module.css'
 import Link from "next/link";
+import { useRouter } from 'next/router';
+
 
 export default function LeftBar({className, ...props}) {
     const user_name = 'Ученна Угвумаду'
+    const router = useRouter();
+
+    const handleClick = () => {
+        localStorage.removeItem('innoToken');
+        localStorage.removeItem('innoIsAuth');
+        router.push('/login');
+    }
     
     return (
         <div className={`${className} `} {...props}>
@@ -65,7 +74,7 @@ export default function LeftBar({className, ...props}) {
             </div>
 
             <div className="flex items-center">
-                <button className="flex items-center bg-transparent h-12 w-full hover:bg-[#333E82] active:bg-[#505B95] font-semibold py-2 px-4 hover:border-transparent rounded">
+                <button onClick={handleClick} className="flex items-center bg-transparent h-12 w-full hover:bg-[#333E82] active:bg-[#505B95] font-semibold py-2 px-4 hover:border-transparent rounded">
                     <div className="text-[#40BA21] pr-4"><RiLogoutBoxRLine size={24}/></div>
                     <div>Log Out</div>
                 </button>
