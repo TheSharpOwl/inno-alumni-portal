@@ -6,7 +6,7 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 from .models import Alumni, ElectiveCourse
-from .validator import validate_innopolis_mail
+from .validator import verify_innopolis_mail
 
 class AlumniSerializer(serializers.ModelSerializer):
   class Meta:
@@ -39,7 +39,7 @@ class RegisterSerializer(serializers.ModelSerializer):
       raise serializers.ValidationError(
         {"password": "Password fields didn't match."})
     print('validating email')
-    if validate_innopolis_mail(attrs['email']) == -1:
+    if verify_innopolis_mail(attrs['email']) == -1:
         raise serializers.ValidationError(
         {"email": "Given email is not an official Innopolis University email address."})
     print('it is fine')

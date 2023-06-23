@@ -4,7 +4,6 @@ import os
 import sys
 
 # TODO hide everything that should be a secret
-# TODO add instructions about running the backend
 
 def main():
     """Run administrative tasks."""
