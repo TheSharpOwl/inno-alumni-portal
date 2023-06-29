@@ -25,6 +25,7 @@ export default function Confirmation () {
   
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
+    console.log(token)
     await axios.post(`${apiEndPoint}/confirm/email`,
     JSON.stringify({
         code: codeMessage
