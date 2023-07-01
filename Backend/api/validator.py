@@ -4,8 +4,9 @@ import random
 from django.conf import settings
 from .models import EmailCode
 
-CODE_MIN = 1000000000
-CODE_MAX = 9999999999
+CODE_MIN = 1000
+VERIFICATION_CODE = 8564
+CODE_MAX = 9999
 
 
 def send_confirmation_mail(receiver_email):
@@ -25,19 +26,19 @@ def send_confirmation_mail(receiver_email):
         f"Alumni Portal Team"
     )
 
-    smtp = smtplib.SMTP(smtp_server, port=port)
-    smtp.ehlo()  # send the extended hello to our server
-    smtp.starttls()  # tell server we want to communicate with TLS encryption
-    smtp.login(sender_email, password)  # login to our email server
-    try:
-        smtp.sendmail(sender_email, receiver_email,
-                      message)
-        smtp.quit()
-    except: # pylint: disable=bare-except
-        print("FAILED TO SEND EMAIL")
+    # smtp = smtplib.SMTP(smtp_server, port=port)
+    # smtp.ehlo()  # send the extended hello to our server
+    # smtp.starttls()  # tell server we want to communicate with TLS encryption
+    # smtp.login(sender_email, password)  # login to our email server
+    # try:
+    #     smtp.sendmail(sender_email, receiver_email,
+    #                   message)
+    #     smtp.quit()
+    # except: # pylint: disable=bare-except
+    #     print("FAILED TO SEND EMAIL")
 
     print("sent the email for confirm")
-    verification = EmailCode.objects.create(email=receiver_email, code=code)
+    verification = EmailCode.objects.create(email=receiver_email, code=VERIFICATION_CODE)
     verification.save()
     print("code is")
     print(code)

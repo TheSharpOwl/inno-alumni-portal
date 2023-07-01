@@ -5,7 +5,7 @@ export const dashboardComponents = [
         title: 'Network',
         description: 'Find the people you studied with',
         img: styles.network,
-        link: "/#"
+        link: "#"
     },
     {
         title: 'Courses',

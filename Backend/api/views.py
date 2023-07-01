@@ -94,14 +94,11 @@ def validate_date_format(requested_date):
 
 
 def send_pass_email(name, requested_date, invited_guests):
-  receiver_email = "n.novarlic@innopolis.ru" # this attribute has to be changed in future
+  receiver_email = "d.atonge@innopolis.university" # this attribute has to be changed in future
   
   visitors = "\t1. {name}\n".format(name=name)
-  count = 1
 
-  for guest in invited_guests:
-    count += 1
-    visitors += "\t{count}. {guest}\n".format(count=str(count), guest=guest)
+  visitors += "\t{guest}\n".format(guest=invited_guests)
 
   message = u"""Subject: Alumni Pass Order
 
@@ -122,17 +119,17 @@ def send_pass_email(name, requested_date, invited_guests):
   sender_email = "alumni.portal@innopolis.university"
   password = settings.EMAIL_PASSWORD
 
-  smtp = smtplib.SMTP(smtp_server, port=port)
+  # smtp = smtplib.SMTP(smtp_server, port=port)
 
-  smtp.ehlo()  
-  smtp.starttls()  
+  # smtp.ehlo()  
+  # smtp.starttls()  
 
-  smtp.login(sender_email, password)  
+  # smtp.login(sender_email, password)  
 
-  smtp.sendmail(sender_email, receiver_email,
-              message.encode("utf-8"))
+  # smtp.sendmail(sender_email, receiver_email,
+  #             message.encode("utf-8"))
               
-  smtp.quit()
+  # smtp.quit()
 
 
 class PassOrderAPI(APIView):

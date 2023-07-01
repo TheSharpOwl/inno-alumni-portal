@@ -130,13 +130,44 @@ const Profile = () => {
 
   return (
     <MainLayout>
-      <div>
-        <h1 className="text-[#40BA21] text-3xl font-bold">Personal data</h1>
-        <div className="my-8">
-          <div className="flex flex-wrap items-center justify-between">
-            <div className="flex items-center">
-              <ProfilePicture src={user.profilePic} alt={user.name} />
-              <ProfileInfo user={user} />
+        <div>
+            <h1 className="text-[#40BA21] text-3xl font-bold">Personal data</h1>
+            <div className="my-8">
+                <div className="flex flex-wrap items-center justify-between">
+                    <div className="flex items-center">
+                        <div className="mr-4">
+                            {
+                                user.profilePic ?
+                                <Avatar 
+                                    src={user.profilePic}
+                                    alt={user.name}
+                                    size={48} 
+                                /> :
+                                <div className="text-[#40BA21]"><HiUserCircle size={96}/></div>
+                            }
+                        </div>
+                        <div>
+                            <h1 className="text-xl font-semibold text-[#202020]">{user.name}</h1>
+                            <h3 className="text-lg font-semibold text-[#202020]">{user.name_russian}</h3>
+                            <p>{user.email}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <button
+                                className="px-4 py-2 text-[#40BA21] border-solid border-[#40BA21] border-2 rounded hover:bg-[#40BA21] hover:text-white"
+                                onClick={() => setIsEditing(true)}
+                            >
+                                EDIT INFORMATION
+                            </button>
+                        </div>
+                        <div>
+                            {/* <button className="mt-4 hover:text-[#40BA21] underline">
+                                Change Password
+                            </button> */}
+                        </div>
+                    </div>
+                </div>
             </div>
             <EditButtons onEdit={() => setIsEditing(true)} onChangePassword={handlePasswordChange} />
           </div>
@@ -144,9 +175,20 @@ const Profile = () => {
 
         <PersonalInfo user={user} />
 
-        <div className="my-8">
-          <h1 className="text-2xl font-bold">About</h1>
-          <About bio={user.bio} />
+            <div className="my-8">
+                <h1 className="text-2xl font-bold">About</h1>
+                
+                    <textarea name="about" id="about" cols={130} rows={3} disabled>
+                        {user.bio || 'Please update your profile information...'}
+                    </textarea>
+               
+            </div>
+            {isEditing && (
+                <EditProfileModal
+                    onSave={handleSave}
+                    onClose={() => setIsEditing(false)}
+                />
+            )}
         </div>
 
         {isEditing && <EditProfileModal onSave={handleSave} onClose={() => setIsEditing(false)} />}
