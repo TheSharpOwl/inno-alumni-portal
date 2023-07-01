@@ -1,8 +1,8 @@
-from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractBaseUser
+from django.db import models
 
 class Alumni(User):
+    '''Alumni Portal user model'''
     name = models.CharField(max_length=60)
     name_russian = models.CharField(max_length=60)
     graduation_year = models.IntegerField(default=1900)
@@ -15,10 +15,10 @@ class Alumni(User):
     verified = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name
-
+        return str(self.name) # surronded by str because of warnings
 
 class ElectiveCourse(models.Model):
+    '''Elective Course Model'''
     name = models.CharField(max_length=100)
     description = models.TextField()
     tutor = models.CharField(max_length=100)
@@ -26,6 +26,7 @@ class ElectiveCourse(models.Model):
 
 
 class EmailCode(models.Model):
+    '''Verification email code model'''
     email = models.EmailField()
     code = models.IntegerField()
 

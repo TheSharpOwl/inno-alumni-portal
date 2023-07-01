@@ -172,6 +172,9 @@ class VerifyMailAPI(APIView):
   def post(self, request):
     alumni = Alumni.objects.get(user_ptr_id=request.user.id)
     code = EmailCode.objects.get(email=alumni.email).code
+    print("request to verify email is:")
+    print(request)
+    print("code is")
     print(code)
     if request.data['code'] == code:
       alumni = Alumni.objects.filter(user_ptr_id=request.user.id).update( verified=True)
