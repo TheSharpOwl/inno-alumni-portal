@@ -21,7 +21,7 @@ export default function Course() {
     }]
     const [allCourseTab, setAllCourseTab] = useState(true)
     const [courses, setCourses] = useState(initialCourses);
-    const [bookedCourses, setBookedCourses] = useState([]);
+    const [bookedCourses, setBookedCourses] = useState(null);
     const [token, setToken] = useState("")
 // console.log(bookedCourses)
     const requestAllCourses = async (token) => {
@@ -80,6 +80,10 @@ export default function Course() {
             }
         })
         .then(res => {
+            const getSelectedCourse = courses.find(c => c.id === courseId)
+            setBookedCourses([...bookedCourses, getSelectedCourse])
+            const currentCourses = courses.filter(c => c.id !== courseId)
+            setCourses(currentCourses)
             console.log(res)
         })
     }

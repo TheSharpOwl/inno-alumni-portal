@@ -74,9 +74,9 @@ const Profile = () => {
                             </button>
                         </div>
                         <div>
-                            <button className="mt-4 hover:text-[#40BA21] underline">
+                            {/* <button className="mt-4 hover:text-[#40BA21] underline">
                                 Change Password
-                            </button>
+                            </button> */}
                         </div>
                     </div>
                 </div>
@@ -116,11 +116,11 @@ const Profile = () => {
 
             <div className="my-8">
                 <h1 className="text-2xl font-bold">About</h1>
-                <div className="border h-[120px] my-4">
-                    <div className="flex items-center overflow-y-auto mx-4">
-                        <p className="mt-2 text-gray-600">{user.bio || 'Please tell us about yourself...'}</p>
-                    </div>
-                </div>
+                
+                    <textarea name="about" id="about" cols={130} rows={3} disabled>
+                        {user.bio || 'Please update your profile information...'}
+                    </textarea>
+               
             </div>
             {isEditing && (
                 <EditProfileModal

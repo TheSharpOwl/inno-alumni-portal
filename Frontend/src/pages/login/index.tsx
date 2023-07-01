@@ -34,6 +34,7 @@ const LoginForm = () => {
 
       if (response.ok) {
         const data = await response.json();
+        localStorage.setItem("alumni-token", data.token);
         console.log('success', response, data);
         setSuccessMessage(data.message); // Set success message
         setShowModal(true); // Show success modal
