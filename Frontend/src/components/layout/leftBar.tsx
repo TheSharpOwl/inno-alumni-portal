@@ -50,8 +50,8 @@ export default function LeftBar({className, ...props}) {
     }
     ,[])
 
-    const handleLogout = (event) => {
-        localStorage.clear();
+    const handleLogout = () => {
+        localStorage.removeItem('innoToken');
         router.push('/login');
     }
     
@@ -111,9 +111,9 @@ export default function LeftBar({className, ...props}) {
             </div>
 
             <div className="flex items-center">
-                <button className="flex items-center bg-transparent h-12 w-full hover:bg-[#333E82] active:bg-[#505B95] font-semibold py-2 px-4 hover:border-transparent rounded">
+                <button onClick={handleLogout} className="flex items-center bg-transparent h-12 w-full hover:bg-[#333E82] active:bg-[#505B95] font-semibold py-2 px-4 hover:border-transparent rounded">
                     <div className="text-[#40BA21] pr-4"><RiLogoutBoxRLine size={24}/></div>
-                    <div onClick={handleLogout}>Log Out</div>
+                    <div>Log Out</div>
                 </button>
             </div>
         </div>

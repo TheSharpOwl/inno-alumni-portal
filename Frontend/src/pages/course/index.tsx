@@ -55,7 +55,7 @@ export default function Course() {
             }
         })
         .then(res => {
-        console.log("BOOKED", res)
+        // console.log("BOOKED", res)
         const result = res.data.map((course) => ({
                 ...course,
                 "duration": "24.07.2023 — 26.07.2023",
@@ -67,7 +67,7 @@ export default function Course() {
     }
 
     const handleRequestCourse = async (courseId) => {
-        const token = localStorage.getItem("alumni-token");
+        const token = localStorage.getItem("innoToken");
         await axios.post(`${apiEndPoint}/request/course`,
         JSON.stringify({
             id: courseId
@@ -88,7 +88,7 @@ export default function Course() {
         })
     }
     useEffect(()=>{
-        const token = localStorage.getItem("alumni-token");
+        const token = localStorage.getItem("innoToken");
         setToken(token)
         requestAllCourses(token);
         requestBookedCourses(token);
