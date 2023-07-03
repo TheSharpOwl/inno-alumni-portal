@@ -38,9 +38,9 @@ const ProfilePicture = ({ src, alt }) => {
 const ProfileInfo = ({ user }) => {
   return (
     <div>
-      <h1 className="text-xl font-semibold text-[#202020]">{user.name}</h1>
-      <h3 className="text-lg font-semibold text-[#202020]">{user.name_russian}</h3>
-      <p>{user.email}</p>
+      <h1 className="text-xl font-semibold text-[#202020]">{user && user.name}</h1>
+      <h3 className="text-lg font-semibold text-[#202020]">{user && user.name_russian}</h3>
+      <p>{user && user.email}</p>
     </div>
   );
 };
@@ -71,27 +71,27 @@ const PersonalInfo = ({ user }) => {
       <div className="flex flex-wrap justify-between mx-8 my-4">
         <div>
           <h1>Degree</h1>
-          <p className="mt-4 text-[#a6a6b3] text-center">{user.field_of_study || 'Field of Study'}</p>
+          <p className="mt-4 text-[#a6a6b3] text-center">{user && user.field_of_study || 'Field of Study'}</p>
         </div>
         <div>
           <h1>Date of graduation</h1>
-          <p className="mt-4 text-[#a6a6b3] text-center">{user.graduation_year || 'YYYY'}</p>
+          <p className="mt-4 text-[#a6a6b3] text-center">{user && user.graduation_year || 'YYYY'}</p>
         </div>
         <div>
           <h1>Place of work</h1>
-          <p className="mt-4 text-[#a6a6b3] text-center">{user.company || 'Company Name'}</p>
+          <p className="mt-4 text-[#a6a6b3] text-center">{user && user.company || 'Company Name'}</p>
         </div>
         <div>
           <h1>Position</h1>
-          <p className="mt-4 text-[#a6a6b3] text-center">{user.position || 'Work Position'}</p>
+          <p className="mt-4 text-[#a6a6b3] text-center">{user && user.position || 'Work Position'}</p>
         </div>
         <div>
           <h1>Current city</h1>
-          <p className="mt-4 text-[#a6a6b3] text-center">{user.city || 'City'}</p>
+          <p className="mt-4 text-[#a6a6b3] text-center">{user && user.city || 'City'}</p>
         </div>
         <div>
           <h1>Telegram</h1>
-          <p className="mt-4 text-[#a6a6b3] text-center">{user.telegram || '@Username'}</p>
+          <p className="mt-4 text-[#a6a6b3] text-center">{user && user.telegram || '@Username'}</p>
         </div>
       </div>
     </div>
@@ -100,11 +100,9 @@ const PersonalInfo = ({ user }) => {
 
 const About = ({ bio }) => {
   return (
-    <div className="border h-[120px] my-4">
-      <div className="flex items-center overflow-y-auto mx-4">
-        <p className="mt-2 text-gray-600">{bio || 'Please tell us about yourself...'}</p>
-      </div>
-    </div>
+    <textarea name="about" id="about" cols={130} rows={3} disabled>
+      {bio || 'Please update your profile information...'}
+    </textarea>
   );
 };
 
@@ -130,44 +128,13 @@ const Profile = () => {
 
   return (
     <MainLayout>
-        <div>
-            <h1 className="text-[#40BA21] text-3xl font-bold">Personal data</h1>
-            <div className="my-8">
-                <div className="flex flex-wrap items-center justify-between">
-                    <div className="flex items-center">
-                        <div className="mr-4">
-                            {
-                                user.profilePic ?
-                                <Avatar 
-                                    src={user.profilePic}
-                                    alt={user.name}
-                                    size={48} 
-                                /> :
-                                <div className="text-[#40BA21]"><HiUserCircle size={96}/></div>
-                            }
-                        </div>
-                        <div>
-                            <h1 className="text-xl font-semibold text-[#202020]">{user.name}</h1>
-                            <h3 className="text-lg font-semibold text-[#202020]">{user.name_russian}</h3>
-                            <p>{user.email}</p>
-                        </div>
-                    </div>
-                    <div>
-                        <div>
-                            <button
-                                className="px-4 py-2 text-[#40BA21] border-solid border-[#40BA21] border-2 rounded hover:bg-[#40BA21] hover:text-white"
-                                onClick={() => setIsEditing(true)}
-                            >
-                                EDIT INFORMATION
-                            </button>
-                        </div>
-                        <div>
-                            {/* <button className="mt-4 hover:text-[#40BA21] underline">
-                                Change Password
-                            </button> */}
-                        </div>
-                    </div>
-                </div>
+      <div>
+        <h1 className="text-[#40BA21] text-3xl font-bold">Personal data</h1>
+        <div className="my-8">
+          <div className="flex flex-wrap items-center justify-between">
+            <div className="flex items-center">
+              <ProfilePicture src={user && user.profilePic} alt={user && user.name} />
+              <ProfileInfo user={user} />
             </div>
             <EditButtons onEdit={() => setIsEditing(true)} onChangePassword={handlePasswordChange} />
           </div>
@@ -175,20 +142,9 @@ const Profile = () => {
 
         <PersonalInfo user={user} />
 
-            <div className="my-8">
-                <h1 className="text-2xl font-bold">About</h1>
-                
-                    <textarea name="about" id="about" cols={130} rows={3} disabled>
-                        {user.bio || 'Please update your profile information...'}
-                    </textarea>
-               
-            </div>
-            {isEditing && (
-                <EditProfileModal
-                    onSave={handleSave}
-                    onClose={() => setIsEditing(false)}
-                />
-            )}
+        <div className="my-8">
+          <h1 className="text-2xl font-bold">About</h1>
+          <About bio={user && user.bio} />
         </div>
 
         {isEditing && <EditProfileModal onSave={handleSave} onClose={() => setIsEditing(false)} />}
