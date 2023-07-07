@@ -15,14 +15,17 @@ import { apiEndPoint } from "../../constants";
 import SuccessModal from "../../components/modals/success.modal";
 import Layout from "../../components/layout/authLayout";
 import { registerValidationSchema } from 'schemaValidation';
+import { useStore } from 'context/store';
 
 
 const SignupForm = () => {
+  const { setIsReg } = useStore(); // Access the setIsReg function from the store
+
   const [show, setShow] = useState<PasswordCredential>({password: false, password2: false});
     const [successMessage, setSuccessMessage] = useState('');
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
-  
+
   const handleSubmit = async (values: {}, { setSubmitting, setErrors }: any) => {
     try {
       const response = await fetch(`${apiEndPoint}/register`, {
@@ -35,24 +38,17 @@ const SignupForm = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('success', response, data);
-        setSuccessMessage(data.message); // Set success message
-        setShowModal(true); // Show success modal
+        setSuccessMessage('Registration Successful'); // Set success message
+        setShowModal(true);
+        setIsReg(true)
         setSubmitting(false);
-        if (!showModal) {
-          const timer = setTimeout(() => {
-            router.push('/login');
-          }, 1000);
-          return () => clearTimeout(timer);
-        }
+        data && router.push('/login');
       } else {
         const errorData = await response.json();
-        console.log('error', errorData);
-        setErrors({ password2: errorData.message });
+        setErrors({ password2: errorData.message || errorData.email[0] });
         setSubmitting(false);
       }
     } catch (error) {
-      console.error('Error:', error);
       setErrors({ password2: 'An error occurred while signing up' });
       setSubmitting(false);
     }
@@ -81,9 +77,7 @@ const SignupForm = () => {
                     <HiOutlineMail size={20}/>
                   </span>
                 </div>
-                <span className="text-red-500 text-left">
-                  <ErrorMessage name="email" component="div" className="error" />
-                </span>
+                <ErrorMessage name="email" component="div" className="text-red-500 text-left" />
               </div>
 
 
@@ -97,9 +91,7 @@ const SignupForm = () => {
                     }
                   </span>
                 </div>
-                <span className="text-red-500 text-left">
-                  <ErrorMessage name="password" component="div" className="error" />
-                </span>
+                <ErrorMessage name="password" component="div" className="text-red-500 text-left" />
               </div>
 
               <div>
@@ -112,14 +104,12 @@ const SignupForm = () => {
                     }
                   </span>
                 </div>
-                <span className="text-red-500 text-left">
-                  <ErrorMessage name="password2" component="div" className="error" />
-                </span>
+                <ErrorMessage name="password2" component="div" className="text-red-500 text-left" />
               </div>
               
               <div className="w-2/5 m-auto">
                 <button type="submit" disabled={isSubmitting} className={styles.button}>
-                    Sign up
+                  {isSubmitting ? 'Signing up...' : 'Sign up'}
                 </button>
               </div>
             </Form>

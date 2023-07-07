@@ -67,7 +67,7 @@ const EditProfileModal = ({ onSave, onClose }) => {
   }
 
   useEffect(() => {
-    const token = localStorage.getItem("alumni-token");
+    const token = localStorage.getItem("innoToken");
     setToken(token);
     updateUserProfile(token);
   }, []);
