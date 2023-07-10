@@ -1,3 +1,6 @@
-Backend/api/__pycache__/
-Backend/alumni_portal/__pycache__/
-node_modules/
+Backend/**/__pycache__/
+Backend/**/.DS_Store/
+Frontend/node_modules/
+Backend/**/.env
+Backend/venv
+.DS_Store
