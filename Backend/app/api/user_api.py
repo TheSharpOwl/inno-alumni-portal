@@ -1,7 +1,7 @@
 
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from fastapi.encoders import jsonable_encoder
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Response, status
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request, Response, status
 
 from app.utils.oa2 import get_current_user
 from ..schema import schemas
@@ -153,3 +153,50 @@ def confirm_verification(
     
     db.user.update(where={"id":user.id}, data={"is_verified": True})
     return Response(status_code=status.HTTP_200_OK)
+
+
+from fastapi_sso.sso.generic import create_provider
+from typing import Any, Callable, Dict, List, Optional, Type, Union
+discovery = {
+    "authorization_endpoint": 'https://sso.university.innopolis.ru/adfs/oauth2/authorize',
+    "token_endpoint": "http://127.0.0.1:9001/api/v1/user/token_sso",
+    "userinfo_endpoint": "http://127.0.0.1:9001/api/v1/user/user_sso",
+}
+# https://moodle.innopolis.university/auth/oauth2/login.php?id=1&wantsurl=%2F&sesskey=bxqcQ7BJwf
+# https://sso.university.innopolis.ru/adfs/oauth2/authorize/?client_id=c393d763-6d21-4f25-9e64-857b6822336c&
+# response_type=code&redirect_uri=https%3A%2F%2Fmoodle.innopolis.university%2Fadmin%2Foauth2callback.php&
+# state=%2Fauth%2Foauth2%2Flogin.php%3Fwantsurl%3Dhttps%253A%252F%252F
+
+# moodle.innopolis.university%252F%26sesskey%3DEfWRDuEBqD%26id%3D1&scope=openid%20profile%20email%20allatclaims&
+# response_mode=form_post
+SSOProvider = create_provider(name="oidc", discovery_document=discovery)
+sso = SSOProvider(
+    client_id="c393d763-6d21-4f25-9e64-857b6822336c",
+    client_secret="secret",
+    redirect_uri="http://127.0.0.1:9001/api/v1/user/callback",
+    allow_insecure_http=True,
+    scope=["openid"],
+    )
+
+@router.get("/login_sso")
+async def login_with_sso():
+    print("login_sso")
+    print(sso)
+    return await sso.get_login_redirect()
+
+@router.get("/token_sso")
+def token_callback_with_sso():
+    print("token_sso")
+    pass
+
+@router.get("/user_sso")
+def user_callback_with_sso():
+    print("user_sso")
+    pass
+
+@router.get("/callback")
+async def authentication_callback_with_sso(request: Request):
+    print("callback", request)
+    user = await sso.verify_and_process(request)
+    print(user)
+    pass
