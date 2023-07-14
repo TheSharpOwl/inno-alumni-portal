@@ -26,4 +26,4 @@ def order_pass(pass_request: schemas.OrderPassRequest, cur_user:schemas.UserOutp
         "guest_info": guest_info
     })
 
-    return {"status": status.HTTP_201_CREATED, "detail": "Successfully created pass order"}
+    return {"status": status.HTTP_201_CREATED, "detail": "Successfully created pass order", "data": requested_pass}

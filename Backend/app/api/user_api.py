@@ -50,6 +50,7 @@ def create_alumni_account(user_to_create: schemas.SignUpUser):
 
     encrypted_password = hash.hash_password(password)
     db.user.create(data={
+        "name": user_to_create.name,
         "email": new_user_email, 
         "password": encrypted_password
     })
