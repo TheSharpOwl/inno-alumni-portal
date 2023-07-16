@@ -1,1 +1,0 @@
-export const apiEndPoint = 'http://ziadxkabakibi.fvds.ru/backend'

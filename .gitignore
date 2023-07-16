@@ -1,6 +1,9 @@
-Backend/**/__pycache__/
-Backend/**/.DS_Store/
-Frontend/node_modules/
-Backend/**/.env
-Backend/venv
+**/__pycache__/
+**/.DS_Store/
+node_modules/
+**/.env
+venv
 .DS_Store
+
+log
+.next
