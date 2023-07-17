@@ -10,9 +10,11 @@ class InternalUser(BaseModel):
     id: str
     email: EmailStr
     name: Optional[str]
-    graduation_year: Optional[int]
-    field_of_study: Optional[str]
-    bio: Optional[str]
+    contact_email: EmailStr
+    phone_number: Optional[str]
+    graduated_track: Optional[str]
+    graduation_year: Optional[str]
+    about_you: Optional[str]
     city: Optional[str]
     company: Optional[str]
     position: Optional[str]
@@ -34,9 +36,11 @@ class SignUpUser(BaseModel):
 
 class UpdateUser(BaseModel):
     name: Optional[str]
-    graduation_year: Optional[int]
-    field_of_study: Optional[str]
-    bio: Optional[str]
+    phone_number: Optional[str]
+    contact_email: EmailStr
+    graduation_year: Optional[str]
+    graduated_track: Optional[str]
+    about_you: Optional[str]
     city: Optional[str]
     company: Optional[str]
     position: Optional[str]
@@ -50,14 +54,16 @@ class UpdateUser(BaseModel):
 class UserOutput(BaseModel):
     name: Optional[str]
     email: EmailStr
-    graduation_year: Optional[int]
+    contact_email: Optional[EmailStr]
+    phone_number: Optional[str]
+    graduation_year: Optional[str]
     telegram_id: Optional[int]
     telegram_handle: Optional[str]
     position: Optional[str]
     company: Optional[str]
     city: Optional[str]
-    bio: Optional[str]
-    field_of_study: Optional[str]
+    about_you: Optional[str]
+    graduated_track: Optional[str]
     is_volunteer: Optional[bool]
 
     class Config():
