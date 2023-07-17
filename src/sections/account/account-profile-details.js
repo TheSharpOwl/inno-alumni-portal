@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -10,11 +10,13 @@ import {
   TextField,
   Unstable_Grid2 as Grid
 } from '@mui/material';
+import { updateUserInformation } from '../../api';
+import { useAuth } from 'src/hooks/use-auth';
 
 const states = [
   {
     value: 'SNE',
-    label: 'Security Networks'
+    label: 'Security & Networks'
   },
   {
     value: 'SE',
@@ -32,18 +34,25 @@ const states = [
 
 
 export const AccountProfileDetails = () => {
+  const { user: {
+    about_you = "", city = "", company = "",
+    contact_email = "", email = "", graduated_track = "",
+    graduation_year = "", name = "", phone_number = "",
+    position = "", telegram_handle = ""
+  } } = useAuth();
+
   const [values, setValues] = useState({
-    fullName: 'Daniel Atonge',
-    telegramHandle: "@hardriive",
-    email: 'd.atonge@innopolis.university',
-    phone: '+79998112665',
-    graduatedTrack: 'SE',
-    graduatedYear: "2022",
-    currentCity: "Innopolis",
-    currentCompany: "SciVenia",
-    companyRole: "Team Lead",
-    aboutYou: 'I love and practice collective sport',
-    contactEmail: "elamboatonge@gmail.com"
+    fullName: name,
+    telegramHandle: telegram_handle,
+    email: email,
+    phone: phone_number,
+    graduatedTrack: graduated_track,
+    graduationYear: graduation_year,
+    currentCity: city,
+    currentCompany: company,
+    companyRole: position,
+    aboutYou: about_you,
+    contactEmail: contact_email
   });
 
 
@@ -57,12 +66,26 @@ export const AccountProfileDetails = () => {
     []
   );
 
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-    },
-    []
-  );
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const { fullName, telegramHandle, phone, graduatedTrack,
+      graduationYear, currentCity, currentCompany,
+      companyRole, aboutYou, contactEmail } = values;
+
+    const response = await updateUserInformation({
+      name: fullName,
+      phone_number: phone,
+      contact_email: contactEmail,
+      graduation_year: graduationYear,
+      graduated_track: graduatedTrack,
+      about_you: aboutYou,
+      city: currentCity,
+      company: currentCompany,
+      position: companyRole,
+      telegram_handle: telegramHandle
+    })
+    console.log(values)
+  };
 
   return (
     <form
@@ -104,6 +127,7 @@ export const AccountProfileDetails = () => {
                   name="email"
                   onChange={handleChange}
                   required
+                  disabled
                   value={values.email}
                 />
               </Grid>
@@ -165,10 +189,11 @@ export const AccountProfileDetails = () => {
                 <TextField
                   fullWidth
                   label="Graduated Year"
-                  name="graduatedYear"
+                  name="graduationYear"
                   onChange={handleChange}
+                  type='number'
                   required
-                  value={values.graduatedYear}
+                  value={values.graduationYear}
                 />
               </Grid>
               <Grid
@@ -244,7 +269,7 @@ export const AccountProfileDetails = () => {
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end' }}>
-          <Button variant="contained">
+          <Button type='submit' variant="contained">
             Save details
           </Button>
         </CardActions>

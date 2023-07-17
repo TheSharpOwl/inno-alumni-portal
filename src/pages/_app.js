@@ -8,11 +8,14 @@ import { AuthConsumer, AuthProvider } from 'src/contexts/auth-context';
 import { useNProgress } from 'src/hooks/use-nprogress';
 import { createTheme } from 'src/theme';
 import { createEmotionCache } from 'src/utils/create-emotion-cache';
+import Notifier from 'src/components/Notifier';
 import 'simplebar-react/dist/simplebar.min.css';
 
 const clientSideEmotionCache = createEmotionCache();
 
 const SplashScreen = () => null;
+
+
 
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -45,6 +48,7 @@ const App = (props) => {
                   : getLayout(<Component {...pageProps} />)
               }
             </AuthConsumer>
+            <Notifier />
           </ThemeProvider>
         </AuthProvider>
       </LocalizationProvider>

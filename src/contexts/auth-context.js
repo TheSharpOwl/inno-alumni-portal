@@ -47,7 +47,7 @@ const handlers = {
     return {
       ...state,
       isAuthenticated: false,
-      user: null
+      user: {}
     };
   }
 };
@@ -90,8 +90,6 @@ export const AuthProvider = (props) => {
           ...userInfo,
           id: '5e86809283e28b96d2d38537',
           avatar: '/assets/avatars/avatar-miron-vitold.png',
-          name: 'Daniel Atonge',
-          email: 'd.atonge@innopolis.university'
         };
 
         dispatch({

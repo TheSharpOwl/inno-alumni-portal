@@ -1,3 +1,4 @@
+import notify from '../utils/notify';
 import sendRequest from './sendRequest';
 const BASE_USER_PATH = '/api/v1/user';
 
@@ -14,26 +15,79 @@ export const loginRegularUser = async ({ email, password }) => {
         },
         body: formData
     }
-    const userToken = await sendRequest(
-        `${BASE_USER_PATH}/login`,
-        options,
-    );
-    return userToken;
+    try {
+        const userToken = await sendRequest(
+            `${BASE_USER_PATH}/login`,
+            options,
+        );
+        notify({ notificationMessage: "Login Successfull" })
+        return userToken;
+    } catch (err) {
+        notify(err)
+    };
+
 };
 
 
 export const registerRegularUser = async ({ name, email, password, confirmPassword }, options = {}) => {
-    const registrationFeedback = await sendRequest(
-        `${BASE_USER_PATH}/register`,
-        {
-            ...options,
-            body: JSON.stringify({
-                name, email, password,
-                confirm_password: confirmPassword
-            })
-        },
-    );
-    return registrationFeedback;
+    try {
+        const registrationFeedback = await sendRequest(
+            `${BASE_USER_PATH}/register`,
+            {
+                ...options,
+                body: JSON.stringify({
+                    name, email, password,
+                    confirm_password: confirmPassword
+                })
+            },
+        );
+        notify({ notificationMessage: "Registration Successfull" })
+        return registrationFeedback;
+    } catch (err) {
+        notify(err)
+    };
+};
+
+
+export const updateUserInformation = async (
+    updateInformation) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const updateFeedback = await sendRequest(
+            `${BASE_USER_PATH}/update`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(updateInformation)
+            },
+        );
+        console.log(updateFeedback)
+        notify({ notificationMessage: "User profile information updated Successfully" })
+        return updateFeedback;
+    } catch (err) {
+        notify(err)
+    };
+};
+
+export const updatePasswordInformation = async (
+    passwordInformation) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const updateFeedback = await sendRequest(
+            `${BASE_USER_PATH}/update-password`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(passwordInformation)
+            },
+        );
+        notify({ notificationMessage: "User password updated Successfully" })
+        return updateFeedback;
+    } catch (err) {
+        notify(err)
+    };
 };
 
 
@@ -42,20 +96,25 @@ export const loginWithInnoSSO = async (options = {}) => {
         `${BASE_USER_PATH}/login_sso`,
         { method: 'GET', ...options },
     );
+    notify({ notificationMessage: "Login with sso Successfull" })
     return redirectURL;
 };
 
 export const getCurrentUser = async ({ accessToken }) => {
-    const userInfo = await sendRequest(
-        `${BASE_USER_PATH}/`,
-        {
-            method: 'GET',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
-            }
-        },
-    );
-    return userInfo;
+    try {
+        const userInfo = await sendRequest(
+            `${BASE_USER_PATH}/`,
+            {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            },
+        );
+        return userInfo;
+    } catch (err) {
+        notify(err)
+    };
 };
 
 /*
@@ -70,16 +129,21 @@ export const getCurrentUser = async ({ accessToken }) => {
 const BASE_PASS_PATH = '/api/v1/request_pass';
 export const createPassRequest = async ({ request }, options = {}) => {
     const accessToken = window.sessionStorage.getItem('alumniToken') || ""
-    const response = await sendRequest(
-        `${BASE_PASS_PATH}/`,
-        {
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
+    try {
+        const response = await sendRequest(
+            `${BASE_PASS_PATH}/`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(request)
             },
-            body: JSON.stringify(request)
-        },
-    );
-    return response;
+        );
+        notify({ notificationMessage: "Pass Request Creation Successfull" })
+        return response;
+    } catch (err) {
+        notify(err)
+    };
 };
 
 export const getPassRequestHistory = async () => {
@@ -129,13 +193,18 @@ export const getBookedElectiveCourses = async () => {
 // http://127.0.0.1:9001/api/v1/elective_course/request?course_id=dadfasdf
 export const makeElectiveRequest = async ({ courseId }) => {
     const accessToken = window.sessionStorage.getItem('alumniToken') || ""
-    const response = await sendRequest(
-        `${BASE_ELECTIVE_PATH}/request?course_id=${courseId}`,
-        {
-            headers: {
-                'Authorization': 'Bearer ' + accessToken
-            }
-        },
-    );
-    return response;
+    try {
+        const response = await sendRequest(
+            `${BASE_ELECTIVE_PATH}/request?course_id=${courseId}`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            },
+        );
+        notify({ notificationMessage: "Request for elective was Successfull and is in progress" })
+        return response;
+    } catch (err) {
+        notify(err)
+    };
 };

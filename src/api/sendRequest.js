@@ -1,4 +1,5 @@
 import 'isomorphic-unfetch';
+import notify from '../utils/notify';
 
 let { PORT, ROOT_URL } = process.env || {};
 PORT = PORT || 9001;
@@ -24,9 +25,9 @@ const sendRequest = async (path, options = {}) => {
     console.log(response);
     if (!response.ok) {
         const failedInformation = await response.json();
-        throw new Error(failedInformation.detail);
+        notify({ notificationMessage: failedInformation.detail })
+        throw new Error(failedInformation.detail)
     }
-
     const jsonData = await response.json();
 
     return jsonData;
