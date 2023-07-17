@@ -41,7 +41,7 @@ const Notifier = () => {
 };
 
 function TransitionLeft(props) {
-    return <Slide {...props} direction="down" />;
+    return <Slide {...props} direction="up" />;
 }
 
 export function openSnackbarExported({ notificationMessage }) {
