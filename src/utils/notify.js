@@ -1,4 +1,4 @@
-import { openSnackbarExported } from 'src/components/Notifier';
+import { openSnackbarExported } from 'src/components/notifier';
 
 export default function notify(obj) {
     openSnackbarExported({
