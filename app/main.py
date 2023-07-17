@@ -16,7 +16,7 @@ app = FastAPI(
     version="1.0",
 )
 
-origins = ['http://localhost:3000']
+origins = ['http://localhost:3000', "https://inno-alumni-portal-final.vercel.app"]
 
 app.add_middleware(
     CORSMiddleware,
