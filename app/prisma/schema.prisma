@@ -1,0 +1,92 @@
+generator db {
+    provider             = "prisma-client-py"
+    recursive_type_depth = "2"
+    interface            = "sync"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = "postgres://alumni_portal_db_user:o7NcbLeRirYftmcMTLKAtGBCfjh46F6t@dpg-cigldflgkuvojj9uh32g-a.oregon-postgres.render.com/alumni_portal_db"
+    //   url      = "postgres://postgres:postgres@127.0.0.1:5432/inno_schedule"
+}
+
+model User {
+    id    String  @id @default(cuid())
+    name  String?
+    email String
+
+    name_russian    String?
+    graduation_year Int?
+    field_of_study  String?
+    bio             String?
+    city            String?
+    company         String?
+    position        String?
+    telegram_handle String?
+    telegram_id     BigInt? @unique
+
+    is_volunteer      Boolean @default(false)
+    is_verified       Boolean @default(false)
+    verification_code Int?
+
+    course_request CourseRequest[]
+    pass_request   PassRequest[]
+
+    elective_course_id String?
+    elective_course    ElectiveCourse? @relation(fields: [elective_course_id], references: [id])
+
+    password   String
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model ElectiveCourse {
+    id              String  @id @default(cuid())
+    description     String
+    course_name     String?
+    instructor_name String?
+
+    available_places Int?
+
+    users   User[]
+    request CourseRequest[]
+}
+
+model PassRequest {
+    id             String        @id @default(cuid())
+    description    String?
+    guest_info     String?
+    feedback       String?
+    type           RequestType   @default(PASS)
+    requested_date String
+    status         RequestStatus @default(PENDING)
+    user_id        String
+    user           User          @relation(fields: [user_id], references: [id])
+    created_at     DateTime      @default(now())
+}
+
+model CourseRequest {
+    id       String  @id @default(cuid())
+    feedback String?
+
+    status  RequestStatus @default(PENDING)
+    user_id String
+    user    User?         @relation(fields: [user_id], references: [id])
+
+    course_id       String?
+    elective_course ElectiveCourse? @relation(fields: [course_id], references: [id])
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+enum RequestStatus {
+    APPROVED
+    REJECTED
+    PENDING
+}
+
+enum RequestType {
+    PASS
+    VOLUNTEER
+}
