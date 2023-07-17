@@ -81,6 +81,25 @@ def update_alumni_account(up_user: schemas.UpdateUser,
         })
     return updated_user
 
+@router.post("/update-password", status_code=status.HTTP_202_ACCEPTED)
+def update_password(
+    pass_info: schemas.UpdateUserPassword,
+    cur_user:schemas.UserWithPassword = Depends(get_current_user)
+):
+    if not hash.verify_password(pass_info.current_password, cur_user.password):
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Currently entered password is wrong")
+    
+    encrypted_new_password = hash.hash_password(pass_info.new_password)
+    db.user.update(data={
+        "password": encrypted_new_password
+    }, where={
+        "id": cur_user.id
+    })
+    return {
+            "status": status.HTTP_202_ACCEPTED,
+            "message": 'Successfully updated password'
+        }
+
 @router.get("/", response_model=schemas.UserOutput, status_code=status.HTTP_200_OK)
 def get_current_alumni(cur_user:schemas.UserOutput = Depends(get_current_user)):
     return cur_user
@@ -107,12 +126,15 @@ def forgot_password(
     return Response(status_code=status.HTTP_200_OK)
 
 
-@router.post("/update-password")
+@router.post("/forgot-update-password")
 def update_password(
     user_info,
 ):
     # user.hash_update_password(user_info, db)
     return Response(status_code=status.HTTP_200_OK)
+
+
+
 
 
 @router.post("/verify-account")

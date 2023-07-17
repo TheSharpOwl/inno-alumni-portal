@@ -26,6 +26,10 @@ class LogInUser(BaseModel):
     email: EmailStr
     password: str
 
+class UserWithPassword(BaseModel):
+    id: str
+    email: EmailStr
+    password: str
 
 
 class SignUpUser(BaseModel):
@@ -72,6 +76,11 @@ class UserOutput(BaseModel):
 
 class ConfirmationCode(BaseModel):
     code: int
+
+
+class UpdateUserPassword(BaseModel):
+    current_password: str
+    new_password: str
 
 
 
