@@ -29,6 +29,8 @@ export const RequestElectiveTable = (props) => {
     onRowsPerPageChange,
     page = 0,
     rowsPerPage = 0,
+    updateElectives,
+    updateBookedElectives
   } = props;
 
   const [selectedCourse, setSelectedCourse] = useState({
@@ -36,7 +38,7 @@ export const RequestElectiveTable = (props) => {
     "course_name": "Personal Efficiency Skills of IT-specialist",
     "instructor_name": "Evgenii Serochudinov",
     "description": "string",
-    "available_places": 20
+    "mode": "OFFLINE"
   })
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -57,6 +59,10 @@ export const RequestElectiveTable = (props) => {
   const handleRequest = async (courseId) => {
     const requestResponse = await makeElectiveRequest({ courseId })
     console.log(requestResponse);
+    updateBookedElectives((prev) => [...prev, requestResponse])
+    const newItems = items.filter(item => item.id !== courseId);
+    updateElectives(newItems)
+    handleClose();
   }
   /*{
     fullName: 'Daniel Atonge',
@@ -69,7 +75,7 @@ export const RequestElectiveTable = (props) => {
     currentCompany: "",
     companyRole: "",
     aboutYou: ''
-  }*/ 
+  }*/
   return (
     <Card>
       <Modal keepMounted
@@ -99,7 +105,11 @@ export const RequestElectiveTable = (props) => {
           <Typography
             variant="h6"
             component="h2"
-            sx={{ mt: 2 }}>Available Places: {selectedCourse.available_places}</Typography>
+            sx={{ mt: 2 }}>Delivery Mode:</Typography>
+          <Typography
+          >
+            {selectedCourse.mode}
+          </Typography>
           <Typography
             variant="h6"
             component="h2"
@@ -148,15 +158,6 @@ export const RequestElectiveTable = (props) => {
         <Box sx={{ minWidth: 800 }}>
           <Table>
             <TableHead>
-              {/* {    id              String  @id @default(cuid())
-    description     String
-    course_name     String?
-    instructor_name String?
-
-    available_places Int?
-
-    users   User[]
-    request CourseRequest[]} */}
               <TableRow>
                 <TableCell style={{ paddingLeft: 40, width: 300 }}>
                   Course Name
@@ -165,7 +166,7 @@ export const RequestElectiveTable = (props) => {
                   Instructor Name
                 </TableCell>
                 <TableCell style={{ width: 200 }}>
-                  Available Places
+                  Delivery Mode
                 </TableCell>
                 <TableCell align='center'
                   style={{ width: 300 }}>
@@ -196,7 +197,7 @@ export const RequestElectiveTable = (props) => {
                       {course.instructor_name}
                     </TableCell>
                     <TableCell>
-                      {course.available_places}
+                      {course.mode}
                     </TableCell>
                     <TableCell style={{ display: 'flex', gap: 9, flexWrap: 'wrap' }}>
 
@@ -253,6 +254,13 @@ export const RequestElectiveTable = (props) => {
               })}
             </TableBody>
           </Table>
+          {!count && (
+            <Typography
+              variant="h6"
+              sx={{ py: 2, textAlign: 'center' }}
+              component="h2">No Available Elective Courses to Pick from
+            </Typography>)
+          }
         </Box>
       </Scrollbar>
       <TablePagination
@@ -279,5 +287,7 @@ RequestElectiveTable.propTypes = {
   onSelectOne: PropTypes.func,
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  selected: PropTypes.array
+  selected: PropTypes.array,
+  updateElectives: PropTypes.func,
+  updateBookedElectives: PropTypes.func,
 };

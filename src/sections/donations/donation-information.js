@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import {
     Box,
     Button,
@@ -8,27 +8,12 @@ import {
     CardHeader,
     Divider,
     TextField,
-    Unstable_Grid2 as Grid
+    Unstable_Grid2 as Grid,
+    Typography
 } from '@mui/material';
+import { Editor } from '@tinymce/tinymce-react';
+import { getAdminDonationText, upsertAdminDonationText } from 'src/api'
 
-const states = [
-    {
-        value: 'alabama',
-        label: 'Alabama'
-    },
-    {
-        value: 'new-york',
-        label: 'New York'
-    },
-    {
-        value: 'san-francisco',
-        label: 'San Francisco'
-    },
-    {
-        value: 'los-angeles',
-        label: 'Los Angeles'
-    }
-];
 
 export const UpdateDonationInformation = () => {
     const [values, setValues] = useState({
@@ -50,26 +35,51 @@ export const UpdateDonationInformation = () => {
         []
     );
 
-    const handleSubmit = useCallback(
-        (event) => {
-            event.preventDefault();
-        },
-        []
-    );
 
+    const editorRef = useRef(null);
+    const [dirty, setDirty] = useState(false)
+    const [donationText, setDonationText] = useState("<p>Loading....</p>")
+
+    useEffect(() => setDirty(false), [donationText])
+    const handleGetAdminDonationText = async () => {
+        const { message } = await getAdminDonationText()
+        console.log(message)
+        setDonationText(message)
+    }
+
+    const handleSetAdminDonationText = async (e) => {
+        e.preventDefault()
+        if (editorRef.current) {
+            const content = editorRef.current.getContent();
+            setDirty(false)
+            editorRef.current.setDirty(false)
+
+            console.log(content)
+            const donation = {
+                message: content,
+            }
+            const responseDonation = await upsertAdminDonationText({ donation })
+            console.log(responseDonation)
+        }
+    }
+
+    useEffect(() => {
+        handleGetAdminDonationText()
+    }, [])
     return (
         <form
             autoComplete="off"
             noValidate
-            onSubmit={handleSubmit}
+            onSubmit={handleSetAdminDonationText}
         >
             <Card>
                 <CardHeader
-                    subheader="How will the funds received be used:"
                     title="Description"
+                    subheader="Answer to the question: Why and for what do we need donations?"
                 />
                 <CardContent sx={{ pt: 0 }}>
                     <Box sx={{ m: -1.5 }}>
+                        <Typography sx={{ px: 1.5, color: 'grey' }} variant='body2'>This answer will be displayed on the Alumni Donation page</Typography>
                         <Grid
                             container
                             spacing={3}
@@ -78,24 +88,35 @@ export const UpdateDonationInformation = () => {
                                 xs={12}
                                 md={12}
                             >
-                                <TextField
-                                    fullWidth
-                                    hiddenLabel
-                                    name="description"
-                                    onChange={handleChange}
-                                    required
-                                    value={"User can do that"}
-                                    multiline
-                                    rows={8}
+                                <Editor
+                                    apiKey='06j1sdk82snkig4i7v5u03ne6nrs1dabbh9ftqntbcutrvv6'
+                                    onInit={(evt, editor) => editorRef.current = editor}
+                                    initialValue={donationText}
+                                    onDirty={() => setDirty(true)}
+                                    init={{
+                                        height: 500,
+                                        menubar: false,
+                                        plugins: [
+                                            'advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview',
+                                            'anchor', 'searchreplace', 'visualblocks', 'code', 'fullscreen',
+                                            'insertdatetime', 'media', 'table', 'code', 'help', 'wordcount'
+                                        ],
+                                        toolbar: 'undo redo | blocks | ' +
+                                            'bold italic forecolor | alignleft aligncenter ' +
+                                            'alignright alignjustify | bullist numlist outdent indent | ' +
+                                            'removeformat | help',
+                                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                                    }}
                                 />
                             </Grid>
 
                         </Grid>
+                        {dirty && <Typography sx={{ px: 1.5, color: 'red' }} variant='body2'>You have unsaved content!</Typography>}
                     </Box>
                 </CardContent>
                 <Divider />
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
-                    <Button variant="contained">
+                    <Button disabled={!dirty} type='submit' variant="contained">
                         Save details
                     </Button>
                 </CardActions>

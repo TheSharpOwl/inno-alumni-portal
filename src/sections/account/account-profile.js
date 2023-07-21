@@ -1,5 +1,5 @@
 import {
-  Avatar,
+  // Avatar,
   Box,
   Button,
   Card,
@@ -8,6 +8,7 @@ import {
   Divider,
   Typography
 } from '@mui/material';
+import Avatar from "boring-avatars";
 
 const user = {
   avatar: '/assets/avatars/avatar-miron-vitold.png',
@@ -15,7 +16,8 @@ const user = {
   country: 'Russian Federation',
   jobTitle: 'Lead Developer',
   name: 'Daniel Atonge',
-  timezone: 'GMT+3'
+  company: "sciVenia",
+  telegramHandle: "hardriive"
 };
 
 export const AccountProfile = () => (
@@ -25,17 +27,18 @@ export const AccountProfile = () => (
         sx={{
           alignItems: 'center',
           display: 'flex',
-          flexDirection: 'column'
+          flexDirection: 'column',
+          py: 2
         }}
       >
-        <Avatar
-          src={user.avatar}
-          sx={{
-            height: 80,
-            mb: 2,
-            width: 80
-          }}
-        />
+        <span style={{ marginBottom: 12 }}>
+          <Avatar
+            variant='beam'
+            size={80}
+            name={user.name}
+          />
+
+        </span>
         <Typography
           gutterBottom
           variant="h5"
@@ -46,24 +49,15 @@ export const AccountProfile = () => (
           color="text.secondary"
           variant="body2"
         >
-          {user.city} {user.country}
+          {user.company}, {user.city}
         </Typography>
         <Typography
           color="text.secondary"
           variant="body2"
         >
-          {user.timezone}
+          @{user.telegramHandle}
         </Typography>
       </Box>
     </CardContent>
-    <Divider />
-    <CardActions>
-      <Button
-        fullWidth
-        variant="text"
-      >
-        Upload picture
-      </Button>
-    </CardActions>
   </Card>
 );

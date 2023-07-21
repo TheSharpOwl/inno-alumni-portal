@@ -1,9 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import {
     Box,
     Card,
     Typography
 } from '@mui/material';
+import { getAdminDonationText } from '../../api';
 
 
 const details = [
@@ -26,7 +27,15 @@ const details = [
 ]
 
 export const WhyDonateInnopolis = () => {
+    const [donationText, setDonationText] = useState("Loading...")
+    const handleGetAdminDonationText = async () => {
+        const { message } = await getAdminDonationText()
+        setDonationText(message)
+    }
 
+    useEffect(() => {
+        handleGetAdminDonationText();
+    }, [])
     return (
         <div>
             <Card sx={{ mb: 1 }}>
@@ -38,7 +47,9 @@ export const WhyDonateInnopolis = () => {
                         >
                             Why and for what do we need donations?
                         </Typography>
-                        {details.map(({ title, value }, i) => (
+                        <div dangerouslySetInnerHTML={{ __html: donationText }}>
+                        </div>
+                        {/* {details.map(({ title, value }, i) => (
                             <div key={i}>
                                 <Typography
                                     sx={{ mt: 4 }}
@@ -49,7 +60,7 @@ export const WhyDonateInnopolis = () => {
                                     {value}
                                 </Typography>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </Box>
 

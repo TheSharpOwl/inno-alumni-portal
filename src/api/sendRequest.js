@@ -25,6 +25,7 @@ const sendRequest = async (path, options = {}) => {
     console.log(response);
     if (!response.ok) {
         const failedInformation = await response.json();
+        console.log(failedInformation);
         notify({ notificationMessage: failedInformation.detail })
         throw new Error(failedInformation.detail)
     }

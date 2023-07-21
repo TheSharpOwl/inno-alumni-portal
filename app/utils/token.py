@@ -1,8 +1,11 @@
-from jose import JWTError, jwt
-from typing import Optional
-from datetime import datetime, timedelta
 import uuid
-from ..config import settings
+from jose import JWTError, jwt
+from typing import List, Optional
+from datetime import datetime, timedelta
+
+from app.config import settings
+
+
 
 SECRET_KEY = settings.secret_key
 ALGORITHM = settings.algorithm

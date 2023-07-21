@@ -9,6 +9,7 @@ from pydantic import BaseModel, EmailStr
 class InternalUser(BaseModel):
     id: str
     email: EmailStr
+    role: str
     name: Optional[str]
     contact_email: EmailStr
     phone_number: Optional[str]
@@ -31,6 +32,11 @@ class UserWithPassword(BaseModel):
     email: EmailStr
     password: str
 
+
+class CreateAdminUser(BaseModel):
+    name: str
+    email: EmailStr
+    password: str
 
 class SignUpUser(BaseModel):
     name: str
@@ -102,7 +108,7 @@ class ElectiveCourse(BaseModel):
     course_name: str
     instructor_name: Optional[str] = None
     description: Optional[str] = None
-    available_places: Optional[int] = None
+    mode: Optional[str] = None
 
 
 class ElectiveCourseOutput(BaseModel):
@@ -110,7 +116,27 @@ class ElectiveCourseOutput(BaseModel):
     course_name: str
     instructor_name: Optional[str] = None
     description: Optional[str] = None
-    available_places: Optional[int] = None
+    mode: Optional[str] = None
+
+
+
+####### DONATION SCHEMAS
+#######################################
+
+class MakeDonation(BaseModel):
+    message: str
+
+class DonationOutput(BaseModel):
+    id: str
+    user: UserOutput
+    message: str
+    created_at: datetime.datetime
+
+
+
+
+
+
 
 
 

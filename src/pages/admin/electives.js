@@ -10,6 +10,7 @@ import { Layout as DashboardLayout } from 'src/layouts/admin-dashboard/layout';
 import { InformationTable } from 'src/sections/customer/customers-table';
 import { InformationSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
+import { useDropzone } from 'react-dropzone'
 
 const now = new Date();
 
@@ -195,6 +196,23 @@ const Page = () => {
     []
   );
 
+  const onDrop = useCallback((acceptedFiles) => {
+    acceptedFiles.forEach((file) => {
+      const reader = new FileReader()
+
+      reader.onabort = () => console.log('file reading was aborted')
+      reader.onerror = () => console.log('file reading has failed')
+      reader.onload = () => {
+        // Do whatever you want with the file contents
+        const binaryStr = reader.result
+        console.log(binaryStr)
+      }
+      reader.readAsArrayBuffer(file)
+    })
+
+  }, [])
+  const { getRootProps, getInputProps } = useDropzone({ onDrop })
+
   return (
     <>
       <Head>
@@ -220,12 +238,23 @@ const Page = () => {
                 <Typography variant="h4">
                   Elective Courses
                 </Typography>
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <p>Drag 'n' drop some files here, or click to select files</p>
+                </div>
+                
                 <Stack
                   alignItems="center"
                   direction="row"
                   spacing={1}
                 >
+
                   <Button
+                    onClick={(e) => {
+
+
+
+                    }}
                     color="inherit"
                     startIcon={(
                       <SvgIcon fontSize="small">

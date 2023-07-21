@@ -59,6 +59,22 @@ def create_alumni_account(user_to_create: schemas.SignUpUser):
             "message": 'Successfully registered user'
         }
 
+@router.post("/register-admin",response_model=schemas.UserOutput, status_code=status.HTTP_201_CREATED)
+def create_admin_account(admin: schemas.CreateAdminUser):
+
+    found_user = db.user.find_first(where={"email": admin.email, "role": "ADMIN"})
+
+    # If user is found return with error
+    if found_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Admin User with email already exists')
+
+    encrypted_password = hash.hash_password(admin.password)
+    return db.user.create(data={
+        "name": admin.name,
+        "email": admin.email, 
+        "password": encrypted_password,
+        "role": "ADMIN"
+    })
 
 
 @router.post("/update", status_code=status.HTTP_201_CREATED, response_model=schemas.UserOutput)
@@ -103,6 +119,21 @@ def update_password(
 @router.get("/", response_model=schemas.UserOutput, status_code=status.HTTP_200_OK)
 def get_current_alumni(cur_user:schemas.UserOutput = Depends(get_current_user)):
     return cur_user
+
+
+@router.get("/all", status_code=status.HTTP_200_OK)
+def get_all_registered_alumni(cur_user:schemas.UserOutput = Depends(get_current_user)):
+    users = db.user.find_many(include={"course_request": True, "pass_request": True, "donation": True}, order={
+        "created_at": "desc"
+    })
+    users_with_stats = list(map(lambda u: {
+        "id": u.id, "name": u.name, "email": u.email, "contact_email": u.contact_email,
+        "phone_number": u.phone_number, "role": u.role, "graduation_year": u.graduation_year, "graduated_track": u.graduated_track,
+        "about_you": u.about_you, "city": u.city, "company": u.company, "position": u.position, 
+        "is_volunteer": u.is_volunteer, "created_at": u.created_at, "telegram_handle": u.telegram_handle,
+        "course_request": len(u.course_request), "pass_request": len(u.pass_request), "donation": len(u.donation)
+    }, users))
+    return users_with_stats
 
 
 @router.post("/forgot-password")

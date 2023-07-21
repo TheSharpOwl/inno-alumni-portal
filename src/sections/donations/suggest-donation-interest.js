@@ -8,37 +8,24 @@ import {
     CardHeader,
     Divider,
     TextField,
-    Unstable_Grid2 as Grid
+    Unstable_Grid2 as Grid,
+    Typography
 } from '@mui/material';
+import { makeDonationText } from '../../api';
 
 
 
 export const SuggestDonationInterest = () => {
-    const [values, setValues] = useState({
-        firstName: 'Anika',
-        lastName: 'Visser',
-        email: 'd.atonge@innopolis.university',
-        phone: '',
-        state: 'los-angeles',
-        country: 'USA'
-    });
+    const [message, setMessage] = useState("")
 
-    const handleChange = useCallback(
-        (event) => {
-            setValues((prevState) => ({
-                ...prevState,
-                [event.target.name]: event.target.value
-            }));
-        },
-        []
-    );
-
-    const handleSubmit = useCallback(
-        (event) => {
-            event.preventDefault();
-        },
-        []
-    );
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const donation = {
+            message
+        }
+        await makeDonationText({ donation })
+        setMessage("")
+    }
 
     return (
         <form
@@ -53,6 +40,9 @@ export const SuggestDonationInterest = () => {
                 />
                 <CardContent sx={{ pt: 0 }}>
                     <Box sx={{ m: -1.5 }}>
+                        <Typography sx={{ px: 1.5, color: 'grey' }} variant="body2">
+                            Add the reference number of your donation and include a brief description of how you want your funds to be used
+                        </Typography>
                         <Grid
                             container
                             spacing={3}
@@ -65,11 +55,11 @@ export const SuggestDonationInterest = () => {
                                     fullWidth
                                     hiddenLabel
                                     name="description"
-                                    onChange={handleChange}
+                                    onChange={(e) => setMessage(e.target.value)}
                                     required
-                                    value={"I will love to support students in need"}
+                                    placeholder={"[RefNo: 294387479937794] \nI will love to support students in need"}
                                     multiline
-                                    rows={8}
+                                    rows={6}
                                 />
                             </Grid>
 
@@ -78,8 +68,8 @@ export const SuggestDonationInterest = () => {
                 </CardContent>
                 <Divider />
                 <CardActions sx={{ justifyContent: 'flex-end' }}>
-                    <Button variant="contained">
-                        Save details
+                    <Button type='submit' variant="contained">
+                        Send Donation Interest
                     </Button>
                 </CardActions>
             </Card>

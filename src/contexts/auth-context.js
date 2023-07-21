@@ -29,7 +29,8 @@ const handlers = {
             user
           })
           : ({
-            isLoading: false
+            isLoading: false,
+            isAuthenticated: false
           })
       )
     };

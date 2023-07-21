@@ -11,11 +11,12 @@ datasource db {
 }
 
 model User {
-    id            String  @id @default(cuid())
+    id            String   @id @default(cuid())
     name          String?
     email         String
     contact_email String?
     phone_number  String?
+    role          UserRole @default(ALUMNI)
 
     graduation_year String?
     graduated_track String?
@@ -37,8 +38,9 @@ model User {
     elective_course    ElectiveCourse? @relation(fields: [elective_course_id], references: [id])
 
     password   String
-    created_at DateTime @default(now())
-    updated_at DateTime @updatedAt
+    created_at DateTime   @default(now())
+    updated_at DateTime   @updatedAt
+    donation   Donation[]
 }
 
 model ElectiveCourse {
@@ -47,7 +49,7 @@ model ElectiveCourse {
     course_name     String?
     instructor_name String?
 
-    available_places Int?
+    mode ElectiveCourseModeType @default(OFFLINE)
 
     users   User[]
     request CourseRequest[]
@@ -81,6 +83,16 @@ model CourseRequest {
     updated_at DateTime @updatedAt
 }
 
+model Donation {
+    id         String   @id @default(cuid())
+    user_id    String
+    user       User     @relation(fields: [user_id], references: [id])
+    message    String
+    type       UserRole @default(ALUMNI)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
 enum RequestStatus {
     APPROVED
     REJECTED
@@ -90,4 +102,15 @@ enum RequestStatus {
 enum RequestType {
     PASS
     VOLUNTEER
+}
+
+enum ElectiveCourseModeType {
+    ONLINE
+    OFFLINE
+    HYBRID
+}
+
+enum UserRole {
+    ALUMNI
+    ADMIN
 }

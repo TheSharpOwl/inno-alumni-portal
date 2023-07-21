@@ -16,6 +16,8 @@ import { BankDetails } from 'src/sections/donations/bank-details';
 import { WhyDonateInnopolis } from 'src/sections/donations/why-donate-innopolis';
 
 
+
+
 const Page = () => (
   <>
     <Head>

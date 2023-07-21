@@ -1,5 +1,6 @@
 import { Slide, Snackbar } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { redirect } from 'next/navigation'
 
 let openSnackbarFn;
 

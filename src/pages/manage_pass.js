@@ -2,10 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from 'next/head';
 import { Box, Button, Container, Grid, Stack, SvgIcon, Typography } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
-import { CreatePassRequest } from 'src/sections/account/create-pass-request';
-import { PassRequestTable } from 'src/sections/account/pass-request-table';
+import { CreatePassRequest } from 'src/sections/request-pass/create-pass-request';
+import { PassRequestTable } from 'src/sections/request-pass/pass-request-table';
 import { createPassRequest, getPassRequestHistory } from 'src/api';
-import { PassRequestInfo } from 'src/sections/donations/pass-request-info';
+import { PassRequestInfo } from 'src/sections/request-pass/pass-request-info';
 
 const Page = () => {
 
@@ -63,7 +63,8 @@ const Page = () => {
                   <PassRequestTable
                     title="History"
                     subheader="View your request pass history"
-                    orders={passRequests} />
+                    orders={passRequests}
+                    updatePassRequests={setPassRequests} />
                 </Grid>
               </Grid>
             </div>

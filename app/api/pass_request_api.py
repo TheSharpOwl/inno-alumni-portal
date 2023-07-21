@@ -13,6 +13,7 @@ def get_all_pass_requests(cur_user:schemas.UserOutput = Depends(get_current_user
     pass_requests = db.passrequest.find_many(where={"user_id": cur_user.id},order={"requested_date": "desc"})
     return pass_requests
 
+
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def order_pass(pass_request: schemas.OrderPassRequest, cur_user:schemas.UserOutput = Depends(get_current_user)):
     guest_info = ""
@@ -27,3 +28,16 @@ def order_pass(pass_request: schemas.OrderPassRequest, cur_user:schemas.UserOutp
     })
 
     return {"status": status.HTTP_201_CREATED, "detail": "Successfully created pass order", "data": requested_pass}
+
+
+@router.delete("/", status_code=status.HTTP_200_OK)
+def disconnect_pass_request(pass_request_id: str, cur_user:schemas.UserOutput = Depends(get_current_user)):
+    pass_to_delete = db.passrequest.find_first(where={
+        "id": pass_request_id,
+        "user_id": cur_user.id
+    })
+    print(f"{pass_request_id} ---- {cur_user.id} ---- {pass_to_delete}")
+
+    return db.passrequest.delete(where={
+        "id": pass_to_delete.id
+        })

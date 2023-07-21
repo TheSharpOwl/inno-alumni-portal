@@ -4,7 +4,7 @@ import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import Bars3Icon from '@heroicons/react/24/solid/Bars3Icon';
 import MagnifyingGlassIcon from '@heroicons/react/24/solid/MagnifyingGlassIcon';
 import {
-  Avatar,
+  // Avatar,
   Badge,
   Box,
   IconButton,
@@ -16,6 +16,7 @@ import {
 import { alpha } from '@mui/material/styles';
 import { usePopover } from 'src/hooks/use-popover';
 import { AccountPopover } from './account-popover';
+import Avatar from "boring-avatars";
 
 const SIDE_NAV_WIDTH = 280;
 const TOP_NAV_HEIGHT = 64;
@@ -71,16 +72,13 @@ export const TopNav = (props) => {
             direction="row"
             spacing={2}
           >
-            <Avatar
-              onClick={accountPopover.handleOpen}
-              ref={accountPopover.anchorRef}
-              sx={{
-                cursor: 'pointer',
-                height: 40,
-                width: 40
-              }}
-              src="/assets/avatars/avatar-miron-vitold.png"
-            />
+            <span onClick={accountPopover.handleOpen} style={{ cursor: 'pointer' }} ref={accountPopover.anchorRef} >
+              <Avatar
+                variant='beam'
+                size={40}
+                name="Daniel Atonge"
+              />
+            </span>
           </Stack>
         </Stack>
       </Box>

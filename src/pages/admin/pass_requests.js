@@ -10,6 +10,7 @@ import { Layout as DashboardLayout } from 'src/layouts/admin-dashboard/layout';
 import { InformationTable } from 'src/sections/customer/customers-table';
 import { InformationSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
+import { PassRequestTable } from '../../sections/request-pass/pass-request-table';
 
 const now = new Date();
 
@@ -248,6 +249,7 @@ const Page = () => {
               rowsPerPage={rowsPerPage}
               selected={customersSelection.selected}
             />
+
           </Stack>
         </Container>
       </Box>

@@ -6,10 +6,9 @@ import { useSelection } from 'src/hooks/use-selection';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { InformationSearch } from 'src/sections/customer/customers-search';
 import { applyPagination } from 'src/utils/apply-pagination';
-import { RequestElectiveTable } from 'src/sections/customer/request-elective-table';
+import { RequestElectiveTable } from 'src/sections/request-elective/request-elective-table';
 import { getAllElectiveCourses, getBookedElectiveCourses } from 'src/api';
-import { PassRequestTable } from 'src/sections/account/pass-request-table';
-import { ElectiveRequestTable } from 'src/sections/account/elective-request-table';
+import { ElectiveRequestTable } from 'src/sections/request-elective/history-elective-request-table';
 
 const now = new Date();
 
@@ -20,7 +19,8 @@ const Page = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [electives, setElectives] = useState([])
   const [bookedElectives, setBookedElectives] = useState([])
-  console.log(electives)
+
+
   const useCustomers = (electives, page, rowsPerPage) => {
     return useMemo(
       () => {
@@ -84,8 +84,9 @@ const Page = () => {
               </Stack>
 
             </Stack>
-            <InformationSearch />
             <RequestElectiveTable
+              updateElectives={setElectives}
+              updateBookedElectives={setBookedElectives}
               count={electives.length}
               items={electiveForPage}
               onPageChange={handlePageChange}
@@ -108,7 +109,10 @@ const Page = () => {
               <ElectiveRequestTable
                 title="History"
                 subheader="View your elective request history"
-                orders={bookedElectives} />
+                orders={bookedElectives}
+                updateElectives={setElectives}
+                updateBookedElectives={setBookedElectives}
+              />
             </Grid>
           </Grid>
         </Container>
