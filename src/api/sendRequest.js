@@ -3,7 +3,7 @@ import notify from '../utils/notify';
 
 let { PORT, ROOT_URL } = process.env || {};
 PORT = PORT || 9001;
-ROOT_URL = ROOT_URL || `http://127.0.0.1:${PORT}`;
+ROOT_URL = ROOT_URL || ""//`http://127.0.0.1:${PORT}`;
 
 const sendRequest = async (path, options = {}) => {
     const removeContentType = options.headers && options.headers['Remove-Content-Type']
