@@ -1,9 +1,9 @@
 import "isomorphic-unfetch";
 import notify from "../utils/notify";
 
-let { PORT, ROOT_URL } = process.env || {};
+let { BACKEND_URL } = process.env || {};
 PORT = PORT || 9001;
-ROOT_URL = ROOT_URL || `http://0.0.0.0:${PORT}`;
+ROOT_URL = BACKEND_URL || `http://0.0.0.0:${PORT}`;
 
 const sendRequest = async (path, options = {}) => {
   const removeContentType =
