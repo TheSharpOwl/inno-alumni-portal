@@ -9,11 +9,10 @@ import {
 } from '@mui/material';
 
 const statusMap = {
-  pending: 'warning',
-  delivered: 'success',
-  refunded: 'error'
+  PENDING: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'error'
 };
-
 export const OverviewFeatureItem = (props) => {
   const { feature = {}, sx } = props;
 

@@ -19,9 +19,9 @@ import { Scrollbar } from 'src/components/scrollbar';
 import { SeverityPill } from 'src/components/severity-pill';
 
 const statusMap = {
-  pending: 'warning',
-  approved: 'success',
-  rejected: 'error'
+  PENDING: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'error'
 };
 
 export const OverviewRequests = (props) => {

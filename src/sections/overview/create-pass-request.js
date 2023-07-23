@@ -21,9 +21,9 @@ import { useCallback, useState } from 'react';
 import { maxWidth } from '@mui/system';
 
 const statusMap = {
-  pending: 'warning',
-  delivered: 'success',
-  refunded: 'error'
+  PENDING: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'error'
 };
 
 export const CreatePassRequest = (props) => {

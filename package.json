@@ -38,8 +38,8 @@
     "react-apexcharts": "1.4.0",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
-    "sheetjs-style": "^0.15.8",
     "simplebar-react": "^3.2.1",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz",
     "yup": "1.0.0"
   },
   "devDependencies": {

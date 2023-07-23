@@ -6,9 +6,9 @@ import { OverviewRequests } from 'src/sections/overview/overview-latest-requests
 const now = new Date();
 
 const statusMap = {
-  pending: 'warning',
-  approved: 'success',
-  rejected: 'error'
+  PENDING: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'error'
 };
 
 const passRequest = [

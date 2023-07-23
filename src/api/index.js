@@ -223,6 +223,40 @@ export const deletePassRequest = async ({ passRequestId }) => {
 };
 
 
+export const getAllPassRequestAdmin = async () => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    const passes = await sendRequest(
+        `${BASE_PASS_PATH}/admin`,
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        },
+    );
+    return passes;
+};
+
+export const updatePassRequest = async ({ requestId, data }) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const request = await sendRequest(
+            `${BASE_PASS_PATH}/?request_id=${requestId}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(data)
+            },
+        );
+        notify({ notificationMessage: "Request status updated Successfully" })
+        return request;
+    } catch (err) {
+        notify(err)
+    };
+};
+
 
 
 
@@ -246,6 +280,20 @@ export const getAllElectiveCourses = async () => {
     return electives;
 };
 
+export const getAllElectiveCoursesAdmin = async () => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    const electives = await sendRequest(
+        `${BASE_ELECTIVE_PATH}/admin`,
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        },
+    );
+    return electives;
+};
+
 export const getBookedElectiveCourses = async () => {
     const accessToken = window.sessionStorage.getItem('alumniToken') || ""
     const electives = await sendRequest(
@@ -258,6 +306,123 @@ export const getBookedElectiveCourses = async () => {
         },
     );
     return electives;
+};
+
+
+export const getAllElectiveRequests = async () => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    const electives = await sendRequest(
+        `${BASE_ELECTIVE_PATH}/request`,
+        {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + accessToken
+            }
+        },
+    );
+    return electives;
+};
+
+
+
+export const updateElectiveCourse = async ({ courseId, data }) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const elective = await sendRequest(
+            `${BASE_ELECTIVE_PATH}/?course_id=${courseId}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(data)
+            },
+        );
+        notify({ notificationMessage: "Course updated Successfully" })
+        return elective;
+    } catch (err) {
+        notify(err)
+    };
+};
+
+export const updateElectiveCourseRequest = async ({ requestId, data }) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const elective = await sendRequest(
+            `${BASE_ELECTIVE_PATH}/?request_id=${requestId}`,
+            {
+                method: 'PATCH',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(data)
+            },
+        );
+        notify({ notificationMessage: "Request status updated Successfully" })
+        return elective;
+    } catch (err) {
+        notify(err)
+    };
+};
+
+
+export const createElectiveCourse = async ({ data }) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const elective = await sendRequest(
+            `${BASE_ELECTIVE_PATH}/`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(data)
+            },
+        );
+        notify({ notificationMessage: "Course created Successfully" })
+        return elective;
+    } catch (err) {
+        notify(err)
+    };
+};
+
+
+export const bulkUploadElective = async ({ data }) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const elective = await sendRequest(
+            `${BASE_ELECTIVE_PATH}/bulk`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                },
+                body: JSON.stringify(data)
+            },
+        );
+        notify({ notificationMessage: "New courses uploaded Successfully" })
+        return elective;
+    } catch (err) {
+        notify(err)
+    };
+};
+
+
+export const deleteElectiveCourse = async ({ courseId }) => {
+    const accessToken = window.sessionStorage.getItem('alumniToken') || ""
+    try {
+        const response = await sendRequest(
+            `${BASE_ELECTIVE_PATH}/remove?course_id=${courseId}`,
+            {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken
+                }
+            },
+        );
+        notify({ notificationMessage: "Course Successfully deleted" })
+        return response;
+    } catch (err) {
+        notify(err)
+    };
 };
 
 // http://127.0.0.1:9001/api/v1/elective_course/request?course_id=dadfasdf
@@ -301,6 +466,8 @@ export const deleteElectiveRequest = async ({ courseRequestId }) => {
 /**************************************************************************************/
 /****************              END ELECTIVE REQUEST               *********************/
 /**************************************************************************************/
+
+
 
 
 

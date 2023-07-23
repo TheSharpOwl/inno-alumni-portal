@@ -23,9 +23,9 @@ import { useState } from 'react';
 import { deletePassRequest } from '../../api';
 
 const statusMap = {
-  pending: 'warning',
-  approved: 'success',
-  rejected: 'error'
+  PENDING: 'warning',
+  APPROVED: 'success',
+  REJECTED: 'error'
 };
 
 export const PassRequestTable = (props) => {

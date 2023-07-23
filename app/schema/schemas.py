@@ -98,6 +98,17 @@ class OrderPassRequest(BaseModel):
     guests: Optional[List[str]] = None
     description: Optional[str] = None
 
+class PassRequestOutput(BaseModel):
+    id: str
+    guest_info: str
+    description: Optional[str]
+    feedback: Optional[str]
+    type: str
+    requested_date: str
+    status: str
+    user_id: str
+    user: Optional[UserOutput] = None
+    created_at: datetime.datetime
 
 
 
@@ -106,17 +117,21 @@ class OrderPassRequest(BaseModel):
 
 class ElectiveCourse(BaseModel):
     course_name: str
-    instructor_name: Optional[str] = None
-    description: Optional[str] = None
-    mode: Optional[str] = None
+    instructor_name: Optional[str] 
+    description: Optional[str]
+    mode: Optional[str]
 
 
 class ElectiveCourseOutput(BaseModel):
     id: str
     course_name: str
-    instructor_name: Optional[str] = None
-    description: Optional[str] = None
-    mode: Optional[str] = None
+    instructor_name: Optional[str] 
+    description: Optional[str]
+    mode: Optional[str] 
+
+class UpdateRequest(BaseModel):
+    feedback: str
+    status: str
 
 
 

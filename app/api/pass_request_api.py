@@ -1,4 +1,6 @@
+from typing import List
 from fastapi import APIRouter, Depends, status
+from fastapi.encoders import jsonable_encoder
 from app.db import db
 from app.utils.oa2 import get_current_user
 from ..schema import schemas
@@ -12,6 +14,18 @@ def get_all_pass_requests(cur_user:schemas.UserOutput = Depends(get_current_user
 
     pass_requests = db.passrequest.find_many(where={"user_id": cur_user.id},order={"requested_date": "desc"})
     return pass_requests
+
+@router.get("/admin", response_model=List[schemas.PassRequestOutput], status_code=status.HTTP_200_OK)
+def get_all_pass_requests_by_admin(cur_user:schemas.UserOutput = Depends(get_current_user)):
+    passes = db.passrequest.find_many(include={"user": True}, order={"created_at": "desc"})
+    return passes
+
+
+@router.patch("/", status_code=status.HTTP_200_OK)
+def updated_elective_request(request_id: str, to_update: schemas.UpdateRequest, cur_user:schemas.UserOutput = Depends(get_current_user)):
+    update = jsonable_encoder(to_update)
+    updated_course = db.passrequest.update(data={ **update}, where={'id': request_id})
+    return updated_course
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)

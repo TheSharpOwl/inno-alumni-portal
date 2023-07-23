@@ -18,7 +18,26 @@ import { UploadDonationQRCode } from 'src/sections/donations/upload-qrcode';
 import { useState } from 'react';
 import { AdminViewDonations } from '../../sections/donations/admin-view-donations';
 
-
+/*
+   "id": "cljvulb6i0001mzlyukhh1do2",
+      "feedback": null,
+      "status": "PENDING",
+      "user_id": "cljvjzrpa0000mz1dnsmzx5kd",
+      "user": null,
+      "course_id": "cljvtw53m0000mznxa5cmb0hq",
+      "elective_course": {
+        "id": "cljvtw53m0000mznxa5cmb0hq",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pellentesque eget ex ut ullamcorper. Quisque rutrum risus at nunc facilisis, a aliquet odio volutpat. Sed sollicitudin nunc non elementum bibendum. Ut eget ornare nisi. Ut ullamcorper iaculis sagittis. Nulla hendrerit accumsan semper. Aliquam magna orci, condimentum vitae cursus ac, dictum eu urna. ",
+        "course_name": "Design-thinking ",
+        "instructor_name": "Pavel Voloschuk",
+        "mode": "HYBRID",
+        "users": null,
+        "request": null
+      },
+      "created_at": "2023-07-09T19:49:04.601000+00:00",
+      "updated_at": "2023-07-09T19:49:04.601000+00:00"
+    },
+*/ 
 const Page = () => {
 
   return (
