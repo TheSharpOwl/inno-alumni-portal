@@ -2,7 +2,7 @@ import "isomorphic-unfetch";
 import notify from "../utils/notify";
 
 let { BACKEND_URL } = process.env || {};
-PORT = PORT || 9001;
+PORT = 9001;
 ROOT_URL = BACKEND_URL || `http://0.0.0.0:${PORT}`;
 
 const sendRequest = async (path, options = {}) => {
