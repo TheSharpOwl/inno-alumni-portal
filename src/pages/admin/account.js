@@ -83,7 +83,7 @@ const Page = () => {
     setTimeout(() => {
       setValues(initialState)
       handleClose()
-    }, 15000)
+    }, 8000)
   }
 
   return (

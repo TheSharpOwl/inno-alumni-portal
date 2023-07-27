@@ -88,9 +88,8 @@ export const AuthProvider = (props) => {
       if (isAuthenticated && accessToken) {
         const userInfo = await getCurrentUser({ accessToken });
         const user = {
-          ...userInfo,
           id: '5e86809283e28b96d2d38537',
-          avatar: '/assets/avatars/avatar-miron-vitold.png',
+          ...userInfo,
         };
 
         dispatch({
@@ -152,11 +151,10 @@ export const AuthProvider = (props) => {
     }
 
     const user = {
-      ...userInfo,
       id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-miron-vitold.png',
       name: 'Daniel Atonge',
-      email: 'd.atonge@innopolis.university'
+      email: 'd.atonge@innopolis.university',
+      ...userInfo,
     };
 
     dispatch({

@@ -41,7 +41,9 @@ export const CreatePassRequest = ({ sendRequest }) => {
     setGuests(newGuests)
   }
 
-  const handleMakeRequest = async () => {
+  const handleMakeRequest = async (e) => {
+    e.preventDefault();
+
     const request = {
       requested_date: requestDate.toISOString().split('T')[0],
       guests,
@@ -51,15 +53,14 @@ export const CreatePassRequest = ({ sendRequest }) => {
 
     setRequestDate(new Date())
     setGuestInput("")
-    setGuests([])
+    setGuests([user.name])
     setDescription("")
   }
 
   return (
     <form
       autoComplete="off"
-      noValidate
-      onSubmit={handleSubmit}
+      onSubmit={handleMakeRequest}
       style={{ minWidth: 600 }}
     >
       <Card>
@@ -72,7 +73,7 @@ export const CreatePassRequest = ({ sendRequest }) => {
           <Box sx={{ m: 1.5 }}>
             <div>
               <DatePicker
-
+                required
                 label="Request Date"
                 value={requestDate}
                 onChange={(newValue) => {
@@ -178,7 +179,8 @@ export const CreatePassRequest = ({ sendRequest }) => {
         <Divider />
         <CardActions sx={{ justifyContent: 'flex-end', mx: 3.5, py: 3 }}>
           <Button variant="contained"
-            onClick={handleMakeRequest}>
+            type='submit'
+          >
             Make Request
           </Button>
         </CardActions>
