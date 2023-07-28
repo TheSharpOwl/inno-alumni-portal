@@ -74,7 +74,7 @@ export const AdminElectiveRequests = (props) => {
     }
     const { id } = selected;
     const response = await updateElectiveCourseRequest({ requestId: id, data })
-    console.log(response)
+    // console.log(response)
     handleClose()
     Router.reload();
   }

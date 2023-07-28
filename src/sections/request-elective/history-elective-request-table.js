@@ -85,7 +85,7 @@ export const ElectiveRequestTable = (props) => {
 
   const handleRequest = async (courseRequestId) => {
     const requestResponse = await deleteElectiveRequest({ courseRequestId })
-    console.log(requestResponse);
+    // console.log(requestResponse);
     updateElectives((prev) => [...prev, requestResponse.elective_course])
     const newItems = orders.filter(item => item.id !== courseRequestId);
     updateBookedElectives(newItems)

@@ -20,7 +20,7 @@ const Page = () => {
       reader.onerror = () => console.log('file reading has failed')
       reader.onload = async (event) => {
         const data = await processExcelCallback(event);
-        console.log(data)
+        // console.log(data)
         await bulkUploadElective({ data })
         Router.reload();
       }

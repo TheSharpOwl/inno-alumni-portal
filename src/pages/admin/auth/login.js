@@ -106,7 +106,7 @@ const Page = () => {
                 color="text.secondary"
                 variant="body2"
               >
-                Do you need access? contact alumni career department
+                Do you need access? contact alumni career department at Innopolis University
                 &nbsp;
               </Typography>
             </Stack>
@@ -161,9 +161,6 @@ const Page = () => {
                   value={formik.values.password}
                 />
               </Stack>
-              <FormHelperText sx={{ mt: 1 }}>
-                Optionally you can skip.
-              </FormHelperText>
               {formik.errors.submit && (
                 <Typography
                   color="error"
@@ -189,18 +186,17 @@ const Page = () => {
                 sx={{ mt: 3 }}
               >
                 <div>
-                  You can use <b>d.atonge@innopolis.university</b> and password <b>string</b>
+                  For alumni, use <Link
+                    component={NextLink}
+                    href="/auth/login"
+                    underline="hover"
+                    variant="subtitle2"
+                  >
+                    Alumni Login
+                  </Link>
                 </div>
               </Alert>
             </form>
-            <Button
-              fullWidth
-              size="large"
-              sx={{ mt: 3 }}
-              onClick={handleSkip}
-            >
-              Skip authentication
-            </Button>
           </div>
         </Box>
       </Box>

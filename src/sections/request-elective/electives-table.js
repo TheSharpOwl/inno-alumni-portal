@@ -83,7 +83,7 @@ export const ElectivesTable = (props) => {
   const deleteElective = async () => {
     const { id } = values;
     const deletedElective = await deleteElectiveCourse({ courseId: id })
-    console.log(deletedElective);
+    // console.log(deletedElective);
 
     const filteredElectives = electives.filter(elective => elective.id !== deletedElective.id)
     setElectives(filteredElectives)
@@ -96,7 +96,7 @@ export const ElectivesTable = (props) => {
       course_name, instructor_name, mode, description
     }
     const createdElective = await createElectiveCourse({ data })
-    console.log(createdElective);
+    // console.log(createdElective);
 
     setElectives((prev) => [...prev, createdElective])
     handleClose()
@@ -108,7 +108,7 @@ export const ElectivesTable = (props) => {
       course_name, instructor_name, mode, description
     }
     const updatedElective = await updateElectiveCourse({ courseId: id, data })
-    console.log(updatedElective);
+    // console.log(updatedElective);
     const filteredElectives = electives.filter(elective => elective.id !== id)
     setElectives([...filteredElectives, updatedElective])
     handleClose()

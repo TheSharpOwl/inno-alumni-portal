@@ -30,7 +30,7 @@ const Page = () => {
     );
   };
   const electiveForPage = useCustomers(electives, page, rowsPerPage);
-  console.log(electiveForPage)
+  // console.log(electiveForPage)
 
   const handlePageChange = useCallback(
     (event, value) => {

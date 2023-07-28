@@ -59,7 +59,7 @@ export const PassRequestTable = (props) => {
 
   const handleDeleteRequest = async (passRequestId) => {
     const requestResponse = await deletePassRequest({ passRequestId })
-    console.log(requestResponse);
+    // console.log(requestResponse);
     const newItems = orders.filter(item => item.id !== passRequestId);
     updatePassRequests(newItems)
     handleClose()

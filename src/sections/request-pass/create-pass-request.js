@@ -103,7 +103,8 @@ export const CreatePassRequest = ({ sendRequest }) => {
                 name="guestName"
                 onChange={(e) => setGuestInput(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && guestInput !== '') {
+                  e.stopPropagation()
+                  if (e.key === 'Enter' && guestInput !== '' && e.preventDefault()) {
                     setGuests((prev) => [...prev, guestInput])
                     setGuestInput("")
                   }

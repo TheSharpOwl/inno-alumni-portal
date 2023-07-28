@@ -64,7 +64,7 @@ export const AdminViewAccounts = (props) => {
 
   const loadingRegisteredUsers = async () => {
     const registeredUsers = await getAllRegisteredUsers()
-    console.log(registeredUsers)
+    // console.log(registeredUsers)
     setUsers(registeredUsers)
   }
   useEffect(() => {

@@ -12,7 +12,7 @@ router = APIRouter(tags=["Obtain Pass"], prefix="/request_pass")
 @router.get("/")
 def get_all_pass_requests(cur_user:schemas.UserOutput = Depends(get_current_user)):
 
-    pass_requests = db.passrequest.find_many(where={"user_id": cur_user.id},order={"requested_date": "desc"})
+    pass_requests = db.passrequest.find_many(where={"user_id": cur_user.id},order={"created_at": "desc"})
     return pass_requests
 
 @router.get("/admin", response_model=List[schemas.PassRequestOutput], status_code=status.HTTP_200_OK)

@@ -60,7 +60,7 @@ export const AdminPassRequests = (props) => {
           id, feedback, status, created_at, email, name, description,
           guest_info: guest_info.split("*_*").join(", "), requested_date
         }))
-    console.log(passRequests)
+    // console.log(passRequests)
     setRequests(modifiedRequests)
   }
   useEffect(() => {
@@ -74,7 +74,7 @@ export const AdminPassRequests = (props) => {
     }
     const { id } = selected;
     const response = await updatePassRequest({ requestId: id, data })
-    console.log(response)
+    // console.log(response)
     handleClose()
     Router.reload();
   }

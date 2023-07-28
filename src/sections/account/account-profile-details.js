@@ -84,7 +84,7 @@ export const AccountProfileDetails = () => {
       position: companyRole,
       telegram_handle: telegramHandle
     })
-    console.log(values)
+    // console.log(values)
   };
 
   return (

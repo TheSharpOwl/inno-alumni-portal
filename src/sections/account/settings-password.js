@@ -36,10 +36,7 @@ export const SettingsPassword = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      current_password: values.currentPassword,
-      new_password: values.newPassword,
-    })
+    
     const response = await updatePasswordInformation({
       current_password: values.currentPassword,
       new_password: values.newPassword,

@@ -42,7 +42,6 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        console.log("HEYUE")
         await auth.signUp(values.email, values.name, values.password, values.confirmPassword);
         router.push('/auth/login');
       } catch (err) {

@@ -28,7 +28,7 @@ export const AuthGuard = (props) => {
       ignore.current = true;
 
       if (!isAuthenticated) {
-        console.log('Not authenticated, redirecting');
+        // console.log('Not authenticated, redirecting');
         router
           .replace({
             pathname: '/auth/login',

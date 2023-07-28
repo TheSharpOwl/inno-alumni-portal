@@ -75,7 +75,6 @@ export const updateUserInformation = async (updateInformation) => {
       },
       body: JSON.stringify(updateInformation)
     });
-    console.log(updateFeedback);
     notify({
       notificationMessage: "User profile information updated Successfully"
     });

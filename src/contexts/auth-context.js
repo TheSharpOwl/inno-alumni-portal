@@ -142,7 +142,7 @@ export const AuthProvider = (props) => {
     const { access_token: accessToken } = await loginRegularUser({ email, password });
     const userInfo = await getCurrentUser({ accessToken });
 
-    console.log(userInfo);
+    // console.log(userInfo);
     try {
       window.sessionStorage.setItem('authenticated', 'true');
       window.sessionStorage.setItem('alumniToken', accessToken);
@@ -166,7 +166,7 @@ export const AuthProvider = (props) => {
   const signUp = async (email, name, password, confirmPassword) => {
     const registeredUser = await registerRegularUser({ name, email, password, confirmPassword });
 
-    console.log(registeredUser);
+    // console.log(registeredUser);
 
   };
 

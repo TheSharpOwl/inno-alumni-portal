@@ -43,7 +43,7 @@ export const UpdateDonationInformation = () => {
     useEffect(() => setDirty(false), [donationText])
     const handleGetAdminDonationText = async () => {
         const { message } = await getAdminDonationText()
-        console.log(message)
+        // console.log(message)
         setDonationText(message)
     }
 
@@ -54,12 +54,12 @@ export const UpdateDonationInformation = () => {
             setDirty(false)
             editorRef.current.setDirty(false)
 
-            console.log(content)
+            // console.log(content)
             const donation = {
                 message: content,
             }
             const responseDonation = await upsertAdminDonationText({ donation })
-            console.log(responseDonation)
+            // console.log(responseDonation)
         }
     }
 

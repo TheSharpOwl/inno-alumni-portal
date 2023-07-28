@@ -28,7 +28,7 @@ const Page = () => {
   const [showPassword, setShowPassword] = useState(false);
   const formik = useFormik({
     initialValues: {
-      email: 'd.atonge@innopolis.university',
+      email: 'a.b@innopolis.university',
       password: 'string',
       submit: null
     },
@@ -48,8 +48,8 @@ const Page = () => {
         await auth.signIn(values.email, values.password);
         router.push('/');
       } catch (err) {
-        helpers.setStatus({ success: false });
-        helpers.setErrors({ submit: err.message });
+        // helpers.setStatus({ success: false });
+        // helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
       }
     }
@@ -64,10 +64,9 @@ const Page = () => {
 
   const handleSkip = useCallback(
     () => {
-      auth.skip();
-      router.push('/');
+      router.push('https://sso.university.innopolis.ru/adfs/oauth2/authorize');
     },
-    [auth, router]
+    [router]
   );
 
   return (
@@ -204,18 +203,17 @@ const Page = () => {
                 sx={{ mt: 3 }}
               >
                 <div>
-                  You can use <b>d.atonge@innopolis.university</b> and password <b>string</b>
+                  For administrative staff, use <Link
+                    component={NextLink}
+                    href="/admin/auth/login"
+                    underline="hover"
+                    variant="subtitle2"
+                  >
+                    Admin Login
+                  </Link>
                 </div>
               </Alert>
             </form>
-            <Button
-              fullWidth
-              size="large"
-              sx={{ mt: 3 }}
-              onClick={handleSkip}
-            >
-              Skip authentication
-            </Button>
 
           </div>
         </Box>

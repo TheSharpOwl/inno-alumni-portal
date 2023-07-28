@@ -76,10 +76,10 @@ const Page = () => {
       email: values.email,
       password: values.password
     }
-    console.log(adminUser);
+    // console.log(adminUser);
 
     const newAdmin = await registerAdminUser(adminUser)
-    console.log(newAdmin);
+    // console.log(newAdmin);
     setTimeout(() => {
       setValues(initialState)
       handleClose()
