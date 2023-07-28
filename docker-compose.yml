@@ -1,75 +1,50 @@
 version: '3.9'
 
-
 services:
-# TODO add database browser in the browser if possible
-  # sqlite3:
-  #   container_name: sqlite3_container
-  #   image: nouchka/sqlite3:latest
-  #   stdin_open: true
-  #   tty: true
-  #   volumes:
-  #     - ./Backend:/root/db/
-  #   ports:
-  #     - '9000:9000' # expose ports - HOST:CONTAINER
-  #   restart: unless-stopped
-
-  # Todo make db image when needed
-  # db:
-  #   image: postgres:14-alpine
-  #   ports:
-  #     - '5432:5432'
-
-  #   environment:
-  #     - POSTGRES_PASSWORD=postgres
-  #     - POSTGRES_USER=postgres
-  #     - POSTGRES_DB=postgres
-
-  #   volumes:
-  #     - ./data/db:/var/lib/postgresql/data/
-
   frontend:
-    build:
-      context: ./Frontend
-      dockerfile: Dockerfile
-
+    build: 
+      context: .
+      dockerfile: frontend.Dockerfile
+    container_name: inno-alumni-frontend
     ports:
-      - '3000:3000'
-
-    # volumes:
-    #   - ./frontend:/app/frontend
-
+      - 80:80
+    volumes:
+      - ./:/usr/src/app
+    command: npm run next-dev
     depends_on:
       - backend
 
   backend: 
     build: 
-      context: ./Backend
-      dockerfile: Dockerfile
-
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-
+      context: .
+      dockerfile: backend.Dockerfile
+    container_name: inno-alumni-backend
+    env_file:
+      - ./.env
     ports:
-      - '8000:8000'
-
+      - 9001:9001
+    command: uvicorn app.main:app --host 0.0.0.0 --port 9001 --reload
     volumes:
-      - ./backend:/app/backend
-    # TODO add with database server
-    # depends_on:
-    #   - db
+      - ./:/usr/src/app
 
-  nginx:
-    build: ./Nginx
-    # volumes:
-    #   - ./Nginx/conf.d:/etc/nginx/conf.d:ro
-    #   - ./frontend:/app/frontend
-    ports:
-      - 80:80
-    restart: unless-stopped
-    depends_on:
-      - backend
-      - frontend
+  # nginx:
+  #   image: nginx:1.22-alpine
+  #   restart: always
+  #   container_name: nginx
+  #   volumes:
+  #     - ./data/nginx:/etc/nginx/conf.d
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
+  # certbot:
+  #   image: certbot/certbot
+  #   restart: always
+  #   container_name: certbot
+  #   volumes:
+  #     - ./data/certbot/conf:/etc/letsencrypt
+  #     - ./data/certbot/www:/var/www/certbot
+  #   entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
