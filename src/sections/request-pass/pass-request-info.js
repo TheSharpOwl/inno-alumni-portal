@@ -21,7 +21,7 @@ const details = [
     },
     {
         title: "Impromptu Visits",
-        value: "For such visits, use the Alumni telegram bot. It has the ability to ask volunteers to help you out with entering the university in a timely manner."
+        value: "For such visits, use the Alumni telegram bot @InnoAlumniBot. It has the ability to ask volunteers to help you out with entering the university in a timely manner."
     },
     {
         title: "What is more",

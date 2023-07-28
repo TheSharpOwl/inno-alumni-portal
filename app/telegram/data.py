@@ -1,4 +1,4 @@
-TOKEN = "625620708:AAFII7HO_Anlcn0pLMUN9Y_HNkTDJ0MLctc"  # - alumni_bot
+TOKEN = "5991107936:AAHGroqKwfyS88AUjckIzL3lUQre5l59gps"  # - InnoAlumniBot
 
 
 TEXT_BUTTON_PASS = "PASS🃏"
