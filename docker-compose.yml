@@ -7,7 +7,7 @@ services:
       dockerfile: frontend.Dockerfile
     container_name: inno-alumni-frontend
     ports:
-      - 80:80
+      - 3000:3000
     volumes:
       - ./:/usr/src/app
     command: npm run next-dev
@@ -23,7 +23,7 @@ services:
       - ./.env
     ports:
       - 9001:9001
-    command: uvicorn app.main:app --host 0.0.0.0 --port 9001 --reload
+    command: uvicorn app.main:app --host 127.0.0.1 --port 9001 --reload
     volumes:
       - ./:/usr/src/app
 
