@@ -16,7 +16,7 @@ app = FastAPI(
     version="1.0",
 )
 
-origins = ['http://localhost', "http://10.90.138.37", "https://graduates.innopolis.university"]
+origins = ['http://localhost', "https://graduates.innopolis.university"]
 
 app.add_middleware(
     CORSMiddleware,

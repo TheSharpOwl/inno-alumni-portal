@@ -13,7 +13,7 @@ COPY package*.json ./
 
 RUN npm install --ignore-scripts
 
-COPY . .
+COPY app .
 
 RUN npm run build
 
