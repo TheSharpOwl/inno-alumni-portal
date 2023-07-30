@@ -1,4 +1,10 @@
 FROM node:18-alpine
+
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+USER nonroot
+
 # Create app directory
 WORKDIR /usr/src/app
 

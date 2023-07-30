@@ -1,5 +1,11 @@
 FROM python:3.9
 
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+
+USER nonroot
+
+
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
