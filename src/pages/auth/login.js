@@ -29,7 +29,7 @@ const Page = () => {
   const formik = useFormik({
     initialValues: {
       email: 'a.b@innopolis.university',
-      password: '',
+      password: 'string',
       submit: null
     },
     validationSchema: Yup.object({

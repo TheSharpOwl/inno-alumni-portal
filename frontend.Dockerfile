@@ -1,19 +1,13 @@
 FROM node:18-alpine
-
-RUN addgroup -S nonroot \
-    && adduser -S nonroot -G nonroot
-
-USER nonroot
-
 # Create app directory
 WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
 
-RUN npm install --ignore-scripts
+RUN npm install
 
-COPY app .
+COPY . .
 
 RUN npm run build
 
