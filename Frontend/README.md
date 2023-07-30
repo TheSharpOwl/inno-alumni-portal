@@ -5,10 +5,13 @@
 2. To `install` all packages (local to the repo) using `npm`
     ```bash
     npm install
+    ```
 3. To `build` the project for production
     ```bash
     npm run build
+    ```
 4. To `start` the project on development
     ```bash
-    npm run dev
+    npm start
+    ```
     
