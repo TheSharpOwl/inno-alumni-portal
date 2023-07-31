@@ -9,9 +9,9 @@ This website involves the ability to keep up with events happening in the univer
 ## Demo
 
 (Screenshots and Video)
+https://youtu.be/PwiZH98iqJ8
 
-[![](https://youtu.be/PwiZH98iqJ8)](https://youtu.be/PwiZH98iqJ8)
-Press play to see the video
+Follow the link to watch the video
 
 
 ## How to Use
