@@ -16,7 +16,7 @@ export const loginRegularUser = async ({ email, password }) => {
   };
   try {
     const userToken = await sendRequest(`${BASE_USER_PATH}/login`, options);
-    notify({ notificationMessage: "Login Successfull" });
+    notify({ notificationMessage: "Login Successful" });
     return userToken;
   } catch (err) {
     notify(err);
@@ -40,7 +40,7 @@ export const registerRegularUser = async (
         })
       }
     );
-    notify({ notificationMessage: "Registration Successfull" });
+    notify({ notificationMessage: "Registration Successful" });
     return registrationFeedback;
   } catch (err) {
     notify(err);
@@ -108,7 +108,7 @@ export const loginWithInnoSSO = async (options = {}) => {
     method: "GET",
     ...options
   });
-  notify({ notificationMessage: "Login with sso Successfull" });
+  notify({ notificationMessage: "Login with sso Successful" });
   return redirectURL;
 };
 
@@ -165,7 +165,7 @@ export const createPassRequest = async ({ request }, options = {}) => {
       },
       body: JSON.stringify(request)
     });
-    notify({ notificationMessage: "Pass Request Creation Successfull" });
+    notify({ notificationMessage: "Pass Request Creation Successful" });
     return response;
   } catch (err) {
     notify(err);
@@ -389,7 +389,7 @@ export const makeElectiveRequest = async ({ courseId }) => {
     );
     notify({
       notificationMessage:
-        "Request for elective was Successfull and is in progress"
+        "Request for elective was Successful and is in progress"
     });
     return response;
   } catch (err) {
