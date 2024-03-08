@@ -25,26 +25,19 @@ or proceed with documentation.
 #### Accessing the Portal <a name="access"></a>
 
 - To access the Alumni Portal, open your preferred web browser and navigate to the provided URL: [www.alumniportal.com](https://github.com/Amirka-Kh/inno-alumni-portal).
-
-    <img src="../../assets/img/1.png" alt="" width="600" height="400" style="border: 1px solid black;">
+  <img src="../../assets/img/1.png" alt="" width="600" height="400" style="border: 1px solid black;">
 
 - If you are a registered user, enter your login credentials (username/email and password) in the designated fields on the login page.
 - If you are accessing the portal for the first time, proceed to register for an account.
 
-  ![Login Credentials](login_credentials.png)
-
 **Registration**:
 - If you are a new user, click on the "Register" link on the login page to create a new account.
 - Provide the required information such as name, email, password, and any additional details requested during registration.
-
-  ![Registration](registration.png)
+  <img src="../../assets/img/2.png" alt="" width="600" height="400" style="border: 1px solid black;">
 
 **Single Sign-On (SSO):**
 - For added convenience, users can also log in via Single Sign-On (SSO) if supported by their institution or organization.
 - Simply click on the "SSO Login" option and follow the prompts provided by your institution's authentication system.
-
-  ![SSO Login](sso_login.png)
-
 
 ##### Supported Browsers and Devices:
 
