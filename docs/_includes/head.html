@@ -1,0 +1,41 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="{{ "/assets/css/main.css" | relative_url }}">
+    <link rel="stylesheet" href="{{ "/assets/css/font-awesome.min.css" | relative_url }}">
+
+    <link rel="shortcut icon" href="{{ "/favicon.ico?1" | relative_url }}">
+    {% seo %}
+
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | absolute_url }}" />
+    <style>
+        /* Adjust the margin between text elements */
+        .header-light,
+        .img-lead {
+            margin-top: 160px;
+            margin-bottom: 44px; /* Increase or decrease as needed */
+        }
+
+        .lead,
+        .btn {
+            margin-bottom: 32px;
+        }
+
+        .btn {
+            background-color: #4CAF50;
+        }
+
+        /* Center align the content vertically */
+        .align-items-center {
+            align-items: center;
+        }
+
+        .list-group-item.active,
+        .list-group-item.active:hover,
+        .list-group-item.active:focus {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
