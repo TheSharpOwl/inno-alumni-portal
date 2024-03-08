@@ -1,0 +1,56 @@
+# Site settings
+title: Inno Alumni Portal
+email:
+description: >
+  Website providing services for Innopolis University Alumni
+lang: en-US
+
+baseurl: "/inno-alumni-portal"
+url: https://Amirka-Kh.github.io/inno-alumni-portal
+git_address: https://github.com/Amirka-Kh/inno-alumni-portal
+git_edit_address: https://github.com/Amirka-Kh/inno-alumni-portal/blob/gh-pages
+
+bootwatch: paper
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+# Plugins (previously gems:)
+plugins:
+  - jekyll-feed
+  - jekyll-redirect-from
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - .idea/
+  - .gitignore
+  - README.md
+  - vendor
+timezone: Europe/Moscow
+defaults:
+- scope:
+    path: _posts
+    type: posts
+  values:
+    layout: post
+    sectionid: blog
+
+- scope:
+    path: _docs
+    type: docs
+  values:
+    layout: docs
+    sectionid: docs
+    seo:
+      type: "WebPage"
+
+collections:
+  docs:
+    permalink: /:collection/:path/
+    output: true
+  posts:
+    permalink: /blog/:year/:month/:day/:title/
+    output: true
